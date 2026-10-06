@@ -1,0 +1,8 @@
+Each PR below was also checked by hand against the live GitHub REST API (read-only GETs of `/pulls/N` and `/issues/N/events`):
+
+- #14049 (dhh): merged and closed by dhh at 2026-10-03 02:03:08Z, created 2026-10-02 12:06:34Z; 2 issue comments and 33 commits match. dhh authors it, so every dhh event has role `author`; no touch or engagement is correct. Its cross-references to #8093 and ~30 other PRs link them into one competition cluster.
+- #8093 (absorbed): closed by dhh at 2026-10-02 12:07:42Z with "Brought in with your authorship in #14049"; prs.csv lists absorbed_by 14049 (body_list). The 2026-09-08 `review_requested` events by ryanrhughes are a bulk action on hundreds of PRs, so `first_maintainer_touch` is that date while the `_nobulk` engagement column is empty until the close.
+- #6346 (maintainer_rejected): closed by dhh 2026-07-27 01:07:52Z, 3 issue comments as in the raw dump. dhh's explanation was posted in the same second, so it is a terminal comment: `silent_decision` is true, `silent_no_comment` is false.
+- #8739 (mass_closed): closed by omarchybot 2026-10-03 11:19:56Z, one of 50+ omarchybot closes that day. Its comment says a commit already fixes the crash, which now matches the `already fix...` wording (the earlier build missed it).
+- #9104 (superseded_duplicate): closed by bjarneo 2026-09-20 15:32:52Z by the "Automated duplication check" comment naming #8879; flagged as a mass-close day for bjarneo.
+- #12814, #13914, #14148, #14220, #8307: open, only bot activity and author edits; timelines match the web UI. #13914 and #14148 both close issue #10289 (closingIssuesReferences), so they form one cluster of two; #8307 is linked to #10289 by a cross-reference.

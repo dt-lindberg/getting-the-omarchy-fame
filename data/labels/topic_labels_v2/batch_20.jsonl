@@ -1,0 +1,244 @@
+{"number": 11129, "title": "Add Kilo AI", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11131, "title": "Tint the Claude Code diff", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11134, "title": "Reject unknown plugin disables", "topic": "shell_ui", "kind": "bug_fix", "confidence": "medium"}
+{"number": 11136, "title": "idle clamp Timer intervals", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11137, "title": "Overlay only the fields", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11142, "title": "Preserve settings when placing", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11144, "title": "Add Axon as a default", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11146, "title": "Stop screensaver busy-loop when", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11149, "title": "Skip togglesplit on non-dwindle", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11150, "title": "Add a doctrine command", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 11151, "title": "Fall back when reboot", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11154, "title": "Probe network latency over", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 11155, "title": "Decode double-escaped notification entities", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11156, "title": "Honour custom Memento Mori", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11157, "title": "Treat Recordly's recording toolbar", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11160, "title": "Match Chinese app names", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11161, "title": "Warn on low battery", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11162, "title": "Flash the lock screen", "topic": "shell_ui", "kind": "feature", "confidence": "medium"}
+{"number": 11164, "title": "Recognize Ecosia as a", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 11167, "title": "Add OpenCode Go agent", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11169, "title": "Match the en dash", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11172, "title": "Add opt-in sudo authentication", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11174, "title": "Show time taken to", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11177, "title": "Show wind in m/s", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11178, "title": "screensaver: use Matrix digital", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11179, "title": "Document what a theme does", "topic": "theming_appearance", "kind": "docs", "confidence": "high"}
+{"number": 11181, "title": "fix hypr add missing", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 11188, "title": "Support window titles for", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11191, "title": "Add optional native Amiga", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11193, "title": "Fix cloned menu plugins", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11194, "title": "Fix idle timer 32-bit", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11195, "title": "Prevent nightlight toggle race", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11196, "title": "Screen time for the", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11197, "title": "Make network speed test", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11198, "title": "Make the adapter pairable", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11199, "title": "Support QVariantList in manifestHasKind", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11205, "title": "Fix default tmux splits", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11206, "title": "Add GTK_IM_MODULE to fcitx", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 11207, "title": "Fail migrations when a", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11209, "title": "Keep the arrow cursor", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11210, "title": "Keep the arrow pointer", "topic": "terminal_dev_env", "kind": "feature", "confidence": "medium"}
+{"number": 11216, "title": "Integrate NetClaw into Omarchy", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11217, "title": "Exit cleanly when the", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11222, "title": "Stop the bootstrap migration", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11223, "title": "Refuse a theme with", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 11227, "title": "Make omarchy-launch-webapp fall back", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11228, "title": "Document Dell XPS 13", "topic": "hardware_drivers", "kind": "docs", "confidence": "high"}
+{"number": 11235, "title": "Stop speedtest workers when", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11237, "title": "Leave LIBVA_DRIVER_NAME unset on", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11238, "title": "Fit the weather panel to", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11239, "title": "Close open bar panels while", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11240, "title": "Allow restarting shell when desktop", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11241, "title": "Fix third-party menu plugins losing", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11242, "title": "Install the marketplace-verified snapshot", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11244, "title": "Clamp the lock screen's", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11246, "title": "feat update add official", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 11250, "title": "Add Ghost to Install", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11252, "title": "Fix Bluetooth tray icon and", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11259, "title": "Avoid lspci in favor of", "topic": "hardware_drivers", "kind": "performance", "confidence": "high"}
+{"number": 11260, "title": "Pause Bluetooth discovery during pairing", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11267, "title": "Silence Claude auth nag when", "topic": "agents_ai", "kind": "bug_fix", "confidence": "high"}
+{"number": 11269, "title": "Fix DaVinci Resolve Download Manager", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11272, "title": "Inhibit idle for fullscreen Steam", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11273, "title": "Lock screen keep fingerprint idle", "topic": "security_auth", "kind": "bug_fix", "confidence": "high"}
+{"number": 11277, "title": "Restore full-width windows after the", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11284, "title": "Fix Bash learning link", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11285, "title": "Give cloned menus their application", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11286, "title": "Configure persistent Wi-Fi Direct PC", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 11287, "title": "Explain snapshot failures caused by", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 11288, "title": "Drop tzdata aliases from the", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11289, "title": "Add the headless server", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 11290, "title": "Document accented letters on the", "topic": "terminal_dev_env", "kind": "docs", "confidence": "high"}
+{"number": 11291, "title": "power color battery indicator by", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 11293, "title": "Resolve the SDDM greeter's", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11294, "title": "Open the whole folder in", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 11295, "title": "Show applications in the microphone", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11296, "title": "Document custom MacBook trackpad", "topic": "hyprland_windowing", "kind": "docs", "confidence": "high"}
+{"number": 11299, "title": "Use system font for", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11300, "title": "Paste clipboard history with", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11302, "title": "Fix network status and latency", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11304, "title": "Add configurable notification font", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11309, "title": "fix bar uniform ink-to-ink", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11311, "title": "Install b43-firmware for BCM4322", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 11312, "title": "Software brightness fallback when DRM", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 11314, "title": "System security hardening", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11315, "title": "Make nouveau software-cursor fix", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11319, "title": "Keep agent selectors readable", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11322, "title": "Recreate lock screen fingerprint", "topic": "security_auth", "kind": "bug_fix", "confidence": "high"}
+{"number": 11325, "title": "Identify Apple Silicon without", "topic": "hardware_drivers", "kind": "refactor", "confidence": "high"}
+{"number": 11328, "title": "Disable USB autosuspend for", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11338, "title": "Withdraw the toast when", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11341, "title": "Show Fcitx5 input method", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11344, "title": "Support both zed and", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11345, "title": "Power off pre-T2 Apple", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11346, "title": "Make Grok Build follow", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11352, "title": "Enable Sunshine by its", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 11353, "title": "Clamp idle timeouts to", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11355, "title": "Detect the Apple bcm5974", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11357, "title": "Add background switcher across", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11360, "title": "Fix debuginfod initialization in diagnose-crash", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11362, "title": "Add bi-directional mouse wheel", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11364, "title": "Keep existing wine when", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 11366, "title": "Add MiniMax Code mcode", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11367, "title": "Add MiniMax Code mcode", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11371, "title": "fix foot use foot-direct", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11372, "title": "Add an OpenCode collector", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11378, "title": "file explorer when focused", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11379, "title": "Add TPM2-backed PIN authentication", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11381, "title": "Install the pre-T2 FaceTime", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 11385, "title": "Kill the local plugin", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11386, "title": "Run development containers with", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 11387, "title": "Detect FocalTech match-on-chip fingerprint", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11388, "title": "Sync the pacman databases", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11390, "title": "Show Open-Meteo air quality", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11393, "title": "Use a generic icon", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 11394, "title": "Reduce OSD and notification", "topic": "shell_ui", "kind": "performance", "confidence": "high"}
+{"number": 11398, "title": "feat install accept owner/repo", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 11401, "title": "set private per-user tmpdir", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 11402, "title": "Sync Omarchy theme to", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11403, "title": "fix shell synchronize surface", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11404, "title": "fix brightness guard keyboard", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11406, "title": "Withdrawn", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 11407, "title": "Accept bar style tokens", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11408, "title": "Reload shell safely when", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11414, "title": "Fix monitor scaling widget", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11415, "title": "Dismiss stale low battery", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11418, "title": "Fix keyboard layout persistence", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11420, "title": "add flight mode bar", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 11421, "title": "Fix stale city suggestions", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11423, "title": "Install OpenCode V2 through", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11427, "title": "Detect Microarray MAFP fingerprint", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11428, "title": "Add ZeroTier as an", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 11431, "title": "fix hybrid GPU VA-API", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11432, "title": "Make power profiles change", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11434, "title": "apple reload brcmfmac after", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11435, "title": "Stop mise from managing", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11436, "title": "Allow Dropbox bar quota", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11438, "title": "Support mounting and unlocking", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11441, "title": "Include windows from all", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11444, "title": "Add GitLab Duo CLI", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11445, "title": "Fix stale basecamp/omarchy links", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11446, "title": "Ship fcitx5 wayland.conf so", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11447, "title": "Ship fcitx5 wayland.conf so", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11451, "title": "Support per-monitor background image", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11454, "title": "Feat workspace default apps", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 11455, "title": "Skip browser help probe", "topic": "apps_packages", "kind": "performance", "confidence": "high"}
+{"number": 11461, "title": "Keep the caller's editor", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11464, "title": "Add the 2017 iMac", "topic": "hardware_drivers", "kind": "docs", "confidence": "high"}
+{"number": 11466, "title": "Tell the agent skill", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 11468, "title": "Show installation duration in", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 11470, "title": "Run declared plugin cleanup", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 11471, "title": "Open Steam Remote Play", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11473, "title": "Allow mouse wheel to cycle", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11475, "title": "Detach nightlight startup from", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11476, "title": "Keep DNS changes running", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11477, "title": "Reconcile hibernation resume parameters", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11478, "title": "Detect damaged package records", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11479, "title": "Reject root-run updates before", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11480, "title": "Serialize package availability checks", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11481, "title": "Keep Voxtype on CPU", "topic": "audio_media", "kind": "bug_fix", "confidence": "high"}
+{"number": 11482, "title": "Preserve presentation command exit", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11483, "title": "Extract crash cores on", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11484, "title": "Preserve custom launchers when", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11487, "title": "Keep terminal font size", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 11488, "title": "Tell agents to reboot", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11489, "title": "Fix grammar in Manual", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 11491, "title": "fix use the accent", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11492, "title": "Own pending shell service", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11493, "title": "applications add Herdr desktop", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11495, "title": "Security Treat command operands", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11496, "title": "Size the weather bar", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11501, "title": "salvage install-arch leftover cluster", "topic": "install_update", "kind": "other", "confidence": "high"}
+{"number": 11502, "title": "salvage shell-visual leftover cluster", "topic": "shell_ui", "kind": "other", "confidence": "high"}
+{"number": 11503, "title": "Add keyboard movement for", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 11507, "title": "Skip omarchy-fcitx5.service when fcitx5", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11510, "title": "Require session token for", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11511, "title": "Require session token for", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11512, "title": "Strip CAP_DAC_READ_SEARCH from", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11513, "title": "Bind sshd to localhost", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11514, "title": "Mise no forced release-age", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 11515, "title": "Make /boot not world-accessible", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11516, "title": "Ignore USB Touch Bar", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11517, "title": "fix capture add icon", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11518, "title": "fix nightlight detach hyprsunset", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11519, "title": "fix menu preserve builtin", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11520, "title": "fix capture single-flight screen", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11521, "title": "fix shell derive publicBarConfig", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11522, "title": "fix monitor use eval", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11523, "title": "Enable paccache.timer to prune", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 11525, "title": "Skip lid suspend for", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 11528, "title": "Update limine tooling before", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11530, "title": "Explain how to do", "topic": "install_update", "kind": "docs", "confidence": "high"}
+{"number": 11534, "title": "Show portrait wallpaper twins", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11536, "title": "Fix BCM4377 Bluetooth hang", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11537, "title": "Enable Google BBR TCP", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 11538, "title": "Mount Btrfs subvolumes with", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 11539, "title": "Add a Grok collector", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11543, "title": "Restore a window from", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 11545, "title": "Disable tap-to-click by", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 11546, "title": "Add cached SSH machine", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11547, "title": "Refresh Catppuccin Latte for", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 11548, "title": "Arbitrate MacBookPro11,5 dGPU to", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11549, "title": "MSI laptop driver optimizations", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 11550, "title": "Do not force global", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11552, "title": "Enable autonomous Runtime Power", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 11553, "title": "Enable automatic direct scanout", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 11554, "title": "Set DefaultTimeoutStopSec=5s for systemd", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 11555, "title": "salvage leftovers-approved leftover cluster", "topic": "cli_repo_misc", "kind": "other", "confidence": "high"}
+{"number": 11557, "title": "Add Kiro CLI usage", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11561, "title": "Scope LocalSend firewall rule", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11564, "title": "Make screen recording stop", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11565, "title": "Scope LocalSend firewall rules", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11566, "title": "Pass themed icon and", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 11567, "title": "Prevent speedtest worker process", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 11568, "title": "Add duration backstop to", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11569, "title": "Skip Electron utility subprocess", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 11570, "title": "Suspend on 2016-2017 MacBook", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11571, "title": "Enable two-finger swipe back/forward", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 11574, "title": "Add expandable hourly rain", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11577, "title": "Fix menu navigation history", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11578, "title": "Derive publicBarConfig from shellConfig", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11579, "title": "Add automatic Glimpse image", "topic": "cli_repo_misc", "kind": "other", "confidence": "high"}
+{"number": 11580, "title": "feat menu improve launcher", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11581, "title": "Add multi-city pages to", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11588, "title": "fix Match 1Password's new", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 11592, "title": "Fix legacy Intel VA-API", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11598, "title": "Disable unprivileged TTY line-discipline", "topic": "security_auth", "kind": "security", "confidence": "high"}
+{"number": 11599, "title": "Gate lock fingerprint PAM", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11600, "title": "Keep update stay-awake state", "topic": "install_update", "kind": "security", "confidence": "high"}
+{"number": 11601, "title": "Keep DDC brightness cache", "topic": "display_capture", "kind": "security", "confidence": "high"}
+{"number": 11602, "title": "Keep capture-region markers out", "topic": "display_capture", "kind": "security", "confidence": "high"}
+{"number": 11604, "title": "Repair legacy user-owned Plymouth", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11605, "title": "Default OMARCHY_PATH and stop", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 11606, "title": "Stop a web app's", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11608, "title": "Fix SearchableDropdown currentIndex hijack", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 11610, "title": "Debounce AppLibrary appsChanged against", "topic": "shell_ui", "kind": "performance", "confidence": "high"}
+{"number": 11612, "title": "feat security Facelock face", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 11615, "title": "Rank apps above same-labeled", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 11616, "title": "Fix weak WiFi signal", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11620, "title": "Fix audio on MacBook", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11621, "title": "Add Antigravity agy agent", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 11622, "title": "Recover closed-lid dock disconnects", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 11623, "title": "Fix MacBook Pro 2015-2017", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 11624, "title": "Scope the MacBook NVMe", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}

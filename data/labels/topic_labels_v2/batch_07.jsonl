@@ -1,0 +1,244 @@
+{"number": 4330, "title": "Add kb_variant to input.conf", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4331, "title": "Open Nautilus in cwd of terminal", "topic": "terminal_dev_env", "kind": "feature", "confidence": "medium"}
+{"number": 4333, "title": "feat: add cliphist-based clipboard manager", "topic": "cli_repo_misc", "kind": "feature", "confidence": "medium"}
+{"number": 4334, "title": "feat: added omarchy-pkg-update to manage", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4337, "title": "Emacs support in omarchy-launch-editor", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4339, "title": "Add missing icons to Development remove", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4340, "title": "Allow overriding default browser via", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4344, "title": "Enable auto-pasting for the emoji picker", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4345, "title": "Add nautilus-python package for Open", "topic": "apps_packages", "kind": "packaging", "confidence": "high"}
+{"number": 4346, "title": "Remove proprietary garbage", "topic": "apps_packages", "kind": "packaging", "confidence": "high"}
+{"number": 4350, "title": "Replace alacritty with xdg-terminal-exec", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4353, "title": "Add stylix theme export", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4354, "title": "feat: add manual omarchy-cleanup utility", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 4361, "title": "This PR introduces a concept of Omarchy-lite", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4362, "title": "Add copy-filepath-to-clipboard mode to", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4366, "title": "Make open alias behave more like", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4374, "title": "Add Super + CTRL + M to", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4375, "title": "Automatically switch power profile when", "topic": "power_session", "kind": "feature", "confidence": "low"}
+{"number": 4378, "title": "add a macos installer", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4386, "title": "Update opacity rule for Steam window", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4388, "title": "Fix echo comment in powerprofile migration", "topic": "install_update", "kind": "bug_fix", "confidence": "low"}
+{"number": 4389, "title": "Add window rules for Bitwarden Chrome", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4391, "title": "Add screensaver launch binding", "topic": "power_session", "kind": "feature", "confidence": "low"}
+{"number": 4392, "title": "Add ability to install different shells", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4395, "title": "Add automatic background cycling", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4401, "title": "fix(waybar/config.jsonc): remove extra character", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4404, "title": "wiremix: less confusing audio default device", "topic": "audio_media", "kind": "bug_fix", "confidence": "high"}
+{"number": 4405, "title": "Update v3.3.3", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 4406, "title": "Fix silent suspend failures when sleep.target", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4414, "title": "Fix hypridle timout comment", "topic": "power_session", "kind": "docs", "confidence": "high"}
+{"number": 4467, "title": "Add dynamic theming for gum", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4468, "title": "feat: add NordVPN to installable services", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4469, "title": "Add minimal TUI timer", "topic": "cli_repo_misc", "kind": "feature", "confidence": "medium"}
+{"number": 4471, "title": "fix: theme template rendering with yq", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4480, "title": "Improve update check to verify latest", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 4482, "title": "feat: add quick install submenu for", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4485, "title": "Don't apply power profile source switching", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4488, "title": "Improve error detection in omarchy-update-analyze-logs", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 4489, "title": "Fix Windows VM timezone and add a", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4491, "title": "Expanded Legacy NVIDIA GPU support with", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 4493, "title": "Disable animations during screenshots", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4494, "title": "Fix/screenshot disable animations", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4495, "title": "Fix clipboard loop caused by wl-x11-sync", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 4497, "title": "Fix Realtek RTL8111/8168 ethernet adapter", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 4498, "title": "Gato", "topic": "terminal_dev_env", "kind": "other", "confidence": "low"}
+{"number": 4499, "title": "Enable Synaptics InterTouch for confirmed", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4502, "title": "Make style path absolute in swayosd", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4503, "title": "Prevent premature exit of omarchy-update-firmware", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 4506, "title": "Ghostty Starship Python virtual env", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4507, "title": "Add Kilo AI", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 4510, "title": "screensaver: fix hyprland crash on screensaver", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4512, "title": "Improve windows vm", "topic": "apps_packages", "kind": "feature", "confidence": "medium"}
+{"number": 4514, "title": "fix: simple typo in omarchy-launch-walker", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4519, "title": "Background selector", "topic": "theming_appearance", "kind": "feature", "confidence": "medium"}
+{"number": 4524, "title": "Add Framework 16 RGB keyboard theme syncing", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4530, "title": "Fix screensaver TTE import on Python", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4531, "title": "Delete snapshot if update fails", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4546, "title": "Add keyboard backlight color for", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4547, "title": "Allow user themes to override individual", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4550, "title": "Add LG TV OLED brightness control", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4556, "title": "Add keyboard RGB theme hook for", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4557, "title": "Add theme-based RGB support for Lenovo", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4559, "title": "Fix for issue #4558", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "low"}
+{"number": 4560, "title": "Steam: automatically install the correct", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4561, "title": "Enable bluetooth at login screen", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 4565, "title": "Handle network click on ethernet-only", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 4566, "title": "Avoid error in omarchy-restart-opencode", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 4569, "title": "Update omarchy-cmd-screenshot", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4571, "title": "Steam: install gpu deps + gamemode", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4572, "title": "Apply omarchy-launch-browser incognito function", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4573, "title": "Windows vm: automatically add kvm", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4574, "title": "Dropbox: dont install file explorer", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4575, "title": "Fix dictation push-to-talk dropping stop", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4578, "title": "Fix: Use unique identifier for installing", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4580, "title": "Added notification for showing headset", "topic": "audio_media", "kind": "feature", "confidence": "high"}
+{"number": 4581, "title": "fix(aur): add -a flag to yay command", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4582, "title": "disable opencode auto-update feature as", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4584, "title": "background selector v2", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4585, "title": "Unbind ctrl+shift+left/right in Ghostty", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4586, "title": "Clean up icon spacing in Update menu", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4588, "title": "Open current terminal on activity icon", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4593, "title": "Add Framework Desktop ARGB fan RGB", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4596, "title": "Add caligula tui as replacement for", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4603, "title": "Add full OSC 52 support to Alacritty", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4612, "title": "Add paste queue for sequential copy/paste", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4614, "title": "Add OCR text capture from screen region", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4615, "title": "Remove Wayland color manager disabling", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4620, "title": "Faster/Improved Shutdown Procedure", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4621, "title": "Add SUPER+M keybinding for maximize", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4623, "title": "Fix snapshot delete bug and improve", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 4626, "title": "Add omarchy drive select to iso2sd", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4630, "title": "Implement lid detection for fingerprint", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 4631, "title": "UPDATE: omarchy-aur-install add sudo", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4634, "title": "QOL: Adds bash tab completion cycling", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4637, "title": "Add cd command argument to zoxide", "topic": "terminal_dev_env", "kind": "feature", "confidence": "medium"}
+{"number": 4639, "title": "update: Update archlinux-keyring before", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4640, "title": "Fix try init in bash when launched", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4641, "title": "Fix firefox detection command in omarchy-launch-browser", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4642, "title": "Fix snapshot delete to clean up created", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 4643, "title": "Adopt Base16 theme schema with backward-compatible", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4644, "title": "Fix reinstall-configs to apply theme defaults", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4645, "title": "Unbind ctrl+shift+page_up/down in Ghostty", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4646, "title": "Fix upload-log usage and support system-info", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4650, "title": "Use web app favicon if none given in", "topic": "apps_packages", "kind": "feature", "confidence": "medium"}
+{"number": 4654, "title": "Correct omarchy-debug journalctl section label", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4656, "title": "Fix OpenCode control sequence leaking in", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4657, "title": "Fix install-dev-env usage text", "topic": "terminal_dev_env", "kind": "docs", "confidence": "high"}
+{"number": 4658, "title": "fix typo", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4659, "title": "Create chromium-flags.conf when enabling Google", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4662, "title": "Fail with usage on unknown install-dev-env", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4663, "title": "Fail early when mise is missing in", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4664, "title": "Fix typo", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4665, "title": "Fix Hyprland Chromium flags migration newline", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4668, "title": "Support single-key keyboard backlight cycling", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4669, "title": "feat: add SUPER A shortcut for near", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4671, "title": "Add Tmux to the config refresh menu", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4672, "title": "Support single-key keyboard backlight cycling", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4673, "title": "Fix low contrast for muted/faint text in", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4674, "title": "Add keyboard layout selection to installer", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4675, "title": "Add remove `scala` and `scala-cli` option", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4676, "title": "Comment out mouse acceleration setting", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4677, "title": "Check hardware state and blacklist drivers", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4705, "title": "Keep the mouse cursor in sync with", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4708, "title": "Remove legacy GPU terminal script and its", "topic": "terminal_dev_env", "kind": "refactor", "confidence": "high"}
+{"number": 4710, "title": "Adds Omarchy Skill to OpenAI Codex CLI", "topic": "cli_repo_misc", "kind": "feature", "confidence": "high"}
+{"number": 4712, "title": "Add keybinds to move current workspace", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4715, "title": "UPDATE: add delete .git confirmation", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4717, "title": "Self-heal missing Elephant menu providers", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4718, "title": "fix: update voxtype dictation notification", "topic": "audio_media", "kind": "docs", "confidence": "high"}
+{"number": 4719, "title": "Fix mkinitcpio hook persistence and vfat", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 4720, "title": "Reveal screenrecording with super + alt", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4721, "title": "Improve battery notification logic and", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4723, "title": "Fix nightlight toggle off", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 4724, "title": "Fix custom theme overrides by centralizing", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4725, "title": "feat(touchscreen): add opt-in touchscreen", "topic": "hardware_drivers", "kind": "feature", "confidence": "medium"}
+{"number": 4730, "title": "add: tmux \"subfolder\" for keybindings", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4732, "title": "eDP Auto Refresh Rate Switching", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4736, "title": "Fix(Hibernate): Make resume config precedence-safe", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4742, "title": "Hide fcitx5 icon from waybar", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4743, "title": "Fail on unknown provider in omarchy-setup-dns", "topic": "networking", "kind": "bug_fix", "confidence": "high"}
+{"number": 4744, "title": "Move active audio streams when switching", "topic": "audio_media", "kind": "bug_fix", "confidence": "high"}
+{"number": 4749, "title": "Add --isolate option for webapps to run", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4750, "title": "Add media controls for the ASUS ROG key", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4751, "title": "Remove example alias for claude command", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4752, "title": "Remove Fcitx5 autostart desktop entry", "topic": "audio_media", "kind": "bug_fix", "confidence": "high"}
+{"number": 4753, "title": "Theme limine bootloader colors on theme", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4756, "title": "Fix bash error when fns directory is empty", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4759, "title": "Add script to unlock screen after lockscreen", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4760, "title": "Add delta theme template for automatic diff", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4762, "title": "Theme boot screens (Limine + Plymouth) on", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4766, "title": "Fix recently broken jq reference to "$p"", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 4767, "title": "Master", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 4771, "title": "Unmute ALSA capture switch in ASUS ROG", "topic": "audio_media", "kind": "bug_fix", "confidence": "high"}
+{"number": 4775, "title": "tmux: bindings for moving to left or", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4778, "title": "Fix monitor scaling toggle for multi-monitor", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 4782, "title": "Update bash rc source order", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4786, "title": "tmux: attach to session on tmux terminal", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4789, "title": "Update outdated keybind description for", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4793, "title": "Fix dedicated GPU from enabling after sleep", "topic": "hardware_drivers", "kind": "bug_fix", "confidence": "high"}
+{"number": 4794, "title": "ADD: Toggle Layout", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4798, "title": "feat: add tmux-powerkit framework for", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4800, "title": "Forward WAYLAND_DISPLAY environment variable", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4807, "title": "Add Emacs integration with theme, font", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4808, "title": "migration(1772211023): fix overflow typo", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4810, "title": "Esp idf", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4813, "title": "Add zsh with shell switching and enhanced", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4814, "title": "Update comment in hypridle.conf", "topic": "power_session", "kind": "docs", "confidence": "high"}
+{"number": 4815, "title": "Screensaver slide animation instead of", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4816, "title": "Adds theme colors in the Hyprland context", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4820, "title": "specify icon for omarchy_themes", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4825, "title": "Apply already configured resolution and", "topic": "display_capture", "kind": "bug_fix", "confidence": "high"}
+{"number": 4826, "title": "Fix changegroupactive offset for Hyprland", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4829, "title": "Add Calibre theme integration", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4835, "title": "Add monitor auto-configuration", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4836, "title": "Add native WezTerm support", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4837, "title": "feat: Timeout for encryption password input", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 4839, "title": "update fork", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 4840, "title": "Enable SSD TRIM on LUKS-encrypted drives", "topic": "security_auth", "kind": "feature", "confidence": "high"}
+{"number": 4841, "title": "Fall back to DDC/CI for brightness on", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4844, "title": "Fix nvim transparency to preserve foreground", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4848, "title": "Automatically adjust the display brightness", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4849, "title": "Fix typo: screenrecording to screen recording", "topic": "cli_repo_misc", "kind": "docs", "confidence": "high"}
+{"number": 4857, "title": "Fix White theme VS Code name mismatch", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4858, "title": "Fix White theme VS Code name mismatch", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4861, "title": "feat: natural zoom bindings and improved", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4862, "title": "fix snapshot delete on failed update", "topic": "install_update", "kind": "bug_fix", "confidence": "high"}
+{"number": 4867, "title": "feat: add 1.25x monitor scaling toggle", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4868, "title": "feature/add 1.25 scaling toggle", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4870, "title": "Layout aware bindings", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4871, "title": "New Binding for Scrolling Layout, Enable", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4872, "title": "Update icons.theme to use Yaru-dark", "topic": "theming_appearance", "kind": "bug_fix", "confidence": "high"}
+{"number": 4873, "title": "Bundle Zed editor with omazed for themes", "topic": "theming_appearance", "kind": "feature", "confidence": "high"}
+{"number": 4874, "title": "feature/add 1.25 scaling toggle", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4877, "title": "Fix try interactive selector appearing on", "topic": "terminal_dev_env", "kind": "bug_fix", "confidence": "high"}
+{"number": 4879, "title": "Add window picker and bind it to", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4880, "title": "fix: Adding layout toggle to special", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4882, "title": "Fix omarchy-windows-vm username/password handling", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4887, "title": "Automatically switch to power-saver profile", "topic": "power_session", "kind": "feature", "confidence": "low"}
+{"number": 4888, "title": "add aur notice for nordvpn", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4890, "title": "Fix copy-url extension clipboard on recent", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4900, "title": "feat: add animation to the scratchpad", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4902, "title": "First version of the background service", "topic": "theming_appearance", "kind": "feature", "confidence": "medium"}
+{"number": 4904, "title": "Add release notes tooltip to waybar update", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4905, "title": "Add omarchy-toggle-ip-mode (DHCP/static IPv4)", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 4907, "title": "Feature/wallpaper backend switch", "topic": "theming_appearance", "kind": "feature", "confidence": "medium"}
+{"number": 4909, "title": "Update jetbrains.conf to capture find windows", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4910, "title": "Use tmux native method of renaming windows", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4911, "title": "Add Alt+-/= pane resize bindings to tmux", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4915, "title": "Prevent LM Studio install from downgrading", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4918, "title": "Add battery identifier to Waybar config", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4919, "title": "fix(hypr): move aspect ratio to layout", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4922, "title": "Install intel-media-driver for Arc 130T/140T", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4923, "title": "fix: small localsend window", "topic": "apps_packages", "kind": "bug_fix", "confidence": "high"}
+{"number": 4925, "title": "sync", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 4926, "title": "feat: add ctrl n and ctrl p for walker", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4928, "title": "Only match window class in omarchy-launch-or-focus", "topic": "hyprland_windowing", "kind": "bug_fix", "confidence": "high"}
+{"number": 4929, "title": "Add Copy Path context menu action to Nautilus", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4930, "title": "Add desktop app install and remove scripts", "topic": "apps_packages", "kind": "feature", "confidence": "high"}
+{"number": 4935, "title": "Add Copilot key remap support for ASUS ROG", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4936, "title": "rename tmux pane to running command where", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4937, "title": "Use OMARCHY_PATH in omarchy-migrate", "topic": "cli_repo_misc", "kind": "bug_fix", "confidence": "high"}
+{"number": 4938, "title": "Add ThinkPad mic mute LED sync following", "topic": "hardware_drivers", "kind": "feature", "confidence": "high"}
+{"number": 4939, "title": "Restore custom ratio when toggling using", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4940, "title": "Unmount FUSE filesystems before suspend/hibernate", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4941, "title": "Fix hyprlock PAM config to prevent freeze", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4942, "title": "Automatically switch to power-saver profile on", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4943, "title": "Add keybind to move window out of", "topic": "hyprland_windowing", "kind": "feature", "confidence": "high"}
+{"number": 4945, "title": "Add opt-in low battery sound hook", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4946, "title": "Add LocalSend send action in Nautilus", "topic": "shell_ui", "kind": "feature", "confidence": "high"}
+{"number": 4952, "title": "add more alias", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4953, "title": "Elephant menu fix when using customized", "topic": "shell_ui", "kind": "bug_fix", "confidence": "high"}
+{"number": 4954, "title": "feat: show message when config is sourced", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4955, "title": "Calamares testing", "topic": "cli_repo_misc", "kind": "other", "confidence": "low"}
+{"number": 4956, "title": "feat: add better display configuration tool", "topic": "display_capture", "kind": "feature", "confidence": "high"}
+{"number": 4960, "title": "Add netbird-tui TUI application", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 4961, "title": "Fix battery remaining time displaying minutes", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}
+{"number": 4962, "title": "Replace slashes in worktree path with", "topic": "terminal_dev_env", "kind": "feature", "confidence": "medium"}
+{"number": 4963, "title": "Exit screensaver on mouse movement", "topic": "power_session", "kind": "feature", "confidence": "high"}
+{"number": 4966, "title": "Move update log to persistent path so", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4967, "title": "Add changelog viewer to update prompt and", "topic": "install_update", "kind": "feature", "confidence": "high"}
+{"number": 4968, "title": "Add speed test to Setup menu", "topic": "networking", "kind": "feature", "confidence": "high"}
+{"number": 4969, "title": "add t3code", "topic": "agents_ai", "kind": "feature", "confidence": "high"}
+{"number": 4971, "title": "Add Tmux section to learn menu", "topic": "terminal_dev_env", "kind": "feature", "confidence": "high"}
+{"number": 4975, "title": "Fix missing sudo for btrfs map-swapfile", "topic": "power_session", "kind": "bug_fix", "confidence": "high"}

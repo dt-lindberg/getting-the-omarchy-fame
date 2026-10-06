@@ -1,0 +1,13 @@
+[project]
+name = "omarchy-triage"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "lifelines>=0.30.3",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pandas>=2.3.3",
+    "pyarrow>=25.0.1",
+    "scikit-learn>=1.9.1",
+    "statsmodels>=0.15.0",
+]

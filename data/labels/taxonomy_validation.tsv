@@ -1,0 +1,61 @@
+number	topic	kind	topic_conf	kind_conf	first_pass_topic	alt_topic	note
+85	shell_ui	feature	medium	high		power_session	power menu UI mechanics (R1)
+838	hyprland_windowing	feature	high	high			
+966	terminal_dev_env	feature	high	medium			neovim plugin; feature vs packaging
+1374	install_update	feature	medium	high	shell_ui	shell_ui	update icon action; R1 domain logic
+1554	networking	bug_fix	medium	medium		install_update	DNS stub symlink; fix vs feature
+2446	display_capture	feature	high	high			
+2780	apps_packages	bug_fix	medium	high		networking	Windows VM RDP check
+2899	hyprland_windowing	bug_fix	high	high	apps_packages	apps_packages	window rule for an app; R2
+3444	theming_appearance	feature	medium	high		shell_ui	theme preview in menu
+3776	hyprland_windowing	feature	high	high			
+4101	cli_repo_misc	other	low	low			empty body, uninformative title
+4231	theming_appearance	feature	high	high			
+4547	theming_appearance	feature	high	high			
+4874	display_capture	feature	high	high			
+4904	install_update	feature	high	high	shell_ui	shell_ui	update indicator; R1
+5023	hyprland_windowing	bug_fix	high	high			
+5109	hyprland_windowing	feature	medium	high		terminal_dev_env	project scratchpad: windows+tmux+cwd
+5121	power_session	refactor	high	high			
+5247	terminal_dev_env	bug_fix	high	high			
+5635	apps_packages	feature	medium	high		audio_media	Nautilus context menu for transcode
+5662	power_session	bug_fix	high	high			
+5711	theming_appearance	feature	high	high	agents_ai	agents_ai	per-app theme sync; R3
+5750	power_session	feature	high	medium			tweak vs bug_fix
+5902	cli_repo_misc	refactor	high	high			
+6019	apps_packages	feature	medium	high		hyprland_windowing	file picker portal
+6021	apps_packages	packaging	high	high			
+6335	shell_ui	feature	low	medium		terminal_dev_env	mixed Waybar+Ghostty tweak
+6954	shell_ui	bug_fix	high	high			
+7241	shell_ui	bug_fix	high	high			
+7445	shell_ui	bug_fix	high	high			
+7450	hyprland_windowing	bug_fix	high	medium	apps_packages	apps_packages	desktop entry for window-rule matching; R2
+7581	display_capture	bug_fix	high	high		power_session	clamshell + scale
+7710	shell_ui	feature	high	high	shell_ui	hyprland_windowing	menu mechanics (R1)
+7792	cli_repo_misc	docs	high	high	shell_ui	shell_ui	agent-facing docs; R5
+7982	hardware_drivers	bug_fix	high	high	hardware_drivers		drives; R7
+9245	shell_ui	bug_fix	high	high			
+9285	install_update	bug_fix	high	high			
+9286	terminal_dev_env	bug_fix	high	high	install_update	install_update	migration for tmux; R4
+9363	theming_appearance	feature	high	high			
+9460	security_auth	security	high	high		install_update	package signature checks
+10043	cli_repo_misc	feature	high	high			hooks
+10240	agents_ai	feature	high	high			
+10408	power_session	bug_fix	high	high			
+10847	cli_repo_misc	bug_fix	high	high			
+10873	power_session	bug_fix	high	high			
+10918	cli_repo_misc	docs	medium	medium			packaging-strategy plan; docs vs other
+10949	install_update	feature	high	high			
+11461	terminal_dev_env	bug_fix	medium	high		security_auth	sudo + editor env
+11501	install_update	other	low	low			salvage of three PRs
+11840	hardware_drivers	packaging	medium	medium		security_auth	fingerprint client stack
+12137	shell_ui	feature	high	medium	shell_ui	apps_packages	glyph presentation; R1
+12669	cli_repo_misc	bug_fix	medium	high		shell_ui	menu-file find
+13347	shell_ui	bug_fix	medium	high		power_session	bar clock after suspend
+13575	security_auth	security	high	high		install_update	sudo keepalive
+13735	cli_repo_misc	docs	high	high	cli_repo_misc	agents_ai	agent skill docs; R5
+13806	networking	bug_fix	high	high			
+14082	audio_media	feature	high	high			
+14199	theming_appearance	bug_fix	high	high			
+14213	shell_ui	bug_fix	high	high			
+12804	install_update	bug_fix	high	high			Limine default entry
