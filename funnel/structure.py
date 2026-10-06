@@ -9,7 +9,17 @@ DOC_DIRS = ("manual/", "docs/")
 
 
 def is_doc_path(path: str) -> bool:
-    """True for files under manual/ or docs/ and any markdown file."""
+    """Check whether a path is documentation.
+
+    Args:
+        path: File path relative to the repository root.
+
+    How:
+        Matches the DOC_DIRS prefixes and DOC_SUFFIXES endings.
+
+    Returns:
+        True for files under manual/ or docs/ and any markdown file.
+    """
     return path.startswith(DOC_DIRS) or path.endswith(DOC_SUFFIXES)
 
 
@@ -20,7 +30,7 @@ def size_and_files(base_row: pd.Series) -> dict:
         base_row: Base PR row (additions, deletions, changed_files, paths, files_total).
 
     How:
-        Paths cover the first 100 files only; files_truncated marks incomplete lists.
+        Paths cover only the first funnel.constants.FILE_LIST_CAP files; files_truncated marks incomplete lists.
 
     Returns:
         Column dictionary.
@@ -30,9 +40,9 @@ def size_and_files(base_row: pd.Series) -> dict:
         "additions": base_row["additions"], "deletions": base_row["deletions"],
         "lines_changed": base_row["additions"] + base_row["deletions"],
         "changed_files": base_row["changed_files"], "files_truncated": base_row["files_total"] > len(paths),
-        "touches_tests": any(p.startswith("test/") for p in paths),
-        "touches_docs": any(is_doc_path(p) for p in paths),
-        "docs_only": bool(paths) and all(is_doc_path(p) for p in paths),
+        "touches_tests": any(path.startswith("test/") for path in paths),
+        "touches_docs": any(is_doc_path(path) for path in paths),
+        "docs_only": bool(paths) and all(is_doc_path(path) for path in paths),
         "areas": pr_areas_from_files(paths), "top_areas": pr_areas_from_files(paths, level="top"),
         "labels_now": list(base_row["labels"]),
     }

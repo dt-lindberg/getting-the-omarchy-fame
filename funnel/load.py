@@ -38,7 +38,15 @@ def load_timeline_nodes(limit: int | None = None) -> list[dict]:
 
 
 def iter_base_prs() -> Iterator[dict]:
-    """Yield flat base records (current title/body, size, labels, first 100 files)."""
+    """Yield flat base records (current title/body, size, labels, first 100 files).
+
+    How:
+        Reads each raw JSONL file in PR_RAW_FILES order and keeps the first
+        record per PR number, so earlier files win.
+
+    Returns:
+        An iterator of one flat dict per PR.
+    """
     seen = set()
     for name in PR_RAW_FILES:
         with open(PR_STATS / name) as handle:
@@ -69,7 +77,14 @@ def iter_base_prs() -> Iterator[dict]:
 
 
 def load_base_prs() -> pd.DataFrame:
-    """Base PR table indexed by number."""
+    """Load the base PR table.
+
+    How:
+        Collects iter_base_prs into a DataFrame.
+
+    Returns:
+        DataFrame indexed by number.
+    """
     return pd.DataFrame(iter_base_prs()).set_index("number")
 
 

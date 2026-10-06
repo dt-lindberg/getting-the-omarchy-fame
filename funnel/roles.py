@@ -22,13 +22,33 @@ def normalise_login(login: str | None) -> str:
 
 
 def is_bot(login: str) -> bool:
-    """True for known automation accounts and any `copilot*` account."""
+    """Check whether a login is an automation account.
+
+    Args:
+        login: Normalised login.
+
+    How:
+        Case-insensitive match against BOT_LOGINS, or a `copilot` prefix.
+
+    Returns:
+        True for known automation accounts and any `copilot*` account.
+    """
     lowered = login.lower()
     return lowered in BOT_LOGINS or lowered.startswith("copilot")
 
 
 def author_group(login: str) -> str:
-    """Classify a PR author as dhh, bot, core or community."""
+    """Classify a PR author as dhh, bot, core or community.
+
+    Args:
+        login: Normalised login of the PR author.
+
+    How:
+        Checks dhh first, then bots, then the maintainer list.
+
+    Returns:
+        One of "dhh", "bot", "core" or "community".
+    """
     if login == DHH:
         return "dhh"
     if is_bot(login):

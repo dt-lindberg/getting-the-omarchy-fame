@@ -13,6 +13,7 @@ Definitions
 import numpy as np
 import pandas as pd
 
+from funnel.constants import ONE_HOUR
 from funnel.terminal import terminal_comment_rows
 
 INTERACTION_TYPES = {"comment", "review", "review_requested", "labeled", "unlabeled", "renamed_title",
@@ -22,12 +23,22 @@ TOUCH_TYPES = INTERACTION_TYPES | {"referenced", "connected"}
 ENGAGEMENT_TYPES = {"comment", "review", "review_requested", "labeled", "unlabeled", "renamed_title",
                     "reaction", "assigned"}
 TERMINAL_TYPES = {"closed", "merged"}
-HOURS = pd.Timedelta(hours=1)
 FAR_FUTURE = pd.Timestamp.max.tz_localize("UTC")
 
 
 def _first(events: pd.DataFrame, mask: pd.Series) -> pd.Timestamp:
-    """Earliest timestamp among masked events, or NaT."""
+    """Find the earliest event time under a mask.
+
+    Args:
+        events: One PR's events.
+        mask: Boolean selector aligned with events.
+
+    How:
+        Takes the minimum `ts` of the selected rows.
+
+    Returns:
+        The earliest timestamp, or NaT when no event is selected.
+    """
     subset = events.loc[mask, "ts"]
     return subset.min() if len(subset) else pd.NaT
 
@@ -80,28 +91,29 @@ def interaction_counts(events: pd.DataFrame, created_at: pd.Timestamp, cutoff: p
     Returns:
         Column dictionary.
     """
-    ev = events[events["ts"] < cutoff]
-    role, kind = ev["actor_role"], ev["type"]
-    inter = ev[(role != "author") & kind.isin(INTERACTION_TYPES - TERMINAL_TYPES)]
-    maint = inter[inter["actor_role"] == "maintainer"]
-    author_edits = ev[role == "author"]
-    unknown_author_commit = (role != "author") & (ev["actor"] == "ghost") & (kind == "commit")
-    commits = ev[(kind == "commit") & (ev["ts"] > created_at) & ((role == "author") | unknown_author_commit)]
+    earlier = events[events["ts"] < cutoff]
+    role, kind = earlier["actor_role"], earlier["type"]
+    interactions = earlier[(role != "author") & kind.isin(INTERACTION_TYPES - TERMINAL_TYPES)]
+    maintainer_interactions = interactions[interactions["actor_role"] == "maintainer"]
+    author_edits = earlier[role == "author"]
+    unknown_author_commit = (role != "author") & (earlier["actor"] == "ghost") & (kind == "commit")
+    commits = earlier[(kind == "commit") & (earlier["ts"] > created_at) & ((role == "author") | unknown_author_commit)]
     values = {
-        "n_interactions": len(inter),
-        "n_community_participants": inter.loc[inter["actor_role"] == "community", "actor"].nunique(),
-        "n_maintainers": maint["actor"].nunique(),
-        "n_bot_events": int((inter["actor_role"] == "bot").sum()),
-        "n_reactions": int((inter["type"] == "reaction").sum()),
-        "n_comment_reactions": int(ev.loc[kind == "comment", "reaction_count"].sum()),
-        "n_substantive_maintainer": int((maint["type"].isin(["comment", "review"]) & maint["substantive"]).sum()),
-        "n_changes_requested": int(((inter["type"] == "review") & (inter["details"] == "CHANGES_REQUESTED")).sum()),
+        "n_interactions": len(interactions),
+        "n_community_participants": interactions.loc[interactions["actor_role"] == "community", "actor"].nunique(),
+        "n_maintainers": maintainer_interactions["actor"].nunique(),
+        "n_bot_events": int((interactions["actor_role"] == "bot").sum()),
+        "n_reactions": int((interactions["type"] == "reaction").sum()),
+        "n_comment_reactions": int(earlier.loc[kind == "comment", "reaction_count"].sum()),
+        "n_substantive_maintainer": int((maintainer_interactions["type"].isin(["comment", "review"])
+                                         & maintainer_interactions["substantive"]).sum()),
+        "n_changes_requested": int(((interactions["type"] == "review") & (interactions["details"] == "CHANGES_REQUESTED")).sum()),
         "n_author_commits": len(commits),
         "n_author_comments": int(author_edits["type"].isin(["comment", "review"]).sum()),
         "title_edits_author": int((author_edits["type"] == "renamed_title").sum()),
         "body_edits_author": int((author_edits["type"] == "body_edit").sum()),
-        "title_edits_maintainer": int((ev["type"].eq("renamed_title") & (role == "maintainer")).sum()),
-        "body_edits_maintainer": int((ev["type"].eq("body_edit") & (role == "maintainer")).sum()),
+        "title_edits_maintainer": int((earlier["type"].eq("renamed_title") & (role == "maintainer")).sum()),
+        "body_edits_maintainer": int((earlier["type"].eq("body_edit") & (role == "maintainer")).sum()),
     }
     return {f"{name}{suffix}": value for name, value in values.items()}
 
@@ -128,11 +140,11 @@ def attention_row(events: pd.DataFrame, created_at: pd.Timestamp, resolved_at: p
     times = attention_times(events, resolved_at, terminal)
     row = dict(times)
     for name, stamp in times.items():
-        row["h_" + name.removeprefix("first_")] = (stamp - created_at) / HOURS if pd.notna(stamp) else np.nan
+        row["h_" + name.removeprefix("first_")] = (stamp - created_at) / ONE_HOUR if pd.notna(stamp) else np.nan
     row["silent_decision"] = bool(pd.notna(resolved_at) and closed_by_role == "maintainer"
                                   and pd.isna(times["first_maintainer_engagement"]))
     end = FAR_FUTURE if pd.isna(resolved_at) else resolved_at
-    pre_cut = times["first_maintainer_engagement"] if pd.notna(times["first_maintainer_engagement"]) else end
+    pre_engagement_cutoff = times["first_maintainer_engagement"] if pd.notna(times["first_maintainer_engagement"]) else end
     row.update(interaction_counts(events, created_at, end, ""))
-    row.update(interaction_counts(events, created_at, pre_cut, "_pre_eng"))
+    row.update(interaction_counts(events, created_at, pre_engagement_cutoff, "_pre_eng"))
     return row

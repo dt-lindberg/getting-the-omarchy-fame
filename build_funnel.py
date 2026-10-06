@@ -20,13 +20,29 @@ LOG = logging.getLogger("funnel")
 
 
 def fetch_is_done() -> bool:
-    """True when the timelines file has all PRs (the README is optional)."""
+    """Check whether the timeline fetch has finished.
+
+    How:
+        Counts lines in the raw timelines file against EXPECTED_PRS (the README
+        is optional).
+
+    Returns:
+        True when the file has at least EXPECTED_PRS lines.
+    """
     with open(RAW_TIMELINES, "rb") as handle:
         return sum(1 for _ in handle) >= EXPECTED_PRS
 
 
 def run_tables(out_dir: Path, limit: int | None) -> None:
-    """Build and write events, prs and snapshots parquet files."""
+    """Build and write events, prs and snapshots parquet files.
+
+    Args:
+        out_dir: Directory the parquet files are written to.
+        limit: Read only this many timeline records, or None for all.
+
+    How:
+        Loads timeline nodes, builds events, then assembles prs and snapshots.
+    """
     nodes = load_timeline_nodes(limit)
     LOG.info("loaded %d timeline nodes", len(nodes))
     events = build_events(nodes)
@@ -38,14 +54,26 @@ def run_tables(out_dir: Path, limit: int | None) -> None:
 
 
 def run_reports(out_dir: Path) -> None:
-    """Write close_samples.md and funnel_summary.md from the written tables."""
+    """Write close_samples.md and funnel_summary.md from the written tables.
+
+    Args:
+        out_dir: Directory holding the parquet tables; reports are written there too.
+
+    How:
+        Reads the three parquet tables and hands them to write_reports.
+    """
     from funnel.reports import write_reports
     write_reports(out_dir, pd.read_parquet(out_dir / "prs.parquet"), pd.read_parquet(out_dir / "events.parquet"),
                   pd.read_parquet(out_dir / "snapshots.parquet"))
 
 
 def main() -> None:
-    """Parse options and run the requested stages."""
+    """Parse options and run the requested stages.
+
+    How:
+        Refuses a full build while the fetch is unfinished, then runs tables,
+        topic join and reports as selected by --stage.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--stage", choices=["all", "tables", "topics", "reports"], default="all")
     parser.add_argument("--partial", action="store_true", help="allow an unfinished fetch; writes to data/derived/partial")

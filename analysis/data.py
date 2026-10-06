@@ -7,12 +7,10 @@ definitions, so the other modules cannot drift apart.
 import numpy as np
 import pandas as pd
 
-from funnel.constants import DERIVED, EPOCH_STARTS, MASS_CLOSE_EVENT_DAY
+from funnel.constants import DERIVED, EPOCH_STARTS, HOURS_PER_DAY, MASS_CLOSE_EVENT_DAY, SECONDS_PER_DAY
 
-HOURS_PER_DAY = 24
 ATTENTION_WINDOW_DAYS = 14
 LAUNCH = EPOCH_STARTS[0][1]
-QUATTRO_START = pd.Timestamp("2026-08-14", tz="UTC")
 EPOCH_ORDER = ["E1", "E2", "E3", "E4"]
 # Pooled group used wherever E3 alone (five days) is too small.
 GROUPS = {"E1": ["E1"], "E2": ["E2"], "Quattro": ["E3", "E4"], "all": EPOCH_ORDER}
@@ -23,29 +21,55 @@ CONTROL_LOGGED = ["lines_changed", "direct_competitors_open_at_creation"]
 CONTROL_BINARY = ["first_pr", "ep_E2", "ep_E3", "ep_E4"]
 CONTROL_CONTINUOUS = ["author_shrunk_rate"]
 HOUR_BANDS = [(0, "h00_06"), (6, "h06_12"), (12, "h12_18"), (18, "h18_24")]
+HOUR_BAND_LENGTH = 6
+# dayofweek counts Monday as 0, so Saturday is 5.
+FIRST_WEEKEND_DAY = 5
 
 
 def load_prs() -> pd.DataFrame:
-    """Read the full PR table (all authors) from data/derived."""
+    """Read the full PR table (all authors) from data/derived.
+
+    How:
+        Reads prs.parquet unchanged.
+
+    Returns:
+        One row per PR.
+    """
     return pd.read_parquet(DERIVED / "prs.parquet")
 
 
 def fetch_time(prs: pd.DataFrame) -> pd.Timestamp:
-    """Latest timestamp seen in the table, used as the follow-up cut-off."""
+    """Find the latest timestamp seen in the table, used as the follow-up cut-off.
+
+    Args:
+        prs: PR table with created_at and resolved_at.
+
+    How:
+        Takes the larger of the latest creation and latest resolution time.
+
+    Returns:
+        The latest timestamp.
+    """
     return max(prs["created_at"].max(), prs["resolved_at"].max())
 
 
 def final_disposition(prs: pd.DataFrame) -> pd.Series:
-    """Disposition with the 2026-09-21 event and other mass-close days folded into mass_closed.
+    """Fold the 2026-09-21 event and other mass-close days into mass_closed.
+
+    Args:
+        prs: PR table with disposition and mass_close_event.
 
     How:
         The funnel table gives duplicate comments precedence over mass_closed, so
         the event PRs are mostly labelled superseded_duplicate. Filtering on the
-        event flag restores the event as one cause.
+        event flag restores the event as one cause. other_closed merges into bot_admin_closed.
+
+    Returns:
+        Disposition per PR.
     """
     mass = (prs["mass_close_event"] != "") | (prs["disposition"] == "mass_closed")
-    out = prs["disposition"].where(~mass, "mass_closed")
-    return out.replace({"other_closed": "bot_admin_closed"})
+    final = prs["disposition"].where(~mass, "mass_closed")
+    return final.replace({"other_closed": "bot_admin_closed"})
 
 
 def load_community() -> pd.DataFrame:
@@ -69,12 +93,12 @@ def load_community() -> pd.DataFrame:
     df["eng"] = df["first_maintainer_engagement_nobulk"].notna()
     df["eng_bulk"] = df["first_maintainer_engagement"].notna()
     end = df["resolved_at"].fillna(now)
-    df["follow_days"] = (end - df["created_at"]).dt.total_seconds() / 86400
+    df["follow_days"] = (end - df["created_at"]).dt.total_seconds() / SECONDS_PER_DAY
     df["epoch"] = pd.Categorical(df["epoch"], EPOCH_ORDER)
     df["weekday"] = df["created_at"].dt.dayofweek
-    df["weekend"] = df["weekday"] >= 5
+    df["weekend"] = df["weekday"] >= FIRST_WEEKEND_DAY
     for start, name in HOUR_BANDS:
-        df[name] = (df["created_at"].dt.hour >= start) & (df["created_at"].dt.hour < start + 6)
+        df[name] = (df["created_at"].dt.hour >= start) & (df["created_at"].dt.hour < start + HOUR_BAND_LENGTH)
     df["first_pr"] = df["author_prior_prs"] == 0
     for name in EPOCH_ORDER[1:]:
         df[f"ep_{name}"] = df["epoch"] == name
@@ -104,5 +128,16 @@ def engaged_within(df: pd.DataFrame, days: float, bulk: bool = False) -> pd.Seri
 
 
 def in_group(df: pd.DataFrame, group: str) -> pd.DataFrame:
-    """Rows whose creation epoch belongs to the named epoch group."""
+    """Select the rows whose creation epoch belongs to a group.
+
+    Args:
+        df: Community PRs from load_community.
+        group: A key of GROUPS (E1, E2, Quattro, all).
+
+    How:
+        Filters on the epochs listed for the group.
+
+    Returns:
+        The matching rows.
+    """
     return df[df["epoch"].isin(GROUPS[group])]

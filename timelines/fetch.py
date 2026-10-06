@@ -15,6 +15,7 @@ LOG = logging.getLogger("timelines")
 SINGLE_RETRIES = 3
 FALLBACK_PAGE_SIZE = 20
 CLOSING_ISSUES_CAP = 10
+MAX_ERRORS_SHOWN = 3
 
 
 def fetch_records(client: GitHubClient, numbers: list[int]) -> list[dict]:
@@ -39,11 +40,11 @@ def fetch_records(client: GitHubClient, numbers: list[int]) -> list[dict]:
             middle = len(numbers) // 2
             return fetch_records(client, numbers[:middle]) + fetch_records(client, numbers[middle:])
         return [fetch_piecewise(client, numbers[0])]
-    unexpected = [e for e in errors if e.get("type") != "NOT_FOUND"]
+    unexpected = [error for error in errors if error.get("type") != "NOT_FOUND"]
     if unexpected:
-        raise RuntimeError(f"unexpected GraphQL errors: {unexpected[:3]}")
+        raise RuntimeError(f"unexpected GraphQL errors: {unexpected[:MAX_ERRORS_SHOWN]}")
     repo = data["repository"]
-    return [finish_record(client, n, repo.get(f"pr{n}")) for n in numbers]
+    return [finish_record(client, number, repo.get(f"pr{number}")) for number in numbers]
 
 
 def fetch_piecewise(client: GitHubClient, number: int) -> dict:
@@ -116,7 +117,7 @@ def finish_record(client: GitHubClient, number: int, node: dict | None,
         meta["null_nodes"][name] = sum(item is None for item in connection["nodes"])
         if name != "timelineItems" and len(connection["nodes"]) != connection["totalCount"]:
             meta["truncated"][name] = connection["totalCount"]
-    meta["null_nodes"] = {k: v for k, v in meta["null_nodes"].items() if v}
+    meta["null_nodes"] = {name: count for name, count in meta["null_nodes"].items() if count}
     closing = node["closingIssuesReferences"]
     if closing["totalCount"] > CLOSING_ISSUES_CAP:
         meta["truncated"]["closingIssuesReferences"] = closing["totalCount"]

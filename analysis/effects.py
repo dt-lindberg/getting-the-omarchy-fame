@@ -35,9 +35,9 @@ def adjusted_effects(df: pd.DataFrame, outcome: pd.Series, logged: list[str], bi
     skip = interest | set(drop)
     design, terms = standardise(
         data,
-        logged + [c for c in CONTROL_LOGGED if c not in skip],
-        binary + [c for c in CONTROL_BINARY if c not in skip],
-        list(linear) + [c for c in CONTROL_CONTINUOUS if c not in skip],
+        logged + [column for column in CONTROL_LOGGED if column not in skip],
+        binary + [column for column in CONTROL_BINARY if column not in skip],
+        list(linear) + [column for column in CONTROL_CONTINUOUS if column not in skip],
     )
     result = {"n": int(len(y)), "events": int(y.sum()), "effects": []}
     fit = fit_logit(design, y, data["author"])

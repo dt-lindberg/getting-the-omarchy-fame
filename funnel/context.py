@@ -13,18 +13,51 @@ WEEK = pd.Timedelta(days=CONTEXT_DAYS)
 
 
 def _count_before(sorted_times: np.ndarray, stamps: np.ndarray) -> np.ndarray:
-    """For each stamp, how many sorted_times are strictly earlier."""
+    """Count, for each stamp, how many sorted_times are strictly earlier.
+
+    Args:
+        sorted_times: Ascending datetime64 array.
+        stamps: Times to count before.
+
+    How:
+        Binary search with side="left".
+
+    Returns:
+        Integer array, one count per stamp.
+    """
     return np.searchsorted(sorted_times, stamps, side="left")
 
 
 def _window_count(sorted_times: np.ndarray, stamps: np.ndarray, window: pd.Timedelta) -> np.ndarray:
-    """For each stamp, how many sorted_times fall in [stamp - window, stamp)."""
+    """Count, for each stamp, how many sorted_times fall in [stamp - window, stamp).
+
+    Args:
+        sorted_times: Ascending datetime64 array.
+        stamps: Times to count before.
+        window: Length of the look-back window.
+
+    How:
+        Difference of two binary searches: events before the stamp minus events before the window start.
+
+    Returns:
+        Integer array, one count per stamp.
+    """
     low = stamps - np.timedelta64(window.value, "ns")
     return _count_before(sorted_times, stamps) - np.searchsorted(sorted_times, low, side="left")
 
 
 def _times(series: pd.Series) -> np.ndarray:
-    """Sorted datetime64 array of the non-null values of a UTC series."""
+    """Convert a UTC series to a sorted array of naive datetime64 values.
+
+    Args:
+        series: Timezone-aware UTC timestamps; nulls are dropped.
+
+    How:
+        Drops nulls, removes the timezone and sorts.
+
+    Returns:
+        Sorted datetime64[ns] array.
+    """
     return np.sort(series.dropna().dt.tz_convert("UTC").dt.tz_localize(None).values.astype("datetime64[ns]"))
 
 
@@ -47,21 +80,21 @@ def author_history(table: pd.DataFrame) -> pd.DataFrame:
     resolved_success = _times(community.loc[community["success"], "resolved_at"])
     p0_den = _count_before(resolved_all, created)
     p0 = np.divide(_count_before(resolved_success, created), p0_den, out=np.zeros(len(table)), where=p0_den > 0)
-    out = pd.DataFrame(0, index=table.index, dtype="int64",
+    history = pd.DataFrame(0, index=table.index, dtype="int64",
                        columns=["author_prior_prs", "author_prior_success", "author_prior_resolved"])
     for _, group in table.groupby("author"):
         stamps = group["created_at"].dt.tz_convert("UTC").dt.tz_localize(None).values.astype("datetime64[ns]")
         own_created = np.sort(stamps)
         own_success = _times(group.loc[group["success"], "resolved_at"])
         own_resolved = _times(group["resolved_at"])
-        out.loc[group.index, "author_prior_prs"] = _count_before(own_created, stamps)
-        out.loc[group.index, "author_prior_success"] = _count_before(own_success, stamps)
-        out.loc[group.index, "author_prior_resolved"] = _count_before(own_resolved, stamps)
-    out = out.astype("int64")
-    out["author_p0"] = p0
-    out["author_shrunk_rate"] = (out["author_prior_success"] + SHRINK_K * p0) / (out["author_prior_prs"] + SHRINK_K)
-    out["author_open_prs_at_creation"] = out["author_prior_prs"] - out["author_prior_resolved"]
-    return out
+        history.loc[group.index, "author_prior_prs"] = _count_before(own_created, stamps)
+        history.loc[group.index, "author_prior_success"] = _count_before(own_success, stamps)
+        history.loc[group.index, "author_prior_resolved"] = _count_before(own_resolved, stamps)
+    history = history.astype("int64")
+    history["author_p0"] = p0
+    history["author_shrunk_rate"] = (history["author_prior_success"] + SHRINK_K * p0) / (history["author_prior_prs"] + SHRINK_K)
+    history["author_open_prs_at_creation"] = history["author_prior_prs"] - history["author_prior_resolved"]
+    return history
 
 
 def repo_context(table: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:

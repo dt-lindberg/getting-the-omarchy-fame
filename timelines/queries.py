@@ -91,7 +91,6 @@ def after_arg(cursor: str | None) -> str:
 
     Args:
         cursor: End cursor of the previous page, or None for the first page.
-        first: Page size.
 
     How:
         Returns an empty string for the first page so the query text stays valid.
@@ -232,7 +231,7 @@ def batch_query(numbers: list[int], connections: bool = True, first: int = PAGE_
         Full GraphQL query text.
     """
     selection = pr_selection(connections, first)
-    aliases = " ".join(f"pr{n}: pullRequest(number: {n}) {{ {selection} }}" for n in numbers)
+    aliases = " ".join(f"pr{number}: pullRequest(number: {number}) {{ {selection} }}" for number in numbers)
     return (
         f"query {{ {RATE_LIMIT} "
         f'repository(owner: "{REPO_OWNER}", name: "{REPO_NAME}") {{ {aliases} }} }}'

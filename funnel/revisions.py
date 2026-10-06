@@ -35,11 +35,11 @@ def body_revisions(node: dict) -> list[BodyRevision]:
     Returns:
         Versions oldest first; empty when the description was never edited.
     """
-    edits = sorted((e for e in node["userContentEdits"]["nodes"] if e["diff"] is not None),
-                   key=lambda e: e["editedAt"])
-    return [BodyRevision(e["editedAt"], normalise_login((e["editor"] or {}).get("login")),
-                         e["diff"], is_creation=i == 0 and node["includesCreatedEdit"])
-            for i, e in enumerate(edits)]
+    edits = sorted((edit for edit in node["userContentEdits"]["nodes"] if edit["diff"] is not None),
+                   key=lambda edit: edit["editedAt"])
+    return [BodyRevision(edit["editedAt"], normalise_login((edit["editor"] or {}).get("login")),
+                         edit["diff"], is_creation=index == 0 and node["includesCreatedEdit"])
+            for index, edit in enumerate(edits)]
 
 
 def title_at(open_title: str, renames: pd.DataFrame, when: pd.Timestamp, inclusive: bool) -> str:
@@ -50,16 +50,35 @@ def title_at(open_title: str, renames: pd.DataFrame, when: pd.Timestamp, inclusi
         renames: This PR's renamed_title events (details2 = new title), time-sorted.
         when: Reference time.
         inclusive: Whether a rename exactly at `when` already applies.
+
+    How:
+        Takes the new title of the last rename up to `when`, else the opening title.
+
+    Returns:
+        The title at that time.
     """
     done = renames[renames["ts"] <= when] if inclusive else renames[renames["ts"] < when]
     return done["details2"].iloc[-1] if len(done) else open_title
 
 
 def body_at(open_body: str, revisions: list[BodyRevision], when: pd.Timestamp, inclusive: bool) -> str:
-    """Body as of a time: the latest revision at or before it, else the opening text."""
+    """Replay description revisions to get the body at a time.
+
+    Args:
+        open_body: Body at creation.
+        revisions: Description versions, oldest first.
+        when: Reference time.
+        inclusive: Whether a revision exactly at `when` already applies.
+
+    How:
+        Walks the revisions in order and keeps the text of the last one up to `when`.
+
+    Returns:
+        The latest revision's text at or before `when`, else the opening text.
+    """
     text = open_body
-    for rev in revisions:
-        stamp = pd.Timestamp(rev.edited_at)
+    for revision in revisions:
+        stamp = pd.Timestamp(revision.edited_at)
         if (stamp <= when) if inclusive else (stamp < when):
-            text = rev.text
+            text = revision.text
     return text

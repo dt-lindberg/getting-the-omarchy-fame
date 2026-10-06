@@ -8,6 +8,8 @@ from collections import Counter
 from datetime import datetime
 from pathlib import Path
 
+from funnel.constants import SECONDS_PER_HOUR
+
 FIELDS_TEXT = """\
 ## Files
 
@@ -131,35 +133,35 @@ def render_readme(result: dict, refs_total: int, span: tuple[str, str]) -> str:
     Returns:
         Markdown text.
     """
-    s = result["stats"]
+    stats = result["stats"]
     seconds = (datetime.fromisoformat(span[1]) - datetime.fromisoformat(span[0])).total_seconds()
     counts = (
-        f"# Timelines fetch\n\nRecords: {s['records']} PRs (not found / not a PR: {s['not_found']}). "
-        f"Fetched {span[0]} to {span[1]} local time, wall time {seconds / 3600:.2f} h "
+        f"# Timelines fetch\n\nRecords: {stats['records']} PRs (not found / not a PR: {stats['not_found']}). "
+        f"Fetched {span[0]} to {span[1]} local time, wall time {seconds / SECONDS_PER_HOUR:.2f} h "
         "including waiting for the rate-limit reset.\n\n"
     )
     pagination = (
         f"## Pagination and truncation\n\nPRs needing more than one page on any connection: "
-        f"{s['paginated']}. Per connection: {dict(s['paginated_by'])}. Max pages seen: "
-        f"{dict(s['max_pages'])}. Piecewise fallbacks: {s['piecewise']}. "
-        f"Truncated connections: {dict(s['truncated']) or 'none'}. "
-        f"Null nodes returned by the API: {dict(s['null_nodes']) or 'none'}.\n\n"
+        f"{stats['paginated']}. Per connection: {dict(stats['paginated_by'])}. Max pages seen: "
+        f"{dict(stats['max_pages'])}. Piecewise fallbacks: {stats['piecewise']}. "
+        f"Truncated connections: {dict(stats['truncated']) or 'none'}. "
+        f"Null nodes returned by the API: {dict(stats['null_nodes']) or 'none'}.\n\n"
         f"PullRequestCommit items vs the PR's commits.totalCount: equal for "
-        f"{s['commit_count_match']} PRs, different for {s['commit_count_differs']} "
-        f"(examples as (number, timeline, api): {s['commit_differences']}).\n\n"
+        f"{stats['commit_count_match']} PRs, different for {stats['commit_count_differs']} "
+        f"(examples as (number, timeline, api): {stats['commit_differences']}).\n\n"
     )
     events = (
         "## Timeline items by type\n\n| type | items | PRs containing |\n|---|---|---|\n"
-        + counter_lines(s["events"], s["pr_with_event"])
-        + f"\n\nReview threads (total over PRs): {s['reviewThreads']}. "
-        f"Body reactions by content: {dict(s['reactions'])}.\n\n"
+        + counter_lines(stats["events"], stats["pr_with_event"])
+        + f"\n\nReview threads (total over PRs): {stats['reviewThreads']}. "
+        f"Body reactions by content: {dict(stats['reactions'])}.\n\n"
     )
     edits = (
-        f"## Description edits\n\nPRs with any edit entry: {s['edit_prs']}; with 2 or more "
-        f"(a real edit beyond the original): {s['multi_edit_prs']}; entries in total: {s['edits']}; "
-        f"entries with deletedAt set: {s['deleted_edits']}.\n\n"
-        f"Newest entry's diff equals the body from the earlier pull: {s['newest_equals_body']} PRs; "
-        f"differs: {s['newest_differs']} (edited between the two pulls, or whitespace).\n\n"
+        f"## Description edits\n\nPRs with any edit entry: {stats['edit_prs']}; with 2 or more "
+        f"(a real edit beyond the original): {stats['multi_edit_prs']}; entries in total: {stats['edits']}; "
+        f"entries with deletedAt set: {stats['deleted_edits']}.\n\n"
+        f"Newest entry's diff equals the body from the earlier pull: {stats['newest_equals_body']} PRs; "
+        f"differs: {stats['newest_differs']} (edited between the two pulls, or whitespace).\n\n"
     )
     refs = f"Distinct referenced same-repo numbers: {refs_total}.\n\n"
     return counts + pagination + events + edits + refs + FIELDS_TEXT

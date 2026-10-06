@@ -6,8 +6,8 @@ Exists so the loop can skip finished PRs and survive a crash mid-write.
 import json
 from pathlib import Path
 
-PR_STATS_RAW = Path(__file__).resolve().parent.parent / "data" / "raw" / "base"
-PR_FILES = ["prs_open.jsonl", "prs_merged.jsonl", "prs_closed.jsonl", "prs_user.jsonl"]
+from funnel.constants import PR_RAW_FILES as PR_FILES
+from funnel.constants import PR_STATS as PR_STATS_RAW
 
 
 def load_pr_numbers() -> list[int]:
@@ -68,5 +68,5 @@ def append_records(path: Path, records: list[dict]) -> None:
         One write per batch; each line is complete JSON ending in a newline.
     """
     with open(path, "a") as handle:
-        handle.write("".join(json.dumps(r, separators=(",", ":")) + "\n" for r in records))
+        handle.write("".join(json.dumps(record, separators=(",", ":")) + "\n" for record in records))
         handle.flush()

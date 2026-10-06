@@ -14,6 +14,7 @@ from statsmodels.tools.sm_exceptions import PerfectSeparationError
 
 Z95 = 1.96
 MIN_EVENTS = 10
+LOGIT_MAX_ITER = 200
 
 
 @dataclass
@@ -43,46 +44,72 @@ def standardise(df: pd.DataFrame, logged: list[str], binary: list[str],
     Returns:
         (design frame with a constant, list of Terms).
     """
-    cols, terms = {}, []
+    columns, terms = {}, []
     for name in logged:
         x = np.log1p(df[name].astype(float))
         if x.std() > 0:
-            cols[name] = x
+            columns[name] = x
             terms.append(Term(name, float(x.mean() - x.std() / 2), float(x.mean() + x.std() / 2)))
     for name in linear:
         x = df[name].astype(float)
         if x.std() > 0:
-            cols[name] = x
+            columns[name] = x
             terms.append(Term(name, float(x.mean() - x.std() / 2), float(x.mean() + x.std() / 2)))
     for name in binary:
         x = df[name].astype(float)
         if 0 < x.mean() < 1:
-            cols[name] = x
+            columns[name] = x
             terms.append(Term(name, 0.0, 1.0))
-    return sm.add_constant(pd.DataFrame(cols, index=df.index), has_constant="add"), terms
+    return sm.add_constant(pd.DataFrame(columns, index=df.index), has_constant="add"), terms
 
 
 def fit_logit(design: pd.DataFrame, y: pd.Series, clusters: pd.Series):
-    """Logit with author-clustered covariance; None when the fit is impossible."""
+    """Fit a logit with author-clustered covariance.
+
+    Args:
+        design: Design matrix including the constant.
+        y: 0/1 outcome.
+        clusters: Author per row, defining the clusters.
+
+    How:
+        Returns None when either outcome class has fewer than MIN_EVENTS rows or
+        the fit fails through perfect separation or a singular matrix.
+
+    Returns:
+        The fitted result, or None when the fit is impossible.
+    """
     if y.sum() < MIN_EVENTS or (1 - y).sum() < MIN_EVENTS:
         return None
     try:
-        return sm.Logit(y, design).fit(disp=0, maxiter=200, cov_type="cluster",
+        return sm.Logit(y, design).fit(disp=0, maxiter=LOGIT_MAX_ITER, cov_type="cluster",
                                        cov_kwds={"groups": pd.factorize(clusters)[0]})
     except (PerfectSeparationError, LinAlgError, np.linalg.LinAlgError):
         return None
 
 
 def _shifted_means(res, design: pd.DataFrame, term: Term):
-    """Counterfactual mean probabilities and their gradients with the term at low and high."""
-    out = []
+    """Predict mean probabilities with one term set to its low and high value.
+
+    Args:
+        res: Fitted logit.
+        design: Design matrix used in the fit.
+        term: The term to shift.
+
+    How:
+        Sets the term's column to each value for every row, keeping the other
+        covariates as observed, and averages the logit gradient too.
+
+    Returns:
+        For low then high: (mean probability, mean gradient, probabilities per row).
+    """
+    shifted = []
     for value in (term.low, term.high):
-        x = design.copy()
-        x[term.name] = value
-        p = res.predict(x).to_numpy()
-        grad = (p * (1 - p))[:, None] * x.to_numpy()
-        out.append((p.mean(), grad.mean(axis=0), p))
-    return out
+        shifted_design = design.copy()
+        shifted_design[term.name] = value
+        probabilities = res.predict(shifted_design).to_numpy()
+        grad = (probabilities * (1 - probabilities))[:, None] * shifted_design.to_numpy()
+        shifted.append((probabilities.mean(), grad.mean(axis=0), probabilities))
+    return shifted
 
 
 def marginal_effects(res, design: pd.DataFrame, terms: list[Term], only: list[str] | None = None) -> list[dict]:
@@ -138,27 +165,39 @@ def aalen_johansen(durations: np.ndarray, causes: np.ndarray, cause_names: list[
         Mapping cause name to cumulative incidence at each grid day.
     """
     order = np.argsort(durations, kind="stable")
-    t, c = durations[order], causes[order]
-    times, first = np.unique(t, return_index=True)
-    at_risk = len(t) - first
-    counts = np.array([[np.sum(c[first[i]:(first[i + 1] if i + 1 < len(first) else len(c))] == k)
+    sorted_durations, sorted_causes = durations[order], causes[order]
+    times, first = np.unique(sorted_durations, return_index=True)
+    at_risk = len(sorted_durations) - first
+    counts = np.array([[np.sum(sorted_causes[first[i]:(first[i + 1] if i + 1 < len(first) else len(sorted_causes))] == k)
                         for k in range(len(cause_names) + 1)] for i in range(len(times))])
     events = counts[:, 1:].sum(axis=1)
     survival_before = np.concatenate([[1.0], np.cumprod(1 - events / at_risk)[:-1]])
-    idx = np.searchsorted(times, grid, side="right") - 1
-    out = {}
+    grid_index = np.searchsorted(times, grid, side="right") - 1
+    incidence = {}
     for k, name in enumerate(cause_names, start=1):
-        cum = np.cumsum(survival_before * counts[:, k] / at_risk)
-        out[name] = [float(cum[i]) if i >= 0 else 0.0 for i in idx]
-    return out
+        cumulative = np.cumsum(survival_before * counts[:, k] / at_risk)
+        incidence[name] = [float(cumulative[i]) if i >= 0 else 0.0 for i in grid_index]
+    return incidence
 
 
 def round_sig(value, digits: int = 3):
-    """Recursively round floats to significant figures; NaN and inf become None."""
+    """Round floats to significant figures so a result is JSON-safe.
+
+    Args:
+        value: Any nested mix of dicts, sequences, numpy values and timestamps.
+        digits: Significant figures to keep.
+
+    How:
+        Recurses through dicts and sequences; NaN and inf become None, numpy
+        scalars become plain Python values and timestamps become ISO strings.
+
+    Returns:
+        The rounded structure.
+    """
     if isinstance(value, dict):
-        return {str(k): round_sig(v, digits) for k, v in value.items()}
+        return {str(key): round_sig(item, digits) for key, item in value.items()}
     if isinstance(value, (list, tuple, np.ndarray, pd.Series)):
-        return [round_sig(v, digits) for v in value]
+        return [round_sig(item, digits) for item in value]
     if isinstance(value, (bool, np.bool_)):
         return bool(value)
     if isinstance(value, (int, np.integer)):

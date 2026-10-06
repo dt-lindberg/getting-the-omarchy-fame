@@ -3,13 +3,24 @@
 import numpy as np
 import pandas as pd
 
-from funnel.constants import RESPONSE_WINDOW_DAYS
-
-HOURS = pd.Timedelta(hours=1)
+from funnel.constants import HOURS_PER_DAY, ONE_HOUR, RESPONSE_WINDOW_DAYS
 
 
 def _author_response_events(events: pd.DataFrame, feedback_at: pd.Timestamp) -> pd.DataFrame:
-    """Author actions after the feedback, labelled by kind (commit, comment, ...)."""
+    """Select the author's actions after the feedback, labelled by kind.
+
+    Args:
+        events: One PR's events.
+        feedback_at: Time of the first substantive maintainer feedback.
+
+    How:
+        Keeps author events (and commits by unlinked `ghost` authors, who are
+        counted as the author) of a response type, mapped to commit, comment,
+        force_push, body_edit or title_edit.
+
+    Returns:
+        The matching events with an added `kind` column.
+    """
     after = events[events["ts"] > feedback_at]
     is_author = after["actor_role"] == "author"
     ghost_commit = (after["actor"] == "ghost") & (after["type"] == "commit")
@@ -32,7 +43,7 @@ def feedback_row(events: pd.DataFrame, feedback_at: pd.Timestamp, resolved_at: p
         disposition: Final disposition name.
 
     How:
-        Author actions between feedback and min(resolution, feedback + 7 days) count as a
+        Author actions between feedback and min(resolution, feedback + RESPONSE_WINDOW_DAYS) count as a
         response; commits after feedback are counted up to resolution.
 
     Returns:
@@ -53,9 +64,9 @@ def feedback_row(events: pd.DataFrame, feedback_at: pd.Timestamp, resolved_at: p
     return {
         "has_feedback": True, "feedback_at": feedback_at, "feedback_type": kind,
         "feedback_by": source["actor"], "author_responded": len(window) > 0,
-        "response_hours": (window["ts"].min() - feedback_at) / HOURS if len(window) else np.nan,
+        "response_hours": (window["ts"].min() - feedback_at) / ONE_HOUR if len(window) else np.nan,
         "response_kinds": sorted(window["kind"].unique()),
-        "feedback_window_h": min(RESPONSE_WINDOW_DAYS * 24, (stop - feedback_at) / HOURS),
+        "feedback_window_h": min(RESPONSE_WINDOW_DAYS * HOURS_PER_DAY, (stop - feedback_at) / ONE_HOUR),
         "pushed_commits_after_feedback": int((responses["kind"] == "commit").sum()),
         "feedback_outcome": disposition,
     }

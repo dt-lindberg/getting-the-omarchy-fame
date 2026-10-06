@@ -32,7 +32,7 @@ BINARY = {
     "title_ends_period": ("presentation", "Title ends with a full stop"), "first_pr": ("author", "Author's first PR"),
     "weekend": ("context", "Opened at weekend"), "h06_12": ("context", "Opened 06-12 UTC"),
     "h12_18": ("context", "Opened 12-18 UTC"), "h18_24": ("context", "Opened 18-24 UTC"),
-    **{f"kind_{k}": ("kind", f"Kind: {k}") for k in KINDS[1:]},
+    **{f"kind_{kind}": ("kind", f"Kind: {kind}") for kind in KINDS[1:]},
 }
 LINEAR = {"author_shrunk_rate": ("author", "Author's earlier success rate (shrunk)")}
 COMPACT_TERMS = {"lines_changed", "body_chars", "has_image", "links_issue", "first_pr", "author_shrunk_rate",
@@ -50,40 +50,72 @@ ENGAGEMENT_LOGGED = {"eng_hours_log": ("engagement", "Wait before first engageme
                      "bot_events_pre_eng": ("engagement", "Bot events before engagement"),
                      "community_pre_eng": ("engagement", "Community participants before engagement")}
 ENGAGEMENT_EDIT = {"author_edited_pre_eng": ("engagement", "Author edited before engagement")}
-LABELS = {**{k: v for k, v in LOGGED.items()}, **BINARY, **LINEAR, **ENGAGEMENT_BINARY, **ENGAGEMENT_LOGGED, **ENGAGEMENT_EDIT}
+LABELS = {**{term: label for term, label in LOGGED.items()}, **BINARY, **LINEAR, **ENGAGEMENT_BINARY, **ENGAGEMENT_LOGGED, **ENGAGEMENT_EDIT}
 
 
 def prepare(df: pd.DataFrame) -> pd.DataFrame:
-    """Add the engagement-time columns used by the stage 2 variant (no look-ahead)."""
-    out = df.copy()
-    out["eng_hours_log"] = out["h_maintainer_engagement_nobulk"].fillna(0)
-    out["bot_events_pre_eng"] = out["n_bot_events_pre_eng"]
-    out["community_pre_eng"] = out["n_community_participants_pre_eng"]
-    out["author_edited_pre_eng"] = (out["title_edits_author_pre_eng"] + out["body_edits_author_pre_eng"]) > 0
-    for col in ["eng_by_dhh", "eng_substantive"]:
-        out[col] = out[col].fillna(False).astype(bool)
-    return out
+    """Add the engagement-time columns used by the stage 2 variant (no look-ahead).
+
+    Args:
+        df: Community PRs from load_core.
+
+    How:
+        Copies the table and derives wait, bot, community and author-edit columns
+        from counts taken before the first engagement.
+
+    Returns:
+        The copy with the extra columns.
+    """
+    prepared = df.copy()
+    prepared["eng_hours_log"] = prepared["h_maintainer_engagement_nobulk"].fillna(0)
+    prepared["bot_events_pre_eng"] = prepared["n_bot_events_pre_eng"]
+    prepared["community_pre_eng"] = prepared["n_community_participants_pre_eng"]
+    prepared["author_edited_pre_eng"] = (prepared["title_edits_author_pre_eng"] + prepared["body_edits_author_pre_eng"]) > 0
+    for column in ["eng_by_dhh", "eng_substantive"]:
+        prepared[column] = prepared[column].fillna(False).astype(bool)
+    return prepared
 
 
 def to_pre(frame: pd.DataFrame) -> pd.DataFrame:
-    """Swap open-snapshot presentation columns for their pre-attention versions."""
-    out = frame.copy()
-    for col in [c for c in BINARY if f"{c}_pre" in out.columns] + ["body_chars", "title_words"]:
-        out[col] = out[f"{col}_pre"]
-    return out
+    """Swap open-snapshot presentation columns for their pre-attention versions.
+
+    Args:
+        frame: Community PRs with `_pre` columns.
+
+    How:
+        Overwrites each binary term that has a `_pre` twin, plus body_chars and title_words.
+
+    Returns:
+        A copy with the swapped columns.
+    """
+    swapped = frame.copy()
+    for column in [term for term in BINARY if f"{term}_pre" in swapped.columns] + ["body_chars", "title_words"]:
+        swapped[column] = swapped[f"{column}_pre"]
+    return swapped
 
 
 def spec(extra: bool = False, drop: tuple[str, ...] = ()) -> tuple[list, list, list]:
-    """Term lists (logged, binary, linear), optionally with the engagement features."""
+    """List the model terms.
+
+    Args:
+        extra: Add the engagement-time features.
+        drop: Term names to leave out.
+
+    How:
+        Starts from LOGGED, BINARY (plus epoch dummies) and LINEAR, then filters out `drop`.
+
+    Returns:
+        (logged, binary, linear) term name lists.
+    """
     logged = list(LOGGED) + (list(ENGAGEMENT_LOGGED) if extra else [])
     binary = list(BINARY) + EPOCH_DUMMIES + (list(ENGAGEMENT_BINARY) + list(ENGAGEMENT_EDIT) if extra else [])
     linear = list(LINEAR)
-    keep = lambda names: [n for n in names if n not in drop]
+    keep = lambda names: [name for name in names if name not in drop]
     return keep(logged), keep(binary), keep(linear)
 
 
 def fit_effects(df: pd.DataFrame, outcome: pd.Series, terms: tuple[list, list, list]):
-    """Fit one clustered logit and return (summary dict, fit, design) for the rows with an outcome.
+    """Fit one clustered logit for the rows with an outcome.
 
     Args:
         df: Rows to model.
@@ -94,13 +126,16 @@ def fit_effects(df: pd.DataFrame, outcome: pd.Series, terms: tuple[list, list, l
         Epoch dummies that are constant inside the rows drop out automatically. If the
         full fit does not converge or gives undefined intervals (too few events for so
         many terms), the compact term set is used instead and the result says so.
+
+    Returns:
+        (summary dict, fit, design); fit and design are None when no spec converged.
     """
     keep = outcome.notna()
     data, y = df[keep], outcome[keep].astype(float)
-    out = {"n": int(len(y)), "events": int(y.sum()), "base_pp": float(y.mean() * 100) if len(y) else None, "effects": []}
+    summary = {"n": int(len(y)), "events": int(y.sum()), "base_pp": float(y.mean() * 100) if len(y) else None, "effects": []}
     minority = min(y.sum(), (1 - y).sum())
     candidates = [("full", terms), ("compact", compact(terms))]
-    if minority < MIN_EVENTS_PER_TERM * sum(len(t) for t in terms):
+    if minority < MIN_EVENTS_PER_TERM * sum(len(names) for names in terms):
         candidates = candidates[1:]
     for label, current in candidates:
         design, steps = standardise(data, *prune_rare(data, current))
@@ -108,35 +143,68 @@ def fit_effects(df: pd.DataFrame, outcome: pd.Series, terms: tuple[list, list, l
         if fit is None or not fit.mle_retvals.get("converged", False):
             continue
         rows = marginal_effects(fit, design, steps)
-        if any(not np.isfinite(r["lo"]) for r in rows):
+        if any(not np.isfinite(row["lo"]) for row in rows):
             continue
-        out["spec"] = label
+        summary["spec"] = label
         for row in rows:
             family, name = LABELS.get(row["term"], ("control", row["term"]))
-            out["effects"].append({**row, "family": family, "label": name})
-        return out, fit, design
-    return out, None, None
+            summary["effects"].append({**row, "family": family, "label": name})
+        return summary, fit, design
+    return summary, None, None
 
 
 def prune_rare(data: pd.DataFrame, terms: tuple[list, list, list]) -> tuple[list, list, list]:
-    """Drop flags with fewer than MIN_FLAG_ROWS rows on either side; they cannot be estimated reliably."""
+    """Drop flags that are too rare to estimate reliably.
+
+    Args:
+        data: Rows to model.
+        terms: (logged, binary, linear) names.
+
+    How:
+        A flag stays only with at least MIN_FLAG_ROWS rows on each side.
+
+    Returns:
+        The same term lists with rare binary flags removed.
+    """
     logged, binary, linear = terms
-    ok = [b for b in binary if min(data[b].sum(), (~data[b].astype(bool)).sum()) >= MIN_FLAG_ROWS]
-    return logged, ok, linear
+    estimable = [flag for flag in binary if min(data[flag].sum(), (~data[flag].astype(bool)).sum()) >= MIN_FLAG_ROWS]
+    return logged, estimable, linear
 
 
 def compact(terms: tuple[list, list, list]) -> tuple[list, list, list]:
-    """The compact term set: only terms from the full list that are also in COMPACT_TERMS."""
-    return tuple([t for t in names if t in COMPACT_TERMS] for names in terms)
+    """Reduce the term lists to the compact set.
+
+    Args:
+        terms: (logged, binary, linear) names.
+
+    How:
+        Keeps only terms that are also in COMPACT_TERMS.
+
+    Returns:
+        The reduced (logged, binary, linear) lists.
+    """
+    return tuple([term for term in names if term in COMPACT_TERMS] for names in terms)
 
 
 def fit_by_group(df: pd.DataFrame, outcome: pd.Series, terms: tuple[list, list, list]) -> dict:
-    """fit_effects for the user-free rows of each epoch group (E1, E2, Quattro, all)."""
+    """Fit the effects separately for each epoch group.
+
+    Args:
+        df: Community PRs.
+        outcome: 0/1 with NaN for rows to skip.
+        terms: (logged, binary, linear) names.
+
+    How:
+        Runs fit_effects on the rows without the user's own PRs in each of E1, E2, Quattro and all.
+
+    Returns:
+        Mapping group name to its effects summary.
+    """
     base = df[~df["is_user_pr"]]
-    out = {}
+    effects_by_group = {}
     for group in GROUPS:
         rows = in_group(base, group)
         # E3 and E4 dummies sum to one inside the pooled group, so E3 is its reference.
-        used = terms if group != "Quattro" else (terms[0], [b for b in terms[1] if b != "ep_E3"], terms[2])
-        out[group] = fit_effects(rows, outcome.loc[rows.index], used)[0]
-    return out
+        used = terms if group != "Quattro" else (terms[0], [flag for flag in terms[1] if flag != "ep_E3"], terms[2])
+        effects_by_group[group] = fit_effects(rows, outcome.loc[rows.index], used)[0]
+    return effects_by_group

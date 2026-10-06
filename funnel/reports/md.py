@@ -10,12 +10,19 @@ def md_table(table: pd.DataFrame, index: bool = True, floatfmt: str = "{:.1f}") 
         table: Table to render.
         index: Include the index as the first column.
         floatfmt: Format for float cells.
+
+    How:
+        Writes a header and separator row, then one row per record; pipes in
+        cells are escaped so they cannot split a column.
+
+    Returns:
+        The table's lines, without trailing newlines.
     """
     frame = table.reset_index() if index else table
-    header = "| " + " | ".join(str(c) for c in frame.columns) + " |"
+    header = "| " + " | ".join(str(column) for column in frame.columns) + " |"
     rule = "|" + "|".join("---" for _ in frame.columns) + "|"
     lines = [header, rule]
     for row in frame.itertuples(index=False):
-        cells = [floatfmt.format(v) if isinstance(v, float) else str(v) for v in row]
-        lines.append("| " + " | ".join(c.replace("|", "\\|") for c in cells) + " |")
+        cells = [floatfmt.format(value) if isinstance(value, float) else str(value) for value in row]
+        lines.append("| " + " | ".join(cell.replace("|", "\\|") for cell in cells) + " |")
     return lines

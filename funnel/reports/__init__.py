@@ -16,6 +16,9 @@ def write_reports(out_dir: Path, prs: pd.DataFrame, events: pd.DataFrame, snapsh
         prs: PR table.
         events: Events table.
         snapshots: Snapshots table.
+
+    How:
+        Writes the close samples from the PR table and the summary from all three tables.
     """
     write_close_samples(out_dir / "close_samples.md", prs)
     write_summary(out_dir / "funnel_summary.md", prs, events, snapshots)

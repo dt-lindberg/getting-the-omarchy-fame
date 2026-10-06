@@ -9,6 +9,11 @@ from funnel.text_rules import is_substantive_text
 
 
 def test_substantive_text_ignores_courtesies():
+    """Check that courtesies and pings are not substantive.
+
+    How:
+        Asserts on short courtesy texts and one real sentence.
+    """
     assert not is_substantive_text("Thanks!")
     assert not is_substantive_text("lgtm")
     assert not is_substantive_text("any update on this?")
@@ -16,6 +21,11 @@ def test_substantive_text_ignores_courtesies():
 
 
 def test_epoch_boundaries():
+    """Check epoch labels on both sides of the E1 and E4 boundaries.
+
+    How:
+        Calls epoch_of one minute either side of each start.
+    """
     assert epoch_of(pd.Timestamp("2025-06-25T23:59Z")) == "E0"
     assert epoch_of(pd.Timestamp("2025-06-26T00:00Z")) == "E1"
     assert epoch_of(pd.Timestamp("2026-08-18T23:59Z")) == "E3"
@@ -23,12 +33,22 @@ def test_epoch_boundaries():
 
 
 def test_superseded_wording():
+    """Check the duplicate-wording pattern.
+
+    How:
+        Asserts two matching closing comments and one that must not match.
+    """
     assert SUPERSEDED_RE.search("Closing in favor of #123")
     assert SUPERSEDED_RE.search("1702cf0be already fixes this crash")
     assert not SUPERSEDED_RE.search("Not a fit for Omarchy.")
 
 
 def test_classify_precedence():
+    """Check that classify applies self_closed, then duplicate, then mass_closed.
+
+    How:
+        Keeps the flags fixed and changes who closed, then the duplicate flag.
+    """
     row = pd.Series({"merged": False, "state": "closed", "closed_by_role": "author"})
     flags = {"absorbed": False, "duplicate_evidence": True, "mass_closed": True}
     assert classify(row, flags) == "self_closed"
@@ -39,6 +59,11 @@ def test_classify_precedence():
 
 
 def test_author_history_counts_only_resolved_successes_before_creation():
+    """Check that author history does not look ahead.
+
+    How:
+        Three PRs by one author where only the first is resolved (successfully) before the others are created.
+    """
     times = pd.to_datetime(["2026-01-01", "2026-01-10", "2026-01-20"], utc=True)
     table = pd.DataFrame({
         "author": ["a", "a", "a"], "author_group": ["community"] * 3, "created_at": times,

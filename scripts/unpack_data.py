@@ -21,6 +21,12 @@ TARGETS = {
 
 
 def main() -> None:
+    """Decompress each snapshot file into data/raw/ and copy the commit table.
+
+    How:
+        Streams each gzip file to its target in TARGETS, then copies the fetch
+        metadata and commits.parquet unchanged.
+    """
     BASE.mkdir(parents=True, exist_ok=True)
     for name, target in TARGETS.items():
         with gzip.open(SNAPSHOT / name, "rb") as src, open(target, "wb") as dst:

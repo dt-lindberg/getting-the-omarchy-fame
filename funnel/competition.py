@@ -14,6 +14,8 @@ from funnel.constants import MAINTAINERS
 from funnel.roles import is_bot
 
 MAX_ANCHOR_LINKS = 10
+# A single PR is not a cluster.
+MIN_CLUSTER_SIZE = 2
 # Closing keyword followed by an issue/PR number, e.g. "Fixes #123" or "closes omacom/omarchy#123".
 KEYWORD_LINK_RE = re.compile(r"\b(?:fix(?:es|ed)?|close[sd]?|resolve[sd]?)\b\s*:?\s*(?:[\w.-]+/[\w.-]+)?#(\d+)", re.I)
 
@@ -38,8 +40,8 @@ def collect_links(nodes: list[dict], events: pd.DataFrame, open_bodies: dict[int
     links: dict[int, set[int]] = defaultdict(set)
     for node in nodes:
         number = node["number"]
-        links[number].update(n["number"] for n in node["closingIssuesReferences"]["nodes"])
-        links[number].update(int(m) for m in KEYWORD_LINK_RE.findall(open_bodies.get(number, "")))
+        links[number].update(issue["number"] for issue in node["closingIssuesReferences"]["nodes"])
+        links[number].update(int(issue_number) for issue_number in KEYWORD_LINK_RE.findall(open_bodies.get(number, "")))
         links[number].discard(number)
     marked = events["type"] == "marked_duplicate"
     # Judge by login, not role: a maintainer's mention is evidence even on their own PR.
@@ -94,7 +96,7 @@ def components(links: dict[int, set[int]], pr_numbers: set[int]) -> dict[int, in
         a direct PR-to-PR mention joins the two PRs.
 
     Returns:
-        {pr_number: cluster_id}, only for PRs in clusters of size >= 2.
+        {pr_number: cluster_id}, only for PRs in clusters of at least MIN_CLUSTER_SIZE.
     """
     degree: dict[int, int] = defaultdict(int)
     for number, anchors in links.items():
@@ -102,12 +104,23 @@ def components(links: dict[int, set[int]], pr_numbers: set[int]) -> dict[int, in
             degree[anchor] += 1
     parent: dict[int, int] = {}
 
-    def find(x: int) -> int:
-        parent.setdefault(x, x)
-        while parent[x] != x:
-            parent[x] = parent[parent[x]]
-            x = parent[x]
-        return x
+    def find(member: int) -> int:
+        """Find a member's cluster root.
+
+        Args:
+            member: PR or anchor number.
+
+        How:
+            Union-find lookup with path halving.
+
+        Returns:
+            The root number of the member's cluster.
+        """
+        parent.setdefault(member, member)
+        while parent[member] != member:
+            parent[member] = parent[parent[member]]
+            member = parent[member]
+        return member
 
     for number, anchors in links.items():
         for anchor in anchors:
@@ -117,11 +130,23 @@ def components(links: dict[int, set[int]], pr_numbers: set[int]) -> dict[int, in
     for number in pr_numbers:
         if number in parent:
             groups[find(number)].append(number)
-    return {n: min(members) for members in groups.values() if len(members) >= 2 for n in members}
+    return {number: min(members) for members in groups.values() if len(members) >= MIN_CLUSTER_SIZE for number in members}
 
 
 def _open_before(table: pd.DataFrame, others: set[int], when: pd.Timestamp) -> int:
-    """How many of `others` were created before `when` and not yet resolved then."""
+    """Count how many of some PRs were already open at a time.
+
+    Args:
+        table: Index number; columns created_at, resolved_at.
+        others: PR numbers to check.
+        when: Reference time.
+
+    How:
+        Keeps PRs created before `when` that are unresolved or resolved after it.
+
+    Returns:
+        The number of PRs open at `when`.
+    """
     if not others:
         return 0
     group = table.loc[sorted(others)]
@@ -143,7 +168,7 @@ def competition_columns(table: pd.DataFrame, cluster_of: dict[int, int],
     Returns:
         DataFrame indexed by number.
     """
-    ids = pd.Series([cluster_of.get(n) for n in table.index], index=table.index, dtype="Int64")
+    ids = pd.Series([cluster_of.get(number) for number in table.index], index=table.index, dtype="Int64")
     stats = {}
     for _, members in table[ids.notna()].groupby(ids[ids.notna()]):
         # Table is sorted by number, so a stable sort breaks creation-time ties by number.
@@ -156,10 +181,10 @@ def competition_columns(table: pd.DataFrame, cluster_of: dict[int, int],
                              bool(members["success"].any()), bool(members.loc[others, "success"].any()))
     columns = ["cluster_size", "competing_open_at_creation", "is_first_in_cluster",
                "cluster_has_success", "cluster_other_success"]
-    rows = [stats.get(n, (1, 0, True, bool(table.at[n, "success"]), False)) for n in table.index]
-    out = pd.DataFrame(rows, index=table.index, columns=columns)
-    out["direct_competitors"] = [len(neighbours.get(n, ())) for n in table.index]
-    out["direct_competitors_open_at_creation"] = [
-        _open_before(table, neighbours.get(n, ()), table.at[n, "created_at"]) for n in table.index]
-    out.insert(0, "competition_cluster_id", ids)
-    return out
+    rows = [stats.get(number, (1, 0, True, bool(table.at[number, "success"]), False)) for number in table.index]
+    competition = pd.DataFrame(rows, index=table.index, columns=columns)
+    competition["direct_competitors"] = [len(neighbours.get(number, ())) for number in table.index]
+    competition["direct_competitors_open_at_creation"] = [
+        _open_before(table, neighbours.get(number, ()), table.at[number, "created_at"]) for number in table.index]
+    competition.insert(0, "competition_cluster_id", ids)
+    return competition

@@ -7,7 +7,17 @@ from funnel.roles import actor_role, author_group, normalise_login
 
 
 def epoch_of(created_at: pd.Timestamp) -> str:
-    """Epoch label (E0 pre-launch, E1..E4) at a creation time."""
+    """Label the epoch (E0 pre-launch, E1..E4) a PR was created in.
+
+    Args:
+        created_at: PR creation time (UTC).
+
+    How:
+        Takes the last epoch in EPOCH_STARTS whose start is not after the time.
+
+    Returns:
+        The epoch name.
+    """
     label = "E0"
     for name, start in EPOCH_STARTS:
         if created_at >= start:
@@ -16,7 +26,18 @@ def epoch_of(created_at: pd.Timestamp) -> str:
 
 
 def _last_event(events: pd.DataFrame, kind: str) -> pd.Series | None:
-    """Latest event of one type in a PR's events, or None."""
+    """Find the latest event of one type in a PR's events.
+
+    Args:
+        events: One PR's events, time-sorted.
+        kind: Event type to look for.
+
+    How:
+        Filters by type and takes the last row.
+
+    Returns:
+        The event row, or None when there is none.
+    """
     subset = events[events["type"] == kind]
     return subset.iloc[-1] if len(subset) else None
 

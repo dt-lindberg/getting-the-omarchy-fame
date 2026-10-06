@@ -24,7 +24,17 @@ PRESENTATION_STAGES = {"open": "", "pre_attention": "_pre"}
 
 
 def group_events(events: pd.DataFrame) -> dict[int, pd.DataFrame]:
-    """Events split per PR number (each frame keeps time order)."""
+    """Split the events table per PR.
+
+    Args:
+        events: Events table with a `number` column, time-sorted.
+
+    How:
+        Groups by number without re-sorting, so each frame keeps time order.
+
+    Returns:
+        Mapping from PR number to that PR's events.
+    """
     return {number: frame for number, frame in events.groupby("number", sort=False)}
 
 
@@ -52,20 +62,21 @@ def per_pr_rows(nodes: list[dict], identity: pd.DataFrame, disposition: pd.DataF
     for node in nodes:
         number = node["number"]
         events = events_by_pr.get(number, empty)
-        ident, disp, base_row = identity.loc[number], disposition.loc[number], base.loc[number]
-        attention = attention_row(events, ident["created_at"], ident["resolved_at"],
-                                  ident["closed_by"], ident["closed_by_role"])
-        snaps, exact = snapshot_rows(node, base_row["title"], base_row["body"], events, attention,
-                                     ident["resolved_at"])
-        snapshots += snaps
+        identity_row, disposition_values, base_row = identity.loc[number], disposition.loc[number], base.loc[number]
+        attention = attention_row(events, identity_row["created_at"], identity_row["resolved_at"],
+                                  identity_row["closed_by"], identity_row["closed_by_role"])
+        pr_snapshots, exact = snapshot_rows(node, base_row["title"], base_row["body"], events, attention,
+                                            identity_row["resolved_at"])
+        snapshots += pr_snapshots
         row = {"title": base_row["title"], **attention, **size_and_files(base_row), **maintainer_edits(events),
                "open_body_exact": exact,
-               **feedback_row(events, attention["first_substantive_maintainer"], ident["resolved_at"],
-                              data_end, disp["disposition"])}
-        for snap in snaps:
-            suffix = PRESENTATION_STAGES.get(snap["stage"])
+               **feedback_row(events, attention["first_substantive_maintainer"], identity_row["resolved_at"],
+                              data_end, disposition_values["disposition"])}
+        for snapshot in pr_snapshots:
+            suffix = PRESENTATION_STAGES.get(snapshot["stage"])
             if suffix is not None:
-                row.update({k + suffix: v for k, v in presentation_features(snap["title"], snap["body"]).items()})
+                row.update({name + suffix: value
+                            for name, value in presentation_features(snapshot["title"], snapshot["body"]).items()})
         rows[number] = row
     table = pd.DataFrame.from_dict(rows, orient="index")
     table.index.name = "number"
@@ -118,7 +129,7 @@ def build_tables(nodes: list[dict], events: pd.DataFrame, base: pd.DataFrame,
         (prs with `number` as a column, snapshots).
     """
     events_by_pr = group_events(events)
-    nodes = sorted(nodes, key=lambda n: n["number"])
+    nodes = sorted(nodes, key=lambda node: node["number"])
     identity = build_identity(nodes, events_by_pr)
     disposition = build_disposition(identity, events_by_pr, base, absorbed)
     per_pr, snapshots = per_pr_rows(nodes, identity, disposition, events_by_pr, base, events["ts"].max())

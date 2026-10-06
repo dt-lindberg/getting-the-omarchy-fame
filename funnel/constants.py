@@ -15,6 +15,10 @@ TOPICS_FILE = ROOT / "data" / "labels" / "topics.parquet"
 PR_STATS = ROOT / "data" / "raw" / "base"
 PR_RAW_FILES = ["prs_open.jsonl", "prs_merged.jsonl", "prs_closed.jsonl", "prs_user.jsonl"]
 EXPECTED_PRS = 6950
+SECONDS_PER_DAY = 86_400
+SECONDS_PER_HOUR = 3_600
+HOURS_PER_DAY = 24
+ONE_HOUR = pd.Timedelta(hours=1)
 
 USER_LOGIN = "dt-lindberg"
 DHH = "dhh"
@@ -52,3 +56,7 @@ TEXT_CAP_BOT = 300
 
 # Same actor, event type and detail on at least this many PRs within one minute is a bulk action.
 BULK_MIN_PRS = 20
+# Changed-file lists in the raw PR data stop at this many files.
+FILE_LIST_CAP = 100
+# Seed for the random examples picked for the markdown reports, so reruns match.
+SAMPLE_SEED = 7

@@ -1,4 +1,4 @@
-"""CLI: run the merged analysis and write data/results/analysis.json."""
+"""CLI entry point: run the merged analysis and write data/results/analysis.json."""
 
 import json
 import warnings
@@ -8,6 +8,7 @@ from analysis import (artefacts, attention, context_effects, conversion, feedbac
                       weekly)
 from analysis.common import RESULTS_FILE, load_core, round_sig
 
+BYTES_PER_KB = 1024
 SCHEMA_NOTE = (
     "Population: community PRs opened since 2025-06-26. Attention = first maintainer engagement with bulk actions removed. "
     "Success = merged or absorbed. 'Quattro' pools E3 and E4. AME = average marginal effect in percentage points for +1 SD "
@@ -15,7 +16,15 @@ SCHEMA_NOTE = (
 
 
 def build() -> dict:
-    """Run every module and assemble the result dictionary (top-level keys as in the analysis plan)."""
+    """Run every analysis module and assemble the result dictionary.
+
+    How:
+        Loads the core table once, runs the attention and conversion stages in
+        order (conversion needs the attention model), then the other modules.
+
+    Returns:
+        Dictionary whose top-level keys are the sections of analysis.json.
+    """
     df = load_core()
     stage1 = attention.run(df)
     stage2 = conversion.run(df, stage1["model"])
@@ -35,12 +44,17 @@ def build() -> dict:
 
 
 def main() -> None:
-    """Build the results and write them as compact JSON rounded to 3 significant figures."""
+    """Build the results and write them as compact JSON.
+
+    How:
+        Rounds every number to 3 significant figures via round_sig and writes
+        RESULTS_FILE without whitespace.
+    """
     warnings.filterwarnings("ignore")
     result = round_sig(build())
     RESULTS_FILE.parent.mkdir(parents=True, exist_ok=True)
     RESULTS_FILE.write_text(json.dumps(result, separators=(",", ":")))
-    print(f"wrote {RESULTS_FILE} ({RESULTS_FILE.stat().st_size / 1024:.0f} KB)")
+    print(f"wrote {RESULTS_FILE} ({RESULTS_FILE.stat().st_size / BYTES_PER_KB:.0f} KB)")
 
 
 if __name__ == "__main__":

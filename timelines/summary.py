@@ -12,6 +12,7 @@ from timelines.store import PR_FILES, PR_STATS_RAW
 
 LOG_TIME = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d)")
 THIS_REPO = "omacom/omarchy"
+MAX_COMMIT_EXAMPLES = 10
 
 
 def iter_records(path: Path):
@@ -61,7 +62,7 @@ def referenced_issue_numbers(node: dict) -> list[tuple[int, str]]:
     Returns:
         (number, kind) pairs; kind is "closing" or "cross_reference".
     """
-    refs = [(n["number"], "closing") for n in node["closingIssuesReferences"]["nodes"]]
+    refs = [(issue["number"], "closing") for issue in node["closingIssuesReferences"]["nodes"]]
     for item in node["timelineItems"]["nodes"]:
         if item["__typename"] != "CrossReferencedEvent":
             continue
@@ -113,9 +114,9 @@ def collect(path: Path) -> dict:
         stats["events"].update(types)
         stats["pr_with_event"].update(types.keys())
         stats["reviewThreads"] = stats.get("reviewThreads", 0) + node["reviewThreads"]["totalCount"]
-        stats["reactions"].update(r["content"] for r in node["reactions"]["nodes"])
+        stats["reactions"].update(reaction["content"] for reaction in node["reactions"]["nodes"])
         tally_edits(stats, node["userContentEdits"]["nodes"], bodies.get(record["number"]))
-        refs.update((n, kind) for n, kind in referenced_issue_numbers(node))
+        refs.update((number, kind) for number, kind in referenced_issue_numbers(node))
     return {"stats": stats, "refs": refs}
 
 
@@ -136,7 +137,7 @@ def tally_commits(stats: dict, number: int, timeline_commits: int, api_total: in
         stats["commit_count_match"] += 1
         return
     stats["commit_count_differs"] += 1
-    if len(stats["commit_differences"]) < 10:
+    if len(stats["commit_differences"]) < MAX_COMMIT_EXAMPLES:
         stats["commit_differences"].append((number, timeline_commits, api_total))
 
 
@@ -157,7 +158,7 @@ def tally_edits(stats: dict, edits: list[dict], current_body: str | None) -> Non
     stats["edit_prs"] += 1
     stats["multi_edit_prs"] += len(edits) > 1
     stats["edits"] += len(edits)
-    stats["deleted_edits"] += sum(e["deletedAt"] is not None for e in edits)
+    stats["deleted_edits"] += sum(edit["deletedAt"] is not None for edit in edits)
     if current_body is not None:
         same = (edits[0]["diff"] or "") == current_body
         stats["newest_equals_body" if same else "newest_differs"] += 1
@@ -175,5 +176,6 @@ def log_span(log_path: Path) -> tuple[str, str]:
     Returns:
         (first, last) timestamp strings, local time.
     """
-    stamps = [m.group(1) for line in open(log_path) if (m := LOG_TIME.match(line))]
+    with open(log_path) as log_file:
+        stamps = [match.group(1) for line in log_file if (match := LOG_TIME.match(line))]
     return stamps[0], stamps[-1]

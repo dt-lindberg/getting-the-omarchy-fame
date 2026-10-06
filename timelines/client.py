@@ -16,6 +16,9 @@ RESET_MARGIN_SECONDS = 5
 SECONDARY_LIMIT_SLEEP_SECONDS = 120
 QUERY_TIMEOUT_SECONDS = 180
 MAX_SECONDARY_RETRIES = 5
+# Longest slice of gh output or GraphQL errors quoted in an error message.
+STDERR_EXCERPT_CHARS = 200
+ERRORS_EXCERPT_CHARS = 300
 
 
 class TransientError(Exception):
@@ -26,6 +29,11 @@ class GitHubClient:
     """Runs GraphQL queries via `gh api graphql`, tracking the point budget."""
 
     def __init__(self) -> None:
+        """Start with an unknown budget.
+
+        How:
+            Remaining points and reset time are unset until the first response reports them.
+        """
         self.remaining: int | None = None
         self.reset_at: datetime | None = None
         self.points_spent = 0
@@ -91,9 +99,9 @@ class GitHubClient:
         try:
             body = json.loads(proc.stdout)
         except json.JSONDecodeError as err:
-            raise TransientError(f"unparseable response: {proc.stderr.strip()[:200]}") from err
+            raise TransientError(f"unparseable response: {proc.stderr.strip()[:STDERR_EXCERPT_CHARS]}") from err
         if not body.get("data"):
-            raise TransientError(f"no data: {str(body.get('errors'))[:300]}")
+            raise TransientError(f"no data: {str(body.get('errors'))[:ERRORS_EXCERPT_CHARS]}")
         self._record_rate_limit(body["data"].get("rateLimit"))
         return body["data"], body.get("errors") or []
 

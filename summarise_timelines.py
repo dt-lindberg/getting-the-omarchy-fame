@@ -9,7 +9,12 @@ RAW = Path(__file__).parent / "data" / "raw"
 
 
 def main() -> None:
-    """Run the statistics pass and write both output files."""
+    """Run the statistics pass and write both output files.
+
+    How:
+        Collects statistics from timelines.jsonl, writes the referenced-issue
+        CSV, then renders the README using the fetch log's time span.
+    """
     result = collect(RAW / "timelines.jsonl")
     write_refs_csv(result["refs"], RAW / "referenced_issues.csv")
     distinct = len({number for number, _ in result["refs"]})

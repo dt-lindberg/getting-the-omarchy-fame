@@ -73,14 +73,25 @@ def image_and_video_flags(body: str) -> tuple[bool, bool]:
     """
     embedded = MD_IMAGE_RE.findall(body) + HTML_IMAGE_RE.findall(body)
     assets = set(ASSET_URL_RE.findall(body))
-    embedded_assets = {a for a in assets if any(a in url for url in embedded)}
+    embedded_assets = {asset for asset in assets if any(asset in url for url in embedded)}
     has_image = bool(embedded) or bool(BARE_IMAGE_RE.search(body))
     has_video = bool(VIDEO_EXT_RE.search(body)) or bool(assets - embedded_assets)
     return has_image, has_video
 
 
 def has_before_after(body: str) -> bool:
-    """True for 'before/after' wording or separate Before and After label lines."""
+    """Detect a before/after comparison in a description.
+
+    Args:
+        body: PR description markdown.
+
+    How:
+        Matches adjacent wording ("before/after", "before vs after") or separate
+        Before and After label lines.
+
+    Returns:
+        True when either form is present.
+    """
     if BEFORE_AFTER_ADJACENT_RE.search(body):
         return True
     return bool(BEFORE_LABEL_RE.search(body) and AFTER_LABEL_RE.search(body))

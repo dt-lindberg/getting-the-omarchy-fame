@@ -15,12 +15,37 @@ EVENT_COLUMNS = ["number", "ts", "type", "actor", "actor_role", "substantive", "
 
 
 def _login(node: dict | None) -> str:
-    """Normalised login of a `{login}` sub-object (None becomes ghost)."""
+    """Read the normalised login from a `{login}` sub-object.
+
+    Args:
+        node: GraphQL actor/user object, or None for deleted accounts.
+
+    How:
+        Delegates to normalise_login, so None becomes `ghost`.
+
+    Returns:
+        The normalised login.
+    """
     return normalise_login((node or {}).get("login"))
 
 
 def _row(number: int, ts: str, kind: str, actor: str, author: str, **extra) -> dict:
-    """One event row with defaults for every column."""
+    """Build one event row with defaults for every column.
+
+    Args:
+        number: PR number.
+        ts: Event timestamp (ISO string).
+        kind: Event type.
+        actor: Normalised actor login.
+        author: Normalised PR author login.
+        **extra: Column values overriding the defaults.
+
+    How:
+        Starts from neutral defaults, adds the actor's role relative to the PR, then applies `extra`.
+
+    Returns:
+        Row dictionary keyed by EVENT_COLUMNS.
+    """
     row = {"number": number, "ts": ts, "type": kind, "actor": actor,
            "actor_role": actor_role(actor, author), "substantive": False, "details": "",
            "details2": "", "ref": None, "reaction_count": 0, "inline_comments": 0,
@@ -30,24 +55,59 @@ def _row(number: int, ts: str, kind: str, actor: str, author: str, **extra) -> d
 
 
 def _text_fields(text: str, role: str) -> dict:
-    """Length and capped text; bots keep less because their comments are huge."""
+    """Measure a text and cap how much of it is stored.
+
+    Args:
+        text: Comment or review body.
+        role: Actor role; bots keep less because their comments are huge.
+
+    How:
+        Applies TEXT_CAP_BOT or TEXT_CAP_HUMAN.
+
+    Returns:
+        Dict with text_chars (full length) and the truncated text.
+    """
     cap = TEXT_CAP_BOT if role == "bot" else TEXT_CAP_HUMAN
     return {"text_chars": len(text), "text": text[:cap]}
 
 
 def _comment(number: int, item: dict, author: str) -> dict:
-    """Issue comment with its total reaction count."""
+    """Convert an issue comment into an event row.
+
+    Args:
+        number: PR number.
+        item: Timeline item of type IssueComment.
+        author: Normalised PR author login.
+
+    How:
+        Records substantive-ness, author association and the total reaction count.
+
+    Returns:
+        Row dictionary.
+    """
     actor = _login(item["author"])
     body = item["body"] or ""
     row = _row(number, item["createdAt"], "comment", actor, author,
                substantive=is_substantive_text(body), details=item["authorAssociation"] or "",
-               reaction_count=sum(g["reactors"]["totalCount"] for g in item["reactionGroups"]))
+               reaction_count=sum(group["reactors"]["totalCount"] for group in item["reactionGroups"]))
     row.update(_text_fields(body, row["actor_role"]))
     return row
 
 
 def _review(number: int, item: dict, author: str) -> dict:
-    """Review: substantive if it requests changes, has inline comments or has content text."""
+    """Convert a review into an event row.
+
+    Args:
+        number: PR number.
+        item: Timeline item of type PullRequestReview.
+        author: Normalised PR author login.
+
+    How:
+        Substantive if it requests changes, has inline comments or has content text.
+
+    Returns:
+        Row dictionary.
+    """
     actor = _login(item["author"])
     body = item["body"] or ""
     inline = item["comments"]["totalCount"]
@@ -60,7 +120,20 @@ def _review(number: int, item: dict, author: str) -> dict:
 
 
 def _commit(number: int, item: dict, author: str, created_at: str) -> dict:
-    """Commit on the PR branch; unlinked git authors become actor `ghost`."""
+    """Convert a commit on the PR branch into an event row.
+
+    Args:
+        number: PR number.
+        item: Timeline item of type PullRequestCommit.
+        author: Normalised PR author login.
+        created_at: PR creation time, to mark commits made before it.
+
+    How:
+        Unlinked git authors become actor `ghost`; earlier commits get details `pre_creation`.
+
+    Returns:
+        Row dictionary.
+    """
     commit = item["commit"]
     user = ((commit["author"] or {}).get("user"))
     ts = commit["committedDate"]
@@ -69,7 +142,19 @@ def _commit(number: int, item: dict, author: str, created_at: str) -> dict:
 
 
 def _closed(number: int, item: dict, author: str) -> dict:
-    """Closed event; `ref` is the PR number of a closing PR when there is one."""
+    """Convert a closed event into an event row.
+
+    Args:
+        number: PR number.
+        item: Timeline item of type ClosedEvent.
+        author: Normalised PR author login.
+
+    How:
+        `ref` is the PR number of a closing PR when there is one.
+
+    Returns:
+        Row dictionary.
+    """
     closer = item.get("closer") or {}
     ref = closer.get("number") if closer.get("__typename") == "PullRequest" else None
     return _row(number, item["createdAt"], "closed", _login(item["actor"]), author,
@@ -77,7 +162,20 @@ def _closed(number: int, item: dict, author: str) -> dict:
 
 
 def _cross_reference(number: int, item: dict, author: str) -> dict:
-    """Cross-reference from another issue or PR; details says which kind and whether it closes."""
+    """Convert a cross-reference from another issue or PR into an event row.
+
+    Args:
+        number: PR number.
+        item: Timeline item of type CrossReferencedEvent.
+        author: Normalised PR author login.
+
+    How:
+        Details says which kind of source it is and whether it closes the PR;
+        references from other repositories carry no ref.
+
+    Returns:
+        Row dictionary.
+    """
     source = item["source"] or {}
     foreign = item["isCrossRepository"]
     kind = ("foreign_" if foreign else "") + source.get("__typename", "").lower()
@@ -87,7 +185,20 @@ def _cross_reference(number: int, item: dict, author: str) -> dict:
 
 
 def timeline_row(number: int, item: dict, author: str, created_at: str) -> dict | None:
-    """Convert one timeline item to an event row, or None for unknown item types."""
+    """Convert one timeline item to an event row.
+
+    Args:
+        number: PR number.
+        item: Raw timeline item.
+        author: Normalised PR author login.
+        created_at: PR creation time.
+
+    How:
+        Dispatches on the item's GraphQL type to a converter or a simple row.
+
+    Returns:
+        Row dictionary, or None for unknown item types.
+    """
     kind = item["__typename"]
     actor = _login(item.get("actor"))
     simple = {"ReopenedEvent": "reopened", "ConvertToDraftEvent": "draft",
@@ -129,10 +240,21 @@ def timeline_row(number: int, item: dict, author: str, created_at: str) -> dict 
 
 
 def side_rows(node: dict, author: str) -> list[dict]:
-    """Body edits (excluding the creation revision) and reactions on the PR body."""
+    """Build rows for body edits and reactions on the PR body.
+
+    Args:
+        node: PR node.
+        author: Normalised PR author login.
+
+    How:
+        Body edits exclude the creation revision.
+
+    Returns:
+        Row dictionaries.
+    """
     number = node["number"]
-    rows = [_row(number, rev.edited_at, "body_edit", rev.editor, author)
-            for rev in body_revisions(node) if not rev.is_creation]
+    rows = [_row(number, revision.edited_at, "body_edit", revision.editor, author)
+            for revision in body_revisions(node) if not revision.is_creation]
     for reaction in node["reactions"]["nodes"]:
         rows.append(_row(number, reaction["createdAt"], "reaction", _login(reaction["user"]), author,
                          details=reaction["content"]))
@@ -140,12 +262,22 @@ def side_rows(node: dict, author: str) -> list[dict]:
 
 
 def node_events(node: dict) -> list[dict]:
-    """All event rows for one PR node."""
+    """Build all event rows for one PR node.
+
+    Args:
+        node: PR node.
+
+    How:
+        Converts timeline items, drops unknown types, and appends the body edits and reactions.
+
+    Returns:
+        Row dictionaries.
+    """
     number = node["number"]
     author = _login(node["author"])
     rows = [timeline_row(number, item, author, node["createdAt"])
             for item in node["timelineItems"]["nodes"] if item]
-    return [r for r in rows if r] + side_rows(node, author)
+    return [row for row in rows if row] + side_rows(node, author)
 
 
 # Event types whose content is unique per PR, so identical timing is not a bulk action.

@@ -38,7 +38,19 @@ def open_texts(node: dict, final_title: str, final_body: str, events: pd.DataFra
 
 
 def _edit_flags(events: pd.DataFrame, cutoff: pd.Timestamp, inclusive: bool) -> tuple[bool, bool]:
-    """Whether the author / a maintainer edited title or body before the cutoff."""
+    """Check whether the author and a maintainer edited the title or body before a cutoff.
+
+    Args:
+        events: One PR's events.
+        cutoff: Time to look before.
+        inclusive: Whether an edit exactly at the cutoff counts.
+
+    How:
+        Filters edit events by time, then tests their actor roles.
+
+    Returns:
+        (edited_by_author, edited_by_maintainer).
+    """
     edits = events[events["type"].isin(EDIT_TYPES)]
     edits = edits[edits["ts"] <= cutoff] if inclusive else edits[edits["ts"] < cutoff]
     return bool((edits["actor_role"] == "author").any()), bool((edits["actor_role"] == "maintainer").any())
@@ -74,23 +86,23 @@ def snapshot_rows(node: dict, final_title: str, final_body: str, events: pd.Data
     rows = [dict(number=number, stage="open", stage_ts=created, title=open_title, body=open_body,
                  edited_by_author_before_stage=False, edited_by_maintainer_before_stage=False)]
     engaged = attention["first_maintainer_engagement"]
-    cut = engaged if pd.notna(engaged) else end
-    author_flag, maint_flag = _edit_flags(events, cut, inclusive=False)
+    cutoff = engaged if pd.notna(engaged) else end
+    author_edited, maintainer_edited = _edit_flags(events, cutoff, inclusive=False)
     rows.append(dict(number=number, stage="pre_attention", stage_ts=engaged if pd.notna(engaged) else resolved_at,
-                     title=title_at(open_title, renames, cut, False), body=body_at(open_body, revisions, cut, False),
-                     edited_by_author_before_stage=author_flag, edited_by_maintainer_before_stage=maint_flag))
+                     title=title_at(open_title, renames, cutoff, False), body=body_at(open_body, revisions, cutoff, False),
+                     edited_by_author_before_stage=author_edited, edited_by_maintainer_before_stage=maintainer_edited))
     feedback = attention["first_substantive_maintainer"]
     if pd.notna(feedback):
         authored = events[events["type"].isin(EDIT_TYPES) & (events["actor_role"] == "author")
                           & (events["ts"] > feedback) & (events["ts"] < end)]
         if len(authored):
             stamp = authored["ts"].max()
-            a_flag, m_flag = _edit_flags(events, stamp, inclusive=True)
+            author_edited, maintainer_edited = _edit_flags(events, stamp, inclusive=True)
             rows.append(dict(number=number, stage="post_feedback", stage_ts=stamp,
                              title=title_at(open_title, renames, stamp, True),
                              body=body_at(open_body, revisions, stamp, True),
-                             edited_by_author_before_stage=a_flag, edited_by_maintainer_before_stage=m_flag))
-    a_flag, m_flag = _edit_flags(events, end, inclusive=True)
+                             edited_by_author_before_stage=author_edited, edited_by_maintainer_before_stage=maintainer_edited))
+    author_edited, maintainer_edited = _edit_flags(events, end, inclusive=True)
     rows.append(dict(number=number, stage="final", stage_ts=resolved_at, title=final_title, body=final_body,
-                     edited_by_author_before_stage=a_flag, edited_by_maintainer_before_stage=m_flag))
+                     edited_by_author_before_stage=author_edited, edited_by_maintainer_before_stage=maintainer_edited))
     return rows, exact

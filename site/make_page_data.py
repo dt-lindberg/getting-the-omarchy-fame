@@ -175,7 +175,11 @@ def dots_data(prs: pd.DataFrame) -> dict:
 
 
 def main() -> None:
-    """Write data/results/page.json and data/results/dots.json."""
+    """Write data/results/page.json and data/results/dots.json.
+
+    How:
+        Reads analysis.json and the funnel's PR table, then writes both as compact JSON.
+    """
     analysis = json.loads((RESULTS / "analysis.json").read_text())
     outputs = {"page.json": page_data(analysis), "dots.json": dots_data(pd.read_parquet(PRS_TABLE))}
     for name, payload in outputs.items():
