@@ -2,8 +2,8 @@
 
 import pandas as pd
 
-from analysis.context import competition
-from analysis.core.common import GROUP_NAMES, in_group, rate
+from analysis import competition
+from analysis.common import GROUP_NAMES, in_group, rate
 
 CONTEXT_VARIABLES = ["backlog_open_community", "arrivals_prev7d", "maintainer_events_prev7d",
                      "dhh_focus_same_area_14d", "core_commits_prev7d"]

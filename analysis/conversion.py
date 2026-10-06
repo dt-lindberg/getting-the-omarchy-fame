@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from analysis.core.models import fit_by_group, prepare, spec, to_pre
+from analysis.models import fit_by_group, prepare, spec, to_pre
 
 
 def conversion_models(df: pd.DataFrame) -> dict:

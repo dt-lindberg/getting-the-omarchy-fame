@@ -3,9 +3,9 @@
 import numpy as np
 import pandas as pd
 
-from analysis.context.data import DISPOSITIONS
-from analysis.context.stats import aalen_johansen
-from analysis.core.common import EPOCH_ORDER, median_quartiles, rate
+from analysis.data import DISPOSITIONS
+from analysis.stats import aalen_johansen
+from analysis.common import EPOCH_ORDER, median_quartiles, rate
 from funnel.constants import MASS_CLOSE_EVENT_DAY
 
 CURVE_DAYS = [7, 30, 90, 180, 365]

@@ -3,10 +3,17 @@
 import numpy as np
 import pandas as pd
 
-from analysis.context.effects import adjusted_effects
-from analysis.core.common import DERIVED, in_group, median_quartiles, rate
-from analysis.feedback.constants import LANDMARK_HOURS, LATENCY_BUCKETS, POSITIVE_PATTERN, REQUEST_PATTERN
+from analysis.effects import adjusted_effects
+from analysis.common import DERIVED, in_group, median_quartiles, rate
 
+# Response latency buckets in hours: (label, lower inclusive, upper exclusive).
+LATENCY_BUCKETS = [("<6h", 0, 6), ("6-24h", 6, 24), ("1-3d", 24, 72), ("3-7d", 72, 168), (">7d", 168, float("inf"))]
+# A PR closed sooner than this after feedback gave the author no real chance to respond.
+LANDMARK_HOURS = (24, 168)
+POSITIVE_PATTERN = (r"\b(lgtm|looks good|looks great|good to (?:go|merge)|will merge|ready to merge|ship it|"
+                    r"nice work|great work|great job|approved)\b")
+REQUEST_PATTERN = (r"\?|\b(please|could you|can you|would you|need to|needs to|should|have to|must|"
+                   r"can't have|going to need)\b")
 # The funnel build only watched for author replies for this many hours after feedback.
 FULL_WINDOW_H = 168
 

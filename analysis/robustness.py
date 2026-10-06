@@ -4,9 +4,9 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 
-from analysis.context.stats import standardise
-from analysis.core.common import GROUPS
-from analysis.core.models import fit_effects, spec
+from analysis.stats import standardise
+from analysis.common import GROUPS
+from analysis.models import fit_effects, spec
 from sklearn.linear_model import LogisticRegression
 
 HOLDOUT_START = pd.Timestamp("2026-08-14", tz="UTC")

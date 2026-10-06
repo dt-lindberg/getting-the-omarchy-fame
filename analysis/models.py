@@ -7,8 +7,8 @@ split into an attention part and a conversion part.
 import numpy as np
 import pandas as pd
 
-from analysis.context.stats import fit_logit, marginal_effects, standardise
-from analysis.core.common import GROUPS, KINDS, in_group
+from analysis.stats import fit_logit, marginal_effects, standardise
+from analysis.common import GROUPS, KINDS, in_group
 
 # term -> (family, human label); family drives the page's grouping.
 LOGGED = {

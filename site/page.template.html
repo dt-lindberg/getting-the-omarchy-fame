@@ -1,4 +1,18 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Noticed, Then Chosen</title>
+<meta name="description" content="What happened to 6,336 community pull requests to Omarchy, and what gets one noticed, then merged.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://dt-lindberg.github.io/getting-the-omarchy-fame/">
+<meta property="og:title" content="Noticed, then chosen: how Omarchy pull requests get merged">
+<meta property="og:description" content="What happened to 6,336 community pull requests to Omarchy, and what gets one noticed, then merged.">
+<meta property="og:image" content="https://dt-lindberg.github.io/getting-the-omarchy-fame/social.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -65,9 +79,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 /* --- page frame ----------------------------------------------------------- */
 .frame { max-width: 1180px; margin: 0 auto; padding: 0 16px; padding-block: 28px 80px; display: grid; gap: var(--gap); }
 .pane { background: var(--pane); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(20px, 4vw, 44px); min-width: 0; }
-.tiles { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 
-.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 14px; }
 h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.015em; }
 h1 { font-size: clamp(44px, 8.4vw, 104px); line-height: .95; font-weight: 800; letter-spacing: -0.022em; }
 h2 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.02; font-weight: 700; }
@@ -103,7 +115,7 @@ h3 { font-size: 21px; line-height: 1.2; font-weight: 700; }
 code { font: 0.88em var(--mono); background: color-mix(in oklab, var(--ink-3) 14%, transparent); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
 
 /* --- chapters ------------------------------------------------------------- */
-.chapter { display: grid; gap: 26px; }
+.chapter { display: grid; gap: 26px; grid-template-columns: minmax(0, 1fr); }
 .chapter > header { display: grid; gap: 16px; }
 .split { display: grid; gap: clamp(20px, 4vw, 48px); grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; }
 @media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr); } }
@@ -121,18 +133,9 @@ svg .val { font-family: var(--mono); font-size: 11.5px; fill: var(--ink); font-v
 svg .grid { stroke: var(--line); stroke-width: 1; }
 svg .axis { stroke: var(--ink-3); stroke-width: 1; }
 [data-tip] { cursor: default; }
-.bigrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 22px; }
-.big .v { font: 800 clamp(40px, 6vw, 72px)/0.95 var(--display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
-.big .l { margin-top: 10px; font-size: 14px; color: var(--ink-2); max-width: 26ch; }
 .callout { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; color: var(--ink); font-size: 18px; max-width: 60ch; }
 
 /* --- quotes, cards ---------------------------------------------------------- */
-.quotes { columns: 3 300px; column-gap: var(--gap); }
-.quote { break-inside: avoid; margin: 0 0 var(--gap); padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
-.quote .theme { font: 500 11px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); margin: 0 0 10px; }
-.quote blockquote { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink); }
-.quote footer { margin-top: 12px; font: 12px/1.4 var(--mono); color: var(--ink-3); }
-.quote footer a { color: inherit; }
 .play-group { display: grid; gap: 14px; }
 .play-group + .play-group { margin-top: 30px; }
 .play-group h3 { display: flex; align-items: baseline; gap: 12px; }
@@ -148,16 +151,6 @@ svg .axis { stroke: var(--ink-3); stroke-width: 1; }
 .chip.warn { color: var(--c-reject); border-color: color-mix(in oklab, var(--c-reject) 45%, var(--line)); }
 .card.late { background: transparent; border-style: dashed; }
 
-.prs { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.pr { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); display: grid; gap: 14px; align-content: start; }
-.pr .no { font: 500 12px var(--mono); color: var(--ink-3); }
-.pr .no a { color: inherit; }
-.pr .t { font: 700 19px/1.25 var(--display); }
-.meter { display: grid; gap: 6px; }
-.meter .row { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--ink-2); }
-.meter .row b { font: 500 13px var(--mono); color: var(--ink); }
-.meter .track { height: 8px; border-radius: 4px; background: color-mix(in oklab, var(--ink-3) 18%, transparent); overflow: hidden; }
-.meter .fill { height: 100%; border-radius: 4px; }
 
 table.rw { border-collapse: collapse; width: 100%; font-size: 14px; }
 table.rw td { padding: 10px 12px 10px 0; border-top: 1px solid var(--line); vertical-align: top; }
@@ -165,13 +158,10 @@ table.rw td:first-child { font: 12px var(--mono); color: var(--ink-3); white-spa
 table.rw .b { color: var(--ink-3); text-decoration: line-through; text-decoration-color: color-mix(in oklab, var(--ink-3) 60%, transparent); }
 table.rw .a { color: var(--ink); }
 
-details.method { border-top: 1px solid var(--line); padding-top: 14px; }
-details.method summary { cursor: pointer; font: 600 16px var(--body); color: var(--ink); }
-details.method[open] summary { margin-bottom: 12px; }
-.qs { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: q; }
-.qs p { margin: 0; padding: 16px 18px; border-radius: var(--radius); background: var(--bg); border: 1px solid var(--line); color: var(--ink); font-size: 15px; }
 .foot { font: 12px/1.6 var(--mono); color: var(--ink-3); padding: 8px 4px 0; }
 </style>
+</head>
+<body>
 
 <header class="waybar" aria-label="Chapters">
   <span class="brand">omarchy/triage</span>
@@ -206,8 +196,6 @@ details.method[open] summary { margin-bottom: 12px; }
     </div>
   </section>
 
-
-
   <section class="pane chapter" id="ws-5" data-ws="3" aria-labelledby="h-5">
     <header>
       <h2 id="h-5">Fixes beat features in every era.</h2>
@@ -223,6 +211,7 @@ details.method[open] summary { margin-bottom: 12px; }
         <p class="sub">Share of decided PRs that were merged or absorbed. Bigger dots carry more PRs.</p>
         <div id="kinds"></div>
         <div class="legend" id="era-legend"></div>
+        <p class="cap">Two thirds of Quattro PRs (2,500 of 3,773) are still open, so its rates rest on the 1,273 already decided and will move as the rest are.</p>
       </figure>
     </div>
     <figure class="figure" style="margin:0">
@@ -272,8 +261,6 @@ details.method[open] summary { margin-bottom: 12px; }
     </div>
   </section>
 
-
-
   <section class="pane chapter" id="ws-10" data-ws="6" aria-labelledby="h-10">
     <header>
       <h2 id="h-10">What to submit, how, when, and what to do once someone looks.</h2>
@@ -281,8 +268,6 @@ details.method[open] summary { margin-bottom: 12px; }
     </header>
     <div id="playbook"></div>
   </section>
-
-
 
   <p class="foot">Data snapshot 6 Oct 2026 09:17 UTC · 6,959 PRs · community = not dhh, not core, not bots · all numbers are associations, not causes.</p>
 </main>
@@ -329,7 +314,7 @@ const DATA = /*__DATA__*/{};
   sections.forEach((s) => io.observe(s));
 
   // --- dot field ---------------------------------------------------------------
-  const rows = DATA.dots.rows.map((r) => ({ n: r[0], day: r[1], g: r[2], eng: r[3], mass: r[4], you: r[5], title: r[6], topic: r[7] }));
+  const rows = DATA.dots.rows.map((r) => ({ n: r[0], day: r[1], g: r[2], eng: r[3], mass: r[4], title: r[5], topic: r[6] }));
   const canvas = document.getElementById("field");
   const tip = document.getElementById("tip");
   let layout = [];
@@ -383,7 +368,6 @@ const DATA = /*__DATA__*/{};
       });
     });
 
-
     // Month ticks along the base.
     ctx.fillStyle = css("--ink-3"); ctx.textAlign = "center";
     const t0 = new Date(DATA.dots.t0 + "T00:00:00Z");
@@ -420,7 +404,7 @@ const DATA = /*__DATA__*/{};
     const r = d.r;
     const date = new Date(Date.parse(DATA.dots.t0) + r.day * 864e5).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
     tip.innerHTML = `<div class="num">#${r.n} · ${date}</div><div>${r.title.replace(/[<&]/g, (c) => ({ "<": "&lt;", "&": "&amp;" }[c]))}</div><div class="num">${label[r.g]}${r.eng ? "" : " · no maintainer reply first"}</div>` +
-      (pinned ? `<div><a href="https://github.com/basecamp/omarchy/pull/${r.n}" target="_blank" rel="noopener">Open on GitHub ↗</a></div>` : "");
+      (pinned ? `<div><a href="https://github.com/omacom/omarchy/pull/${r.n}" target="_blank" rel="noopener">Open on GitHub ↗</a></div>` : "");
     tip.hidden = false;
     tip.dataset.pinned = String(!!pinned);
     const tx = Math.min(ev.clientX + 14, window.innerWidth - 316);
@@ -564,113 +548,6 @@ const DATA = /*__DATA__*/{};
     });
   }
 
-  function eraBig() {
-    const inc = P.incidence;
-    const dq = P.dispositions.find((r) => r.epoch === "Q");
-    const qDecided = ["M", "A", "S", "C", "W", "R"].reduce((a, k) => a + (dq[k] || 0), 0);
-    const rows = ["E1", "E2", "Q"].map((e) => {
-      const pp = e === "Q" ? (100 * (dq.M + dq.A)) / qDecided : H.success_among_decided[e].pp;
-      const eng = inc[e].engaged[3] * 100;
-      return `<div class="big"><p class="eyebrow" style="margin:0 0 10px">${ERA[e]}</p><div class="v">${Math.round(pp)}%</div><div class="l">of decided PRs accepted. ${eng < 10 ? eng.toFixed(1) : Math.round(eng)}% got a maintainer reply within 14 days.</div></div>`;
-    });
-    document.getElementById("era-big").innerHTML = rows.join("");
-  }
-
-  function weekly() {
-    const host = document.getElementById("weekly");
-    host.innerHTML = "";
-    const series = P.weekly.series, labels = P.weekly.labels;
-    const keys = [["opened", "bars"], ["p_engaged7", "line"], ["success_decided", "line"], ["community_merges", "bars"]];
-    const t0 = Date.parse(series.opened[0].week);
-    const wk = (iso) => (Date.parse(iso) - t0) / (7 * 864e5);
-    const boxes = keys.map(() => { const b = document.createElement("div"); b.className = "figure"; host.appendChild(b); return b; });
-    keys.forEach(([key, type], ki) => {
-      const box = boxes[ki];
-      const data = series[key];
-      const w = W(box), h = 170, l = 34, r = 8, t = 26, b = 22;
-      const svg = svgIn(box, w, h, labels[key]);
-      const x = lin(0, data.length, l, w - r);
-      const max = Math.max(...data.map((d) => d.value || 0));
-      const top = key.startsWith("p_") || key.startsWith("success") ? Math.max(40, Math.ceil(max / 10) * 10) : Math.ceil(max / 100) * 100 || 10;
-      const yv = lin(0, top, h - b, t);
-      T(svg, 0, 14, labels[key] + (key.startsWith("p_") || key.startsWith("success") ? " (%)" : ""), { style: "fill:var(--ink);font-weight:600" });
-      [0, top / 2, top].forEach((v) => {
-        S("line", { x1: l, x2: w - r, y1: yv(v), y2: yv(v), class: "grid" }, svg);
-        T(svg, l - 6, yv(v) + 4, fmt.format(v), { "text-anchor": "end", class: "mono" });
-      });
-      Object.entries(P.weekly.epoch_starts).forEach(([e, iso]) => {
-        if (e === "E1" || e === "E4") return;
-        const xx = x(wk(iso) + 0.5);
-        S("line", { x1: xx, x2: xx, y1: t - 4, y2: h - b, style: "stroke:var(--ink-3);stroke-dasharray:2 3" }, svg);
-      });
-      if (type === "bars") {
-        const bw = Math.max(1, x(1) - x(0) - 1.5);
-        data.forEach((d, i) => d.value != null && S("rect", { x: x(i) + 0.75, y: yv(d.value), width: bw, height: yv(0) - yv(d.value), rx: 1, style: "fill:var(--accent);opacity:.85" }, svg));
-      } else {
-        let path = "", pen = false;
-        data.forEach((d, i) => {
-          if (d.value == null) { pen = false; return; }
-          path += (pen ? "L" : "M") + x(i + 0.5) + "," + yv(Math.min(d.value, top)); pen = true;
-        });
-        S("path", { d: path, style: "fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" }, svg);
-      }
-      (P.breakpoints[key] || []).slice(0, 3).forEach((bp) => {
-        const xx = x(wk(bp.week) + 0.5);
-        S("path", { d: `M${xx - 5},${t - 12} L${xx + 5},${t - 12} L${xx},${t - 5} Z`, style: "fill:var(--ink)", "data-tip": `Break in the week of ${bp.week}<br><span class="num">${bp.mean_before.toFixed(1)} → ${bp.mean_after.toFixed(1)}</span>` }, svg);
-      });
-      // Invisible week-wide hit areas carry the hover layer.
-      data.forEach((d, i) => S("rect", { x: x(i), y: t, width: x(1) - x(0), height: h - b - t, style: "fill:transparent", "data-tip": `Week of ${d.week}<br><span class="num">${d.value == null ? "no decided PRs yet" : fmt.format(Math.round(d.value * 10) / 10)}</span>` }, svg));
-      [["2025-07-01", "Jul ’25"], ["2026-01-01", "Jan ’26"], ["2026-07-01", "Jul ’26"]].forEach(([iso, lab]) => T(svg, x(wk(iso)), h - 4, lab, { class: "mono", "text-anchor": "middle" }));
-    });
-  }
-
-  function legendHtml(keys) {
-    return keys.map((k) => `<span><i style="background:${gcol[k]}"></i>${glabel[k]}</span>`).join("");
-  }
-
-  function disp() {
-    const host = document.getElementById("disp");
-    const rows = P.dispositions.filter((r) => r.epoch !== "all");
-    const w = W(host), lw = 96, rowH = 30, gapY = 14, h = rows.length * (rowH + gapY);
-    const svg = svgIn(host, w, h, "Outcomes by era");
-    const order = GROUPS.map((g) => g.k);
-    rows.forEach((r, i) => {
-      const n = order.reduce((a, k) => a + (r[k] || 0), 0);
-      const y = i * (rowH + gapY);
-      T(svg, 0, y + 13, ERA[r.epoch], { style: "fill:var(--ink);font-weight:600" });
-      T(svg, 0, y + 27, fmt.format(n) + " PRs", { class: "mono" });
-      let x = lw;
-      const sc = (w - lw) / n;
-      order.forEach((k) => {
-        const v = r[k] || 0;
-        if (!v) return;
-        const ww = v * sc;
-        S("rect", { x: x, y, width: Math.max(0.5, ww - 2), height: rowH, rx: 2, style: `fill:${gcol[k]}`, "data-tip": `${ERA[r.epoch]} · ${esc(glabel[k])}<br><span class="num">${fmt.format(v)} PRs · ${(100 * v / n).toFixed(1)}%</span>` }, svg);
-        if (ww > 38) T(svg, x + 6, y + 19, Math.round(100 * v / n) + "%", { class: "val", style: `fill:${k === "C" || k === "O" ? "var(--on-fill-dark)" : "var(--on-fill)"};pointer-events:none` });
-        x += ww;
-      });
-    });
-    document.getElementById("disp-legend").innerHTML = legendHtml(order);
-  }
-
-  function curves() {
-    const host = document.getElementById("curves");
-    const w = W(host), h = 260, l = 36, r = 104, t = 12, b = 28;
-    const svg = svgIn(host, w, h, "Cumulative share of PRs with maintainer engagement by day");
-    const days = P.incidence.grid_days;
-    const x = (d) => lin(Math.log(1), Math.log(90), l, w - r)(Math.log(d));
-    const y = lin(0, 30, h - b, t);
-    [0, 10, 20, 30].forEach((v) => { S("line", { x1: l, x2: w - r, y1: y(v), y2: y(v), class: "grid" }, svg); T(svg, l - 6, y(v) + 4, v + "%", { "text-anchor": "end", class: "mono" }); });
-    days.forEach((d) => T(svg, x(d), h - 8, d === 1 ? "1 day" : d + "d", { "text-anchor": "middle", class: "mono" }));
-    [["E1", "--c-e1"], ["E2", "--c-e2"], ["Q", "--c-e3"]].forEach(([e, c]) => {
-      const vals = P.incidence[e].engaged.map((v) => v * 100);
-      S("path", { d: vals.map((v, i) => (i ? "L" : "M") + x(days[i]) + "," + y(v)).join(""), style: `fill:none;stroke:var(${c});stroke-width:2;stroke-linejoin:round;stroke-linecap:round` }, svg);
-      vals.forEach((v, i) => S("circle", { cx: x(days[i]), cy: y(v), r: 4, style: `fill:var(${c});stroke:var(--pane);stroke-width:2`, "data-tip": `${ERA[e]} · within ${days[i]} day${days[i] > 1 ? "s" : ""}<br><span class="num">${v.toFixed(1)}% engaged</span>` }, svg));
-      const last = vals[vals.length - 1];
-      T(svg, x(90) + 12, y(last) + 4, `${ERA[e]} ${last < 10 ? last.toFixed(1) : Math.round(last)}%`, { style: "fill:var(--ink)" });
-    });
-  }
-
   function hbars(host, rows, opts) {
     const w = W(host), lw = opts.lw || 150, rowH = 26, h = rows.length * rowH + 6, rr = 64;
     const svg = svgIn(host, w, h, opts.label);
@@ -683,42 +560,6 @@ const DATA = /*__DATA__*/{};
       if (r.lo != null) S("line", { x1: x(r.lo), x2: x(r.hi), y1: y + 13, y2: y + 13, style: "stroke:var(--ink);stroke-width:1.5;opacity:.7" }, svg);
       T(svg, Math.max(x(r.pp), r.hi != null ? x(r.hi) : 0) + 8, y + 17, `${Math.round(r.pp)}%`, { class: "val" });
       T(svg, w, y + 17, "n=" + fmt.format(r.n), { "text-anchor": "end", class: "mono" });
-    });
-  }
-
-  function sweep() {
-    const m = P.mass, c = m.closed, o = m.left_open;
-    const host = document.getElementById("sweep");
-    const rows = [
-      ["Had a rival PR open", c.has_rival.pp, o.has_rival.pp],
-      ["Author's first PR", c.first_pr.pp, o.first_pr.pp],
-      ["Ever had a maintainer conversation", c.ever_engaged.pp, o.ever_engaged.pp],
-      ["Had a bot review or comment", c.had_bot_review_or_comment.pp, o.had_bot_review_or_comment.pp],
-    ];
-    const w = W(host), lw = Math.min(230, w * 0.42), blockH = 52, h = rows.length * blockH + 24;
-    const svg = svgIn(host, w, h, "Swept PRs compared with PRs left open");
-    const x = lin(0, 100, lw, w - 44);
-    S("rect", { x: lw, y: 0, width: 10, height: 10, rx: 2, style: "fill:var(--c-swept)" }, svg); T(svg, lw + 16, 9, "Closed in the sweep (265)", {});
-    S("rect", { x: lw + 200, y: 0, width: 10, height: 10, rx: 2, style: "fill:var(--ink-3)" }, svg); T(svg, lw + 216, 9, "Left open that day (2,217)", {});
-    rows.forEach(([label, a, b], i) => {
-      const y = 24 + i * blockH;
-      T(svg, lw - 10, y + 20, label, { "text-anchor": "end", style: "fill:var(--ink)" });
-      [[a, "--c-swept"], [b, "--ink-3"]].forEach(([v, col], j) => {
-        S("rect", { x: lw, y: y + j * 18, width: Math.max(1.5, x(v) - lw), height: 14, rx: 3, style: `fill:var(${col})`, "data-tip": `${esc(label)}<br><span class="num">${j ? "left open" : "swept"}: ${v.toFixed(1)}%</span>` }, svg);
-        T(svg, x(v) + 6, y + j * 18 + 11, v.toFixed(v < 10 ? 1 : 0) + "%", { class: "val" });
-      });
-    });
-    const st = m.cited_target_status;
-    const seg = [["Still open", st.open || 0, "--c-open"], ["Merged or absorbed", (st.merged || 0) + (st.absorbed || 0), "--c-success"], ["Closed by author", st.self_closed || 0, "--c-self"], ["Superseded", st.superseded_duplicate || 0, "--c-super"], ["Swept too", (st.mass_closed || 0) + (st.bot_admin_closed || 0), "--c-swept"]];
-    const tot = seg.reduce((a, s) => a + s[1], 0);
-    const th = document.getElementById("sweep-targets");
-    const sw = svgIn(th, W(th), 34, "Status of the PRs the sweep kept open");
-    let xx = 0;
-    seg.forEach(([lab, v, col]) => {
-      const ww = (v / tot) * W(th);
-      S("rect", { x: xx, y: 0, width: Math.max(0.5, ww - 2), height: 30, rx: 3, style: `fill:var(${col})`, "data-tip": `${lab}<br><span class="num">${v} of ${tot}</span>` }, sw);
-      if (ww > 70) T(sw, xx + 8, 20, `${lab} ${v}`, { class: "val", style: `fill:${col === "--c-open" ? "var(--ink)" : "var(--on-fill)"};pointer-events:none` });
-      xx += ww;
     });
   }
 
@@ -830,47 +671,6 @@ const DATA = /*__DATA__*/{};
     ], { max: 80, label: "Acceptance by response time", lw: 130 });
   }
 
-  function artefacts() {
-    const host = document.getElementById("artefacts");
-    const NAMES = {
-      "maintainer review request (individual)": "Maintainer asks someone to review", "label: ready": "Label: ready", "label: verified": "Label: verified",
-      "omarchybot comment": "omarchybot comment", "AI code review (copilot, greptile)": "AI code review", "label: bug": "Label: bug",
-      "label: enhancement": "Label: enhancement", "maintainer review request (bulk)": "Bulk review request",
-    };
-    const rows = P.artefacts.filter((a) => NAMES[a.name] && a.hours != null).sort((a, b) => a.hours - b.hours);
-    const w = Math.max(560, W(host)), lw = 210, rr = 110, rowH = 30, h = rows.length * rowH + 44;
-    const svg = svgIn(host, w, h, "Timing of triage signals before the decision");
-    const lg = (v) => Math.log10(v);
-    const x = (hrs) => lin(lg(0.1), lg(1000), w - rr, lw)(lg(Math.max(0.1, hrs)));
-    [[0.1667, "10 min"], [1, "1 h"], [24, "1 day"], [168, "1 wk"]].forEach(([v, lab]) => {
-      S("line", { x1: x(v), x2: x(v), y1: 6, y2: h - 30, class: "grid" }, svg);
-      T(svg, x(v), h - 12, lab, { "text-anchor": "middle", class: "mono" });
-    });
-    S("line", { x1: w - rr + 6, x2: w - rr + 6, y1: 0, y2: h - 30, style: "stroke:var(--ink);stroke-width:2" }, svg);
-    T(svg, w - rr + 12, h - 12, "decision", { class: "mono", style: "fill:var(--ink)" });
-    rows.forEach((a, i) => {
-      const y = 14 + i * rowH;
-      const lift = a.with / a.without;
-      const col = lift > 1.25 ? "var(--c-success)" : lift < 0.8 ? "var(--c-reject)" : "var(--ink-3)";
-      T(svg, lw - 12, y + 4, NAMES[a.name], { "text-anchor": "end", style: "fill:var(--ink)" });
-      S("line", { x1: x(a.hours), x2: w - rr + 6, y1: y, y2: y, style: `stroke:${col};stroke-width:1.5;opacity:.35` }, svg);
-      S("circle", { cx: x(a.hours), cy: y, r: 6, style: `fill:${col};stroke:var(--pane);stroke-width:2`, "data-tip": `${esc(NAMES[a.name])}<br><span class="num">median ${a.hours < 1 ? Math.round(a.hours * 60) + " min" : a.hours < 48 ? Math.round(a.hours) + " h" : Math.round(a.hours / 24) + " days"} before the decision · on ${fmt.format(a.n)} PRs</span>` }, svg);
-      T(svg, w, y + 4, `${Math.round(a.with)}% vs ${Math.round(a.without)}%`, { "text-anchor": "end", class: "val" });
-    });
-  }
-
-  function rewrites() {
-    const ex = P.rewrites.examples.filter((e) => e.accepted !== false).slice(0, 9);
-    document.getElementById("rewrites").innerHTML = ex.map((e) =>
-      `<tr><td><a href="https://github.com/basecamp/omarchy/pull/${e.number}" target="_blank" rel="noopener">#${e.number}</a></td><td><div class="b">${esc(e.before)}</div><div class="a">${esc(e.after)}</div></td></tr>`).join("");
-  }
-
-  function voices() {
-    const OUTC = { maintainer_rejected: "rejected", merged: "merged", superseded_duplicate: "superseded", mass_closed: "closed", absorbed: "absorbed" };
-    document.getElementById("voices").innerHTML = P.voices.filter((v) => ![3330, 1296].includes(v.number)).map((v) =>
-      `<figure class="quote"><p class="theme">${esc(v.theme)}</p><blockquote>${esc(v.quote).replace(/`([^`]+)`/g, "<code>$1</code>")}</blockquote><footer>${esc(v.speaker)} · ${ERA[v.epoch] || v.epoch} · <a href="https://github.com/basecamp/omarchy/pull/${v.number}" target="_blank" rel="noopener">#${v.number}</a> · ${OUTC[v.outcome] || v.outcome}</footer></figure>`).join("");
-  }
-
   function playbook() {
     const G = [
       ["Getting attention", "before anyone looks", [
@@ -900,16 +700,6 @@ const DATA = /*__DATA__*/{};
           `<span class="chip${i === 0 ? " stage" : ""}${/^high/.test(c) ? " warn" : ""}">${c}</span>`).join("")}</div></article>`).join("")}</div></div>`).join("");
   }
 
-  function userPrs() {
-    const host = document.getElementById("user-prs");
-    host.innerHTML = Object.entries(P.user_prs).filter(([, v]) => v && v.title).map(([n, v]) => {
-      const now = v.now || {};
-      const created = now.created ? new Date(now.created).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "";
-      const meter = (label, val, col) => `<div class="meter"><div class="row"><span>${label}</span><b>${val < 10 ? val.toFixed(1) : Math.round(val)}%</b></div><div class="track"><div class="fill" style="width:${Math.max(1, val)}%;background:var(${col})"></div></div></div>`;
-      return `<article class="pr"><div class="no"><a href="https://github.com/basecamp/omarchy/pull/${n}" target="_blank" rel="noopener">#${n}</a> · opened ${created} · ${KIND[now.kind] || ""} · ${fmt.format(now.lines_changed || 0)} lines</div><div class="t">${esc(v.title)}</div>${meter("Chance a maintainer engages within 14 days", v.p_engaged_14d_pp, "--accent")}${meter("Chance it is accepted once one does", v.p_success_if_engaged_pp, "--c-success")}</article>`;
-    }).join("");
-  }
-
   function renderAll() {
     flow(); kinds(); topics(); decomp(); feedback();
   }
@@ -919,3 +709,5 @@ const DATA = /*__DATA__*/{};
   let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(renderAll, 150); });
 })();
 </script>
+</body>
+</html>

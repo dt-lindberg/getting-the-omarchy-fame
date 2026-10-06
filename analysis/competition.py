@@ -7,8 +7,8 @@ comparisons because transitive clusters chain through absorbing PRs (largest 258
 import numpy as np
 import pandas as pd
 
-from analysis.context.data import EPOCH_ORDER, GROUPS, engaged_within, in_group, load_prs
-from analysis.context.effects import adjusted_effects
+from analysis.data import EPOCH_ORDER, GROUPS, engaged_within, in_group, load_prs
+from analysis.effects import adjusted_effects
 
 SMALL_CLUSTER_MAX = 10
 RIVAL_CONTROLS = ("direct_competitors_open_at_creation",)

@@ -1,24 +1,23 @@
 """Shared loading and small summaries for the merged analysis.
 
-Wraps analysis.context.data (population rule, dispositions, engagement flags) and adds
+Wraps analysis.data (population rule, dispositions, engagement flags) and adds
 the columns every core module needs, so none of them re-derives them.
 """
 
 import numpy as np
 import pandas as pd
 
-from analysis.context.data import EPOCH_ORDER, GROUPS, engaged_within, in_group, load_community
-from analysis.context.stats import Z95, round_sig
+from analysis.data import EPOCH_ORDER, GROUPS, engaged_within, in_group, load_community
+from analysis.stats import Z95, round_sig
 from funnel.constants import DERIVED, ROOT
 
 RESULTS_FILE = ROOT / "data" / "results" / "analysis.json"
-FINDINGS_FILE = ROOT / "docs" / "findings.md"
 GROUP_NAMES = list(GROUPS)
 KINDS = ["bug_fix", "feature", "performance", "security", "docs", "refactor", "packaging", "other"]
 # Share of events above which a cell is flagged as thin on the page.
 THIN_N = 30
 
-__all__ = ["EPOCH_ORDER", "GROUPS", "GROUP_NAMES", "KINDS", "THIN_N", "DERIVED", "RESULTS_FILE", "FINDINGS_FILE",
+__all__ = ["EPOCH_ORDER", "GROUPS", "GROUP_NAMES", "KINDS", "THIN_N", "DERIVED", "RESULTS_FILE",
            "in_group", "round_sig", "load_core", "rate", "median_quartiles"]
 
 

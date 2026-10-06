@@ -3,8 +3,8 @@
 import numpy as np
 import pandas as pd
 
-from analysis.context.data import engaged_within
-from analysis.core.common import DERIVED
+from analysis.data import engaged_within
+from analysis.common import DERIVED
 from funnel.constants import EPOCH_STARTS
 
 MIN_SEGMENT_WEEKS = 4

@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from analysis.core.common import GROUP_NAMES, KINDS, in_group, rate
+from analysis.common import GROUP_NAMES, KINDS, in_group, rate
 
 TOPIC_FILE_COLUMNS = ["topic", "kind"]
 

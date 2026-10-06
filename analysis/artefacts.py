@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-from analysis.core.common import DERIVED, in_group, median_quartiles, rate
+from analysis.common import DERIVED, in_group, median_quartiles, rate
 
 LABELS_OF_INTEREST = ["verified", "ready", "bug", "enhancement", "duplicate", "compatibility", "documentation"]
 EVENT_COLUMNS = ["number", "ts", "type", "actor", "actor_role", "details", "bulk"]

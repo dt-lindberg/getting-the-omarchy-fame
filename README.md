@@ -20,7 +20,7 @@ Snapshot taken on 6 October 2026, in `data/snapshot/` (also attached to the [dat
 | `community_for_topics.jsonl.gz` | Community PR titles and opening text, as given to the topic classifier |
 | `commits.parquet` | `git log origin/quattro` with the area each commit touches |
 
-Other committed outputs: `data/labels/topics.*` (kind and topic of each PR, labelled by Claude Haiku), `data/results/analysis.json` (all results) and `data/results/page.json` (what the page draws).
+Other committed outputs: `data/labels/topics.*` (kind and topic of each PR, labelled by Claude Haiku), `data/results/analysis.json` (all results), and `data/results/page.json` and `dots.json` (what the page draws).
 
 ## Reproduce
 
@@ -32,11 +32,15 @@ uv run python scripts/unpack_data.py       # snapshot -> data/raw/ and data/deri
 uv run python area_activity.py             # daily activity per area
 uv run python build_funnel.py --stage all  # per-PR funnel tables (about 90 s)
 uv run python run_analysis.py              # models and summaries -> data/results/analysis.json
-uv run python site/make_page_data.py       # -> data/results/page.json
-uv run python scripts/export_dots.py       # -> site/dots.json
+uv run python site/make_page_data.py       # -> data/results/page.json, dots.json
 uv run python site/build_page.py           # -> docs/index.html
+uv run pytest                              # checks of the funnel rules
 ```
 
 To refresh the data instead: `fetch_timelines.py` pulls timelines with the `gh` CLI, and `build_commits.py` reads a local clone of Omarchy (set `OMARCHY_REPO`, default `../omarchy`).
 
 Working notes, including the brief and the classifier prompts, are in `notes/`.
+
+## Licence
+
+The code is under the [MIT licence](LICENSE). The snapshot holds public GitHub content (PR titles, descriptions, comments), which stays with its authors under [GitHub's terms](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service).

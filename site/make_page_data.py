@@ -1,10 +1,22 @@
-"""Distil analysis.json into the compact shapes the page draws (site/page.json -> data/results/page.json)."""
+"""Distil the analysis results into the two small JSON files the page draws.
+
+page.json holds the aggregates behind each chart; dots.json holds one record per
+community PR for the hero dot chart. Both live in data/results/.
+"""
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-A = json.loads((ROOT / "data/results/analysis.json").read_text())
+import pandas as pd
 
+ROOT = Path(__file__).resolve().parent.parent
+RESULTS = ROOT / "data" / "results"
+PRS_TABLE = ROOT / "data" / "derived" / "prs.parquet"
+LAUNCH = pd.Timestamp("2025-06-26", tz="UTC")
+SECONDS_PER_DAY = 86_400
+# Long titles are trimmed for the dot tooltip to keep the payload small.
+TITLE_MAX_CHARS = 90
+
+# Disposition -> one-letter outcome group shared by the flow chart, the bars and the dots.
 OUTCOME_GROUP = {
     "merged": "M", "absorbed": "A", "superseded_duplicate": "S", "self_closed": "C",
     "mass_closed": "W", "bot_admin_closed": "W", "other_closed": "W", "maintainer_rejected": "R", "open": "O",
@@ -20,115 +32,156 @@ DECOMP_TERMS = {
     "ai_marker": "Says it was AI-generated", "title_conventional_prefix": "fix:/feat: title prefix",
     "author_open_prs_at_creation": "Author has more PRs open",
 }
+KIND_METRICS = ("n", "engaged14", "success_if_engaged", "success_decided")
 
 
-def sankey() -> dict:
+def sankey(analysis: dict) -> dict:
+    """Collapse the attention -> disposition flows onto the page's outcome groups.
+
+    Args:
+        analysis: The full analysis.json contents.
+
+    How:
+        Sums link counts per (attention class, outcome group) pair.
+
+    Returns:
+        Attention classes and [attention, group, count] flows.
+    """
     flows = {}
-    for link in A["sankey"]["links"]:
+    for link in analysis["sankey"]["links"]:
         key = (link["attention"], OUTCOME_GROUP.get(link["outcome"], "W"))
         flows[key] = flows.get(key, 0) + link["n"]
-    return {"attention": A["sankey"]["attention"], "flows": [[a, g, n] for (a, g), n in flows.items()]}
+    return {"attention": analysis["sankey"]["attention"], "flows": [[a, g, n] for (a, g), n in flows.items()]}
 
 
-def quattro_incidence() -> dict:
-    """Cumulative incidence of maintainer engagement for the pooled Quattro era (from 2026-08-14)."""
-    import numpy as np
-    import pandas as pd
-    from lifelines import AalenJohansenFitter
+def dispositions(analysis: dict) -> list:
+    """Outcome-group counts per era, with Quattro and Institution pooled as one era.
 
-    d = pd.read_parquet(ROOT / "data/derived/prs.parquet")
-    c = d[(d.author_group == "community") & (d.created_at >= "2026-08-14")]
-    fetched = pd.Timestamp(A["meta"]["fetched_at"])
-    eng = c.h_maintainer_engagement_nobulk
-    res = (c.resolved_at - c.created_at).dt.total_seconds() / 3600
-    cen = (fetched - c.created_at).dt.total_seconds() / 3600
-    # Engagement is the event; a decision without engagement competes with it; open PRs are censored.
-    t = np.where(eng.notna(), eng, np.where(c.resolved_at.notna(), res, cen))
-    e = np.where(eng.notna(), 1, np.where(c.resolved_at.notna(), 2, 0))
-    aj = AalenJohansenFitter(calculate_variance=False).fit(np.maximum(t, 1e-3) / 24, e, event_of_interest=1)
-    cif = aj.cumulative_density_.iloc[:, 0]
-    days = A["attention"]["incidence"]["grid_days"]
-    return {"n": int(len(c)), "engaged": [round(float(cif[cif.index <= g].iloc[-1]), 4) for g in days]}
+    Args:
+        analysis: The full analysis.json contents.
 
+    How:
+        Regroups each epoch's disposition counts, then sums E3 and E4 into "Q"
+        because the page treats everything from 2026-08-14 as Quattro.
 
-def dispositions() -> list:
+    Returns:
+        Rows for E1, E2, Q and all, each mapping outcome group to count.
+    """
     rows = []
-    for c in A["dispositions"]["counts"]:
+    for counts in analysis["dispositions"]["counts"]:
         groups = {}
-        for k, v in c.items():
-            if k == "epoch":
-                continue
-            g = OUTCOME_GROUP.get(k, "W")
-            groups[g] = groups.get(g, 0) + v
-        rows.append({"epoch": c["epoch"], **groups})
-    # Quattro and Institution are one era on the page: Quattro, from 2026-08-14.
-    q = {"epoch": "Q"}
-    for r in rows:
-        if r["epoch"] in ("E3", "E4"):
-            for k, v in r.items():
-                if k != "epoch":
-                    q[k] = q.get(k, 0) + v
-    return [r for r in rows if r["epoch"] not in ("E3", "E4")][:2] + [q] + [r for r in rows if r["epoch"] == "all"]
+        for disposition, n in counts.items():
+            if disposition != "epoch":
+                group = OUTCOME_GROUP.get(disposition, "W")
+                groups[group] = groups.get(group, 0) + n
+        rows.append({"epoch": counts["epoch"], **groups})
+    quattro = {"epoch": "Q"}
+    for row in rows:
+        if row["epoch"] in ("E3", "E4"):
+            for group, n in row.items():
+                if group != "epoch":
+                    quattro[group] = quattro.get(group, 0) + n
+    by_epoch = {row["epoch"]: row for row in rows}
+    return [by_epoch["E1"], by_epoch["E2"], quattro, by_epoch["all"]]
 
 
-def decomposition() -> list:
+def decomposition(analysis: dict) -> list:
+    """Attention, conversion and total effects for the features the page names.
+
+    Args:
+        analysis: The full analysis.json contents.
+
+    How:
+        Keeps only terms with a plain-English label in DECOMP_TERMS.
+
+    Returns:
+        One row per labelled term.
+    """
+    return [{"label": DECOMP_TERMS[r["term"]], "term": r["term"],
+             "att": r.get("attention"), "conv": r.get("conversion"), "tot": r.get("total")}
+            for r in analysis["decomposition"]["all"] if r["term"] in DECOMP_TERMS]
+
+
+def kinds(analysis: dict) -> list:
+    """Per-kind rates by era, reduced to the metrics the kind chart draws.
+
+    Args:
+        analysis: The full analysis.json contents.
+
+    How:
+        Copies KIND_METRICS for each era group; missing cells become empty.
+
+    Returns:
+        One row per kind, keyed by era group.
+    """
     out = []
-    for r in A["decomposition"]["all"]:
-        if r["term"] in DECOMP_TERMS:
-            out.append({"label": DECOMP_TERMS[r["term"]], "term": r["term"],
-                        "att": r.get("attention"), "conv": r.get("conversion"), "tot": r.get("total")})
-    return out
-
-
-def kinds() -> list:
-    out = []
-    for k in A["kind_topic"]["kinds"]:
-        row = {"kind": k["label"]}
-        for g in A["kind_topic"]["groups"]:
-            cell = k.get(g) or {}
-            row[g] = {m: cell.get(m) for m in ("n", "engaged14", "success_if_engaged", "success_decided")}
+    for kind in analysis["kind_topic"]["kinds"]:
+        row = {"kind": kind["label"]}
+        for group in analysis["kind_topic"]["groups"]:
+            cell = kind.get(group) or {}
+            row[group] = {metric: cell.get(metric) for metric in KIND_METRICS}
         out.append(row)
     return out
 
 
-def artefacts() -> list:
-    out = []
-    for a in A["artefacts"]:
-        allg = a.get("all") or {}
-        out.append({"name": a["artefact"], "n": a["n_with"],
-                    "with": (allg.get("with") or {}).get("pp"), "without": (allg.get("without") or {}).get("pp"),
-                    "hours": (a.get("hours_before_decision") or {}).get("success", {}).get("median")})
-    return out
+def page_data(analysis: dict) -> dict:
+    """Assemble everything the page's charts read from page.json.
+
+    Args:
+        analysis: The full analysis.json contents.
+
+    How:
+        Picks and reshapes only the results the published sections draw.
+
+    Returns:
+        The page.json contents.
+    """
+    feedback = analysis["feedback"]
+    return {
+        "headline": analysis["headline"],
+        "sankey": sankey(analysis),
+        "dispositions": dispositions(analysis),
+        "decomposition": decomposition(analysis),
+        "kinds": kinds(analysis),
+        "topics": analysis["kind_topic"]["topics"],
+        "feedback": {"kind": feedback["by_response_kind"]["all_decided"], "latency": feedback["by_latency"]["all_decided"]},
+    }
+
+
+def dots_data(prs: pd.DataFrame) -> dict:
+    """One compact record per community PR since launch, oldest first.
+
+    Args:
+        prs: The funnel's per-PR table (data/derived/prs.parquet).
+
+    How:
+        Stores days since launch rather than timestamps, and positional rows
+        rather than objects, to keep the inlined payload small.
+
+    Returns:
+        Launch date, field names and the rows.
+    """
+    community = prs[(prs["author_group"] == "community") & (prs["created_at"] >= LAUNCH)].sort_values("created_at")
+    rows = [[
+        int(pr.number),
+        round((pr.created_at - LAUNCH).total_seconds() / SECONDS_PER_DAY, 2),
+        OUTCOME_GROUP[pr.disposition],
+        int(pd.notna(pr.h_maintainer_engagement_nobulk)),
+        int(bool(pr.mass_close_event)),
+        (pr.title or "")[:TITLE_MAX_CHARS],
+        pr.topic or "",
+    ] for pr in community.itertuples()]
+    return {"t0": LAUNCH.date().isoformat(), "fields": ["n", "day", "g", "eng", "mass", "title", "topic"], "rows": rows}
 
 
 def main() -> None:
-    fb = A["feedback"]
-    page = {
-        "headline": A["headline"],
-        "sankey": sankey(),
-        "dispositions": dispositions(),
-        "incidence": {**A["attention"]["incidence"], "Q": quattro_incidence()},
-        "weekly": A["weekly"],
-        "breakpoints": A["breakpoints"],
-        "decomposition": decomposition(),
-        "kinds": kinds(),
-        "kind_groups": A["kind_topic"]["groups"],
-        "topics_matrix": A["kind_topic"]["matrix"],
-        "topics": A["kind_topic"]["topics"],
-        "feedback": {"kind": fb["by_response_kind"]["all_decided"], "latency": fb["by_latency"]["all_decided"],
-                     "adjusted": fb["adjusted"], "landmark": fb["landmark"], "last": fb["last_response_to_decision_hours"],
-                     "cohort": fb["cohort"]},
-        "artefacts": artefacts(),
-        "rewrites": A["rewrites"],
-        "voices": A["voices"],
-        "mass": A["mass_close"],
-        "competition": A["context"]["competition"],
-        "dhh_focus": A["context"]["dhh_focus"],
-        "user_prs": A["user_prs"],
-        "robustness": A["robustness"]["time_holdout"],
-    }
-    (ROOT / "data/results/page.json").write_text(json.dumps(page, separators=(",", ":")))
-    print("page.json", (ROOT / "data/results/page.json").stat().st_size // 1024, "KiB")
+    """Write data/results/page.json and data/results/dots.json."""
+    analysis = json.loads((RESULTS / "analysis.json").read_text())
+    outputs = {"page.json": page_data(analysis), "dots.json": dots_data(pd.read_parquet(PRS_TABLE))}
+    for name, payload in outputs.items():
+        path = RESULTS / name
+        path.write_text(json.dumps(payload, separators=(",", ":")))
+        print(f"{path.relative_to(ROOT)} {path.stat().st_size // 1024} KiB")
 
 
 if __name__ == "__main__":

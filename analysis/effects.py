@@ -5,8 +5,8 @@ Used by the competition and creation-context modules so both report effects the 
 
 import pandas as pd
 
-from analysis.context.data import CONTROL_BINARY, CONTROL_CONTINUOUS, CONTROL_LOGGED
-from analysis.context.stats import fit_logit, marginal_effects, standardise
+from analysis.data import CONTROL_BINARY, CONTROL_CONTINUOUS, CONTROL_LOGGED
+from analysis.stats import fit_logit, marginal_effects, standardise
 
 
 def adjusted_effects(df: pd.DataFrame, outcome: pd.Series, logged: list[str], binary: list[str],

@@ -3,10 +3,10 @@
 import json
 import warnings
 
-from analysis.context.data import load_prs
-from analysis.core import (artefacts, attention, context_effects, conversion, feedback, headline, kind_topic,
-                           robustness, users, voices, weekly)
-from analysis.core.common import RESULTS_FILE, load_core, round_sig
+from analysis.data import load_prs
+from analysis import (artefacts, attention, context_effects, conversion, feedback, headline, kind_topic, robustness,
+                      weekly)
+from analysis.common import RESULTS_FILE, load_core, round_sig
 
 SCHEMA_NOTE = (
     "Population: community PRs opened since 2025-06-26. Attention = first maintainer engagement with bulk actions removed. "
@@ -29,9 +29,9 @@ def build() -> dict:
         "attention": stage1, "conversion": {k: v for k, v in stage2.items() if k != "decomposition"},
         "decomposition": stage2["decomposition"], "kind_topic": kind_topic.run(df),
         "context": context_effects.run(df, models), "feedback": feedback.run(df),
-        "artefacts": rew["artefacts"], "rewrites": rew["rewrites"], "voices": voices.run(df),
+        "artefacts": rew["artefacts"], "rewrites": rew["rewrites"],
         "weekly": {k: weekly_out[k] for k in ("series", "labels", "epoch_starts", "note")},
-        "breakpoints": weekly_out["breakpoints"], "robustness": robustness.run(df), "user_prs": users.run(df)}
+        "breakpoints": weekly_out["breakpoints"], "robustness": robustness.run(df)}
 
 
 def main() -> None:

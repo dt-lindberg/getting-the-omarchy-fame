@@ -3,9 +3,9 @@
 import numpy as np
 import pandas as pd
 
-from analysis.context.stats import aalen_johansen
-from analysis.core.common import EPOCH_ORDER, GROUPS, in_group, median_quartiles
-from analysis.core.models import fit_by_group, spec
+from analysis.stats import aalen_johansen
+from analysis.common import EPOCH_ORDER, GROUPS, in_group, median_quartiles
+from analysis.models import fit_by_group, spec
 
 GRID_DAYS = [1, 3, 7, 14, 30, 90]
 
