@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB" data-theme="rose-pine" data-mode="light">
+<html lang="en-GB" data-theme="tokyo-night" data-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -17,17 +17,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <script>
-// Every installed Omarchy theme; the viewer's last choice is applied before first paint.
+// Every installed Omarchy theme, applied before first paint: the viewer's last choice, else Rosé Pine
+// for a light system preference and Tokyo Night for dark or unknown.
 window.OMARCHY_THEMES = /*__THEME_LIST__*/[];
 (() => {
-  let id = "rose-pine";
+  let id = window.matchMedia?.("(prefers-color-scheme: light)").matches ? "rose-pine" : "tokyo-night";
   try { id = localStorage.getItem("omarchy-theme") || id; } catch (e) {}
   const t = OMARCHY_THEMES.find((x) => x.id === id);
   if (t) { document.documentElement.dataset.theme = t.id; document.documentElement.dataset.mode = t.mode; }
 })();
 </script>
 <style>
-/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Any Omarchy theme; Rosé Pine by default. */
+/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Any Omarchy theme; Rosé Pine or Tokyo Night by default, following the system's light or dark setting. */
 :root {
   --bg: #faf4ed; --pane: #fffaf3; --line: #e6ddd5; --ink: #575279; --ink-2: #6e6a86; --ink-3: #8a85a0;
   --accent: #286983; --bar: #f2e9e1;

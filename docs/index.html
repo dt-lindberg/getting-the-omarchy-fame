@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB" data-theme="rose-pine" data-mode="light">
+<html lang="en-GB" data-theme="tokyo-night" data-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -17,17 +17,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <script>
-// Every installed Omarchy theme; the viewer's last choice is applied before first paint.
+// Every installed Omarchy theme, applied before first paint: the viewer's last choice, else Rosé Pine
+// for a light system preference and Tokyo Night for dark or unknown.
 window.OMARCHY_THEMES = [{"id":"catppuccin","name":"Catppuccin","mode":"dark","bg":"#1e1e2e","ink":"#cdd6f4","accent":"#89b4fa","swatch":["#f38ba8","#f9e2af","#a6e3a1","#89b4fa","#f5c2e7"]},{"id":"catppuccin-latte","name":"Catppuccin Latte","mode":"light","bg":"#eff1f5","ink":"#4c4f69","accent":"#1e66f5","swatch":["#d20f39","#df8e1d","#40a02b","#1e66f5","#ea76cb"]},{"id":"ethereal","name":"Ethereal","mode":"dark","bg":"#060B1E","ink":"#ffcead","accent":"#7d82d9","swatch":["#ED5B5A","#E9BB4F","#92a593","#7d82d9","#c89dc1"]},{"id":"everforest","name":"Everforest","mode":"dark","bg":"#2d353b","ink":"#d3c6aa","accent":"#7fbbb3","swatch":["#e67e80","#dbbc7f","#a7c080","#7fbbb3","#d699b6"]},{"id":"flexoki-light","name":"Flexoki Light","mode":"light","bg":"#FFFCF0","ink":"#100F0F","accent":"#205EA6","swatch":["#D14D41","#D0A215","#879A39","#205EA6","#CE5D97"]},{"id":"gruvbox","name":"Gruvbox","mode":"dark","bg":"#282828","ink":"#d4be98","accent":"#7daea3","swatch":["#ea6962","#d8a657","#a9b665","#7daea3","#d3869b"]},{"id":"hackerman","name":"Hackerman","mode":"dark","bg":"#0B0C16","ink":"#ddf7ff","accent":"#82FB9C","swatch":["#50f872","#50f7d4","#4fe88f","#829dd4","#86a7df"]},{"id":"kanagawa","name":"Kanagawa","mode":"dark","bg":"#1f1f28","ink":"#dcd7ba","accent":"#dcd7ba","swatch":["#c34043","#c0a36e","#76946a","#7e9cd8","#957fb8"]},{"id":"last-horizon","name":"Last Horizon","mode":"dark","bg":"#0c0b0c","ink":"#FAFCFB","accent":"#b59790","swatch":["#c38b7b","#6B5E73","#87a9b0","#b59790","#c4d8e2"]},{"id":"lumon","name":"Lumon","mode":"dark","bg":"#16242d","ink":"#d6e2ee","accent":"#8bc9eb","swatch":["#4d86b0","#6fa4c9","#5e95bc","#6fb8e3","#8bc9eb"]},{"id":"lupine","name":"Lupine","mode":"light","bg":"#fafafa","ink":"#212121","accent":"#3264eb","swatch":["#c900c4","#026fde","#4a2fd0","#3264eb","#8a4ad7"]},{"id":"matte-black","name":"Matte Black","mode":"dark","bg":"#121212","ink":"#bebebe","accent":"#e68e0d","swatch":["#D35F5F","#b91c1c","#FFC107","#e68e0d","#D35F5F"]},{"id":"miasma","name":"Miasma","mode":"dark","bg":"#222222","ink":"#c2c2b0","accent":"#78824b","swatch":["#685742","#b36d43","#5f875f","#78824b","#bb7744"]},{"id":"nord","name":"Nord","mode":"dark","bg":"#2e3440","ink":"#d8dee9","accent":"#81a1c1","swatch":["#bf616a","#ebcb8b","#a3be8c","#81a1c1","#b48ead"]},{"id":"osaka-jade","name":"Osaka Jade","mode":"dark","bg":"#111c18","ink":"#C1C497","accent":"#509475","swatch":["#FF5345","#459451","#549e6a","#509475","#D2689C"]},{"id":"retro-82","name":"Retro-82","mode":"dark","bg":"#05182e","ink":"#f6dcac","accent":"#faa968","swatch":["#f85525","#e97b3c","#028391","#3f8f8a","#3f8f8a"]},{"id":"ristretto","name":"Ristretto","mode":"dark","bg":"#2c2525","ink":"#e6d9db","accent":"#f38d70","swatch":["#fd6883","#f9cc6c","#adda78","#f38d70","#a8a9eb"]},{"id":"rose-pine","name":"Rosé Pine","mode":"light","bg":"#faf4ed","ink":"#575279","accent":"#56949f","swatch":["#b4637a","#ea9d34","#286983","#56949f","#907aa9"]},{"id":"solitude","name":"Solitude","mode":"dark","bg":"#101315","ink":"#cacccc","accent":"#798186","swatch":["#565d60","#d9dbdc","#9fa5a9","#798186","#aeaeae"]},{"id":"tokyo-night","name":"Tokyo Night","mode":"dark","bg":"#1a1b26","ink":"#a9b1d6","accent":"#7aa2f7","swatch":["#f7768e","#e0af68","#9ece6a","#7aa2f7","#ad8ee6"]},{"id":"vantablack","name":"Vantablack","mode":"dark","bg":"#000000","ink":"#ffffff","accent":"#8d8d8d","swatch":["#a4a4a4","#cecece","#b6b6b6","#8d8d8d","#9b9b9b"]},{"id":"white","name":"White","mode":"light","bg":"#ffffff","ink":"#000000","accent":"#6e6e6e","swatch":["#2a2a2a","#4a4a4a","#3a3a3a","#1a1a1a","#2e2e2e"]}];
 (() => {
-  let id = "rose-pine";
+  let id = window.matchMedia?.("(prefers-color-scheme: light)").matches ? "rose-pine" : "tokyo-night";
   try { id = localStorage.getItem("omarchy-theme") || id; } catch (e) {}
   const t = OMARCHY_THEMES.find((x) => x.id === id);
   if (t) { document.documentElement.dataset.theme = t.id; document.documentElement.dataset.mode = t.mode; }
 })();
 </script>
 <style>
-/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Any Omarchy theme; Rosé Pine by default. */
+/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Any Omarchy theme; Rosé Pine or Tokyo Night by default, following the system's light or dark setting. */
 :root {
   --bg: #faf4ed; --pane: #fffaf3; --line: #e6ddd5; --ink: #575279; --ink-2: #6e6a86; --ink-3: #8a85a0;
   --accent: #286983; --bar: #f2e9e1;
