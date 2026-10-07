@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="rose-pine" data-mode="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -16,21 +16,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<script>
+// Every installed Omarchy theme; the viewer's last choice is applied before first paint.
+window.OMARCHY_THEMES = /*__THEME_LIST__*/[];
+(() => {
+  let id = "rose-pine";
+  try { id = localStorage.getItem("omarchy-theme") || id; } catch (e) {}
+  const t = OMARCHY_THEMES.find((x) => x.id === id);
+  if (t) { document.documentElement.dataset.theme = t.id; document.documentElement.dataset.mode = t.mode; }
+})();
+</script>
 <style>
-/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Rosé Pine Dawn by default, Rosé Pine when dark is chosen. */
+/* Layout: a tiled desktop. A waybar-style strip down the left edge whose workspaces are the chapters; each chapter is a tiled pane with gaps. Any Omarchy theme; Rosé Pine by default. */
 :root {
   --bg: #faf4ed; --pane: #fffaf3; --line: #e6ddd5; --ink: #575279; --ink-2: #6e6a86; --ink-3: #8a85a0;
   --accent: #286983; --bar: #f2e9e1;
-  --c-success: #1baf7a; --c-super: #2a78d6; --c-self: #eda100; --c-swept: #4a3aa7; --c-reject: #e34948; --c-open: #d9d2cf;
+  --c-success: #1baf7a; --c-super: #2a78d6; --c-self: #eda100; --c-swept: #4a3aa7; --c-reject: #e34948;
   --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --gap: 10px; --radius: 8px; --side: 56px;
 }
-:root[data-theme="dark"] {
-  --bg: #191724; --pane: #1f1d2e; --line: #2c2a40; --ink: #e0def4; --ink-2: #b5b1cc; --ink-3: #7f7a9a;
-  --accent: #9ccfd8; --bar: #1f1d2e;
-  --c-success: #199e70; --c-super: #3987e5; --c-self: #c98500; --c-swept: #9085e9; --c-reject: #e66767; --c-open: #403d52;
+/*__THEME_CSS__*/
+/* Panes, rules and the "still open" grey are derived from each theme's background and text. Chart colours only follow light or dark, since several themes are near-monochrome. */
+:root {
+  --pane: color-mix(in oklab, var(--bg) 55%, white); --line: color-mix(in oklab, var(--ink) 13%, var(--bg));
+  --c-open: color-mix(in oklab, var(--ink) 18%, var(--bg));
+}
+:root[data-mode="dark"] {
+  --pane: color-mix(in oklab, var(--bg) 94%, var(--ink)); --line: color-mix(in oklab, var(--ink) 16%, var(--bg));
+  --c-success: #199e70; --c-super: #3987e5; --c-self: #c98500; --c-swept: #9085e9; --c-reject: #e66767;
   color-scheme: dark;
 }
 
@@ -55,20 +70,37 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 }
 .waybar nav a[aria-current="true"] { background: var(--accent); color: var(--bar); }
 .waybar nav a:hover { color: var(--ink); }
-/* Theme toggle: shows a moon in light mode and a sun in dark mode; last in the strip on phones, first in the sidebar. */
+/* Theme picker: a round accent button, last in the strip on phones and first in the sidebar; opens a list of every Omarchy theme. */
 #theme-toggle {
   order: 2; margin-left: auto; flex: none; display: grid; place-items: center;
   width: 30px; height: 30px; padding: 0; border-radius: 50%; cursor: pointer;
   color: var(--accent); background: var(--pane); border: 1.5px solid var(--accent);
   transition: background .15s, color .15s;
 }
-#theme-toggle:hover { background: var(--accent); color: var(--bar); }
+#theme-toggle:hover, #theme-toggle[aria-expanded="true"] { background: var(--accent); color: var(--bar); }
 #theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-#theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-#theme-toggle .moon { fill: currentColor; stroke: none; }
-#theme-toggle .sun { display: none; }
-:root[data-theme="dark"] #theme-toggle .moon { display: none; }
-:root[data-theme="dark"] #theme-toggle .sun { display: block; }
+#theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+#theme-toggle circle { fill: currentColor; stroke: none; }
+#theme-menu {
+  position: fixed; z-index: 40; top: 40px; right: 8px; width: 236px; max-height: calc(100dvh - 52px); overflow-y: auto;
+  padding: 6px; border-radius: var(--radius); background: var(--pane); border: 1px solid var(--line);
+  box-shadow: 0 12px 36px rgb(0 0 0 / .22); font: 13px/1.2 var(--body); color: var(--ink);
+}
+#theme-menu[hidden] { display: none; }
+#theme-menu h3 { margin: 8px 8px 4px; font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+#theme-menu h3:first-child { margin-top: 4px; }
+#theme-menu [role="option"] {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 6px 8px; border: 0; border-radius: 6px;
+  background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+#theme-menu [role="option"]:hover, #theme-menu [role="option"]:focus-visible { background: color-mix(in oklab, var(--ink) 9%, transparent); outline: none; }
+#theme-menu [aria-selected="true"] { font-weight: 600; }
+#theme-menu [aria-selected="true"]::after { content: "✓"; margin-left: auto; color: var(--accent); }
+#theme-menu .sw {
+  flex: none; display: flex; align-items: center; gap: 2px; padding: 0 5px; height: 20px; border-radius: 4px;
+  border: 1px solid color-mix(in oklab, var(--ink) 18%, transparent);
+}
+#theme-menu .sw i { width: 6px; height: 10px; border-radius: 2px; }
 @media (min-width: 900px) {
   body { padding-left: var(--side); }
   .waybar {
@@ -78,7 +110,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   }
   .waybar nav { flex-direction: column; gap: 4px; overflow: visible; }
   #theme-toggle { order: 0; margin: 0; width: 36px; height: 36px; }
-  #theme-toggle svg { width: 18px; height: 18px; }
+  #theme-toggle svg { width: 19px; height: 19px; }
+  #theme-menu { top: 12px; right: auto; left: calc(var(--side) + 8px); max-height: calc(100dvh - 24px); }
 }
 
 /* --- page frame ----------------------------------------------------------- */
@@ -116,7 +149,7 @@ h3 { font-size: 21px; line-height: 1.2; font-weight: 700; }
 .stat .v { font: 700 clamp(34px, 4.6vw, 54px)/1 var(--display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .stat .l { margin-top: 8px; font-size: 14px; line-height: 1.4; color: var(--ink-2); max-width: 22ch; }
 :root { --c-e1: #0076a7; --c-e2: #e19b34; --c-e3: #a83f59; --on-fill: #ffffff; --on-fill-dark: #262b47; }
-:root[data-theme="dark"] { --c-e1: #008ec1; --c-e2: #c68206; --c-e3: #c45770; --on-fill: #16161e; --on-fill-dark: #16161e; }
+:root[data-mode="dark"] { --c-e1: #008ec1; --c-e2: #c68206; --c-e3: #c45770; --on-fill: #16161e; --on-fill-dark: #16161e; }
 code { font: 0.88em var(--mono); background: color-mix(in oklab, var(--ink-3) 14%, transparent); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
 
 /* --- chapters ------------------------------------------------------------- */
@@ -169,10 +202,10 @@ table.rw .a { color: var(--ink); }
 <body>
 
 <header class="waybar" aria-label="Chapters">
-  <button type="button" id="theme-toggle" aria-label="Switch between light and dark theme" title="Switch theme">
-    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
-    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  <button type="button" id="theme-toggle" aria-label="Choose a theme" aria-haspopup="listbox" aria-expanded="false" aria-controls="theme-menu" title="Choose a theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0 0 18c1.2 0 1.8-.9 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="11.5" r="1.3"/><circle cx="10.5" cy="7.5" r="1.3"/><circle cx="15.5" cy="7.5" r="1.3"/></svg>
   </button>
+  <div id="theme-menu" role="listbox" aria-label="Omarchy themes" hidden></div>
   <nav id="ws"></nav>
 </header>
 
@@ -439,14 +472,34 @@ const DATA = /*__DATA__*/{};
   document.fonts?.ready.then(drawField);
   window.TRIAGE = { GROUPS, fmt };
 
-  // Theme switch: Rosé Pine Dawn by default, Rosé Pine on request; remembered per viewer when storage allows.
+  // Theme picker: lists light then dark themes, applies the choice and remembers it per viewer when storage allows.
   const root = document.documentElement;
-  try { const saved = localStorage.getItem("triage-theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
-  document.getElementById("theme-toggle").addEventListener("click", () => {
-    const next = root.dataset.theme === "dark" ? "light" : "dark";
-    root.dataset.theme = next;
-    try { localStorage.setItem("triage-theme", next); } catch (e) {}
+  const button = document.getElementById("theme-toggle");
+  const menu = document.getElementById("theme-menu");
+  const group = (mode, title) => `<h3>${title}</h3>` + OMARCHY_THEMES.filter((t) => t.mode === mode).map((t) =>
+    `<button type="button" role="option" data-id="${t.id}" aria-selected="${t.id === root.dataset.theme}">` +
+    `<span class="sw" style="background:${t.bg}">${[t.ink, t.accent, ...t.swatch.slice(0, 3)].map((c) => `<i style="background:${c}"></i>`).join("")}</span>${t.name}</button>`
+  ).join("");
+  menu.innerHTML = group("light", "Light") + group("dark", "Dark");
+  const options = [...menu.querySelectorAll('[role="option"]')];
+  const setOpen = (open) => {
+    menu.hidden = !open; button.setAttribute("aria-expanded", open);
+    if (open) (menu.querySelector('[aria-selected="true"]') || options[0]).focus();
+  };
+  button.addEventListener("click", () => setOpen(menu.hidden));
+  menu.addEventListener("click", (e) => {
+    const opt = e.target.closest('[role="option"]'); if (!opt) return;
+    const t = OMARCHY_THEMES.find((x) => x.id === opt.dataset.id);
+    root.dataset.mode = t.mode; root.dataset.theme = t.id;
+    options.forEach((o) => o.setAttribute("aria-selected", o === opt));
+    try { localStorage.setItem("omarchy-theme", t.id); } catch (e) {}
   });
+  menu.addEventListener("keydown", (e) => {
+    const i = options.indexOf(document.activeElement);
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); options[(i + (e.key === "ArrowDown" ? 1 : -1) + options.length) % options.length].focus(); }
+    if (e.key === "Escape") { setOpen(false); button.focus(); }
+  });
+  document.addEventListener("click", (e) => { if (!menu.hidden && !menu.contains(e.target) && !button.contains(e.target)) setOpen(false); });
 })();
 </script>
 <script>

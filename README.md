@@ -32,6 +32,7 @@ uv run python scripts/unpack_data.py       # snapshot -> data/raw/ and data/deri
 uv run python build_funnel.py --stage all  # per-PR funnel tables (about 90 s)
 uv run python run_analysis.py              # models and summaries -> data/results/analysis.json
 uv run python site/make_page_data.py       # -> data/results/page.json, dots.json
+uv run python site/omarchy_themes.py       # installed Omarchy themes -> site/themes.json (committed)
 uv run python site/build_page.py           # -> docs/index.html
 uv run pytest                              # checks of the funnel rules
 ```

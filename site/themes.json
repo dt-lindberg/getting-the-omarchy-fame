@@ -1,0 +1,398 @@
+[
+ {
+  "id": "catppuccin",
+  "name": "Catppuccin",
+  "mode": "dark",
+  "bg": "#1e1e2e",
+  "bar": "#313244",
+  "ink": "#cdd6f4",
+  "ink2": "#bac2de",
+  "ink3": "#6c7086",
+  "accent": "#89b4fa",
+  "swatch": [
+   "#f38ba8",
+   "#f9e2af",
+   "#a6e3a1",
+   "#89b4fa",
+   "#f5c2e7"
+  ]
+ },
+ {
+  "id": "catppuccin-latte",
+  "name": "Catppuccin Latte",
+  "mode": "light",
+  "bg": "#eff1f5",
+  "bar": "#dce0e8",
+  "ink": "#4c4f69",
+  "ink2": "#5c5f77",
+  "ink3": "#9ca0b0",
+  "accent": "#1e66f5",
+  "swatch": [
+   "#d20f39",
+   "#df8e1d",
+   "#40a02b",
+   "#1e66f5",
+   "#ea76cb"
+  ]
+ },
+ {
+  "id": "ethereal",
+  "name": "Ethereal",
+  "mode": "dark",
+  "bg": "#060B1E",
+  "bar": "#131a3a",
+  "ink": "#ffcead",
+  "ink2": "#c9b8a6",
+  "ink3": "#6d7db6",
+  "accent": "#7d82d9",
+  "swatch": [
+   "#ED5B5A",
+   "#E9BB4F",
+   "#92a593",
+   "#7d82d9",
+   "#c89dc1"
+  ]
+ },
+ {
+  "id": "everforest",
+  "name": "Everforest",
+  "mode": "dark",
+  "bg": "#2d353b",
+  "bar": "#343f44",
+  "ink": "#d3c6aa",
+  "ink2": "#9da9a0",
+  "ink3": "#4f585e",
+  "accent": "#7fbbb3",
+  "swatch": [
+   "#e67e80",
+   "#dbbc7f",
+   "#a7c080",
+   "#7fbbb3",
+   "#d699b6"
+  ]
+ },
+ {
+  "id": "flexoki-light",
+  "name": "Flexoki Light",
+  "mode": "light",
+  "bg": "#FFFCF0",
+  "bar": "#E6E4D9",
+  "ink": "#100F0F",
+  "ink2": "#403E3C",
+  "ink3": "#878580",
+  "accent": "#205EA6",
+  "swatch": [
+   "#D14D41",
+   "#D0A215",
+   "#879A39",
+   "#205EA6",
+   "#CE5D97"
+  ]
+ },
+ {
+  "id": "gruvbox",
+  "name": "Gruvbox",
+  "mode": "dark",
+  "bg": "#282828",
+  "bar": "#3c3836",
+  "ink": "#d4be98",
+  "ink2": "#bdae93",
+  "ink3": "#7c6f64",
+  "accent": "#7daea3",
+  "swatch": [
+   "#ea6962",
+   "#d8a657",
+   "#a9b665",
+   "#7daea3",
+   "#d3869b"
+  ]
+ },
+ {
+  "id": "hackerman",
+  "name": "Hackerman",
+  "mode": "dark",
+  "bg": "#0B0C16",
+  "bar": "#151828",
+  "ink": "#ddf7ff",
+  "ink2": "#b5c5db",
+  "ink3": "#6a6e95",
+  "accent": "#82FB9C",
+  "swatch": [
+   "#50f872",
+   "#50f7d4",
+   "#4fe88f",
+   "#829dd4",
+   "#86a7df"
+  ]
+ },
+ {
+  "id": "kanagawa",
+  "name": "Kanagawa",
+  "mode": "dark",
+  "bg": "#1f1f28",
+  "bar": "#223249",
+  "ink": "#dcd7ba",
+  "ink2": "#c8c093",
+  "ink3": "#727169",
+  "accent": "#dcd7ba",
+  "swatch": [
+   "#c34043",
+   "#c0a36e",
+   "#76946a",
+   "#7e9cd8",
+   "#957fb8"
+  ]
+ },
+ {
+  "id": "last-horizon",
+  "name": "Last Horizon",
+  "mode": "dark",
+  "bg": "#0c0b0c",
+  "bar": "#0c0b0c",
+  "ink": "#FAFCFB",
+  "ink2": "#cfd3cd",
+  "ink3": "#584e51",
+  "accent": "#b59790",
+  "swatch": [
+   "#c38b7b",
+   "#6B5E73",
+   "#87a9b0",
+   "#b59790",
+   "#c4d8e2"
+  ]
+ },
+ {
+  "id": "lumon",
+  "name": "Lumon",
+  "mode": "dark",
+  "bg": "#16242d",
+  "bar": "#1b2d40",
+  "ink": "#d6e2ee",
+  "ink2": "#d6e2ee",
+  "ink3": "#4d86b0",
+  "accent": "#8bc9eb",
+  "swatch": [
+   "#4d86b0",
+   "#6fa4c9",
+   "#5e95bc",
+   "#6fb8e3",
+   "#8bc9eb"
+  ]
+ },
+ {
+  "id": "lupine",
+  "name": "Lupine",
+  "mode": "light",
+  "bg": "#fafafa",
+  "bar": "#f5f5f5",
+  "ink": "#212121",
+  "ink2": "#424242",
+  "ink3": "#757575",
+  "accent": "#3264eb",
+  "swatch": [
+   "#c900c4",
+   "#026fde",
+   "#4a2fd0",
+   "#3264eb",
+   "#8a4ad7"
+  ]
+ },
+ {
+  "id": "matte-black",
+  "name": "Matte Black",
+  "mode": "dark",
+  "bg": "#121212",
+  "bar": "#1e1e1e",
+  "ink": "#bebebe",
+  "ink2": "#8a8a8d",
+  "ink3": "#555555",
+  "accent": "#e68e0d",
+  "swatch": [
+   "#D35F5F",
+   "#b91c1c",
+   "#FFC107",
+   "#e68e0d",
+   "#D35F5F"
+  ]
+ },
+ {
+  "id": "miasma",
+  "name": "Miasma",
+  "mode": "dark",
+  "bg": "#222222",
+  "bar": "#2c2c2c",
+  "ink": "#c2c2b0",
+  "ink2": "#8a8a7e",
+  "ink3": "#555555",
+  "accent": "#78824b",
+  "swatch": [
+   "#685742",
+   "#b36d43",
+   "#5f875f",
+   "#78824b",
+   "#bb7744"
+  ]
+ },
+ {
+  "id": "nord",
+  "name": "Nord",
+  "mode": "dark",
+  "bg": "#2e3440",
+  "bar": "#3b4252",
+  "ink": "#d8dee9",
+  "ink2": "#adb5c4",
+  "ink3": "#667080",
+  "accent": "#81a1c1",
+  "swatch": [
+   "#bf616a",
+   "#ebcb8b",
+   "#a3be8c",
+   "#81a1c1",
+   "#b48ead"
+  ]
+ },
+ {
+  "id": "osaka-jade",
+  "name": "Osaka Jade",
+  "mode": "dark",
+  "bg": "#111c18",
+  "bar": "#23372B",
+  "ink": "#C1C497",
+  "ink2": "#D6D5BC",
+  "ink3": "#81B8A8",
+  "accent": "#509475",
+  "swatch": [
+   "#FF5345",
+   "#459451",
+   "#549e6a",
+   "#509475",
+   "#D2689C"
+  ]
+ },
+ {
+  "id": "retro-82",
+  "name": "Retro-82",
+  "mode": "dark",
+  "bg": "#05182e",
+  "bar": "#0a2540",
+  "ink": "#f6dcac",
+  "ink2": "#a7c9c6",
+  "ink3": "#3f8f8a",
+  "accent": "#faa968",
+  "swatch": [
+   "#f85525",
+   "#e97b3c",
+   "#028391",
+   "#3f8f8a",
+   "#3f8f8a"
+  ]
+ },
+ {
+  "id": "ristretto",
+  "name": "Ristretto",
+  "mode": "dark",
+  "bg": "#2c2525",
+  "bar": "#3d2f2a",
+  "ink": "#e6d9db",
+  "ink2": "#c3b7b8",
+  "ink3": "#72696a",
+  "accent": "#f38d70",
+  "swatch": [
+   "#fd6883",
+   "#f9cc6c",
+   "#adda78",
+   "#f38d70",
+   "#a8a9eb"
+  ]
+ },
+ {
+  "id": "rose-pine",
+  "name": "Ros\u00e9 Pine",
+  "mode": "light",
+  "bg": "#faf4ed",
+  "bar": "#f2e9e1",
+  "ink": "#575279",
+  "ink2": "#6e6a86",
+  "ink3": "#9893a5",
+  "accent": "#56949f",
+  "swatch": [
+   "#b4637a",
+   "#ea9d34",
+   "#286983",
+   "#56949f",
+   "#907aa9"
+  ]
+ },
+ {
+  "id": "solitude",
+  "name": "Solitude",
+  "mode": "dark",
+  "bg": "#101315",
+  "bar": "#101315",
+  "ink": "#cacccc",
+  "ink2": "#cbc2be",
+  "ink3": "#4b4e55",
+  "accent": "#798186",
+  "swatch": [
+   "#565d60",
+   "#d9dbdc",
+   "#9fa5a9",
+   "#798186",
+   "#aeaeae"
+  ]
+ },
+ {
+  "id": "tokyo-night",
+  "name": "Tokyo Night",
+  "mode": "dark",
+  "bg": "#1a1b26",
+  "bar": "#24283b",
+  "ink": "#a9b1d6",
+  "ink2": "#b4bee6",
+  "ink3": "#565f89",
+  "accent": "#7aa2f7",
+  "swatch": [
+   "#f7768e",
+   "#e0af68",
+   "#9ece6a",
+   "#7aa2f7",
+   "#ad8ee6"
+  ]
+ },
+ {
+  "id": "vantablack",
+  "name": "Vantablack",
+  "mode": "dark",
+  "bg": "#000000",
+  "bar": "#1a1a1a",
+  "ink": "#ffffff",
+  "ink2": "#ececec",
+  "ink3": "#505050",
+  "accent": "#8d8d8d",
+  "swatch": [
+   "#a4a4a4",
+   "#cecece",
+   "#b6b6b6",
+   "#8d8d8d",
+   "#9b9b9b"
+  ]
+ },
+ {
+  "id": "white",
+  "name": "White",
+  "mode": "light",
+  "bg": "#ffffff",
+  "bar": "#c0c0c0",
+  "ink": "#000000",
+  "ink2": "#000000",
+  "ink3": "#c0c0c0",
+  "accent": "#6e6e6e",
+  "swatch": [
+   "#2a2a2a",
+   "#4a4a4a",
+   "#3a3a3a",
+   "#1a1a1a",
+   "#2e2e2e"
+  ]
+ }
+]
