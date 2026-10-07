@@ -14,7 +14,7 @@ submitted / edited → attention → maintainer engagement → author response /
 - Strictly read-only on GitHub. Never comment, react, label, edit, close or open anything.
 - Do not run the Omarchy repo's tests.
 - Do not modify anything in `/home/dt-lindberg/Projects/omarchy-pr-stats/` (earlier work) or `/home/dt-lindberg/Projects/omarchy/` (the user's clone; `git log` / `git show` reads are fine, no checkouts, no fetch-with-prune, no branch changes).
-- Python via `uv run` in `/home/dt-lindberg/Projects/omarchy-triage` (pandas, numpy, statsmodels, lifelines, scikit-learn, matplotlib, pyarrow installed). Prefer parquet for large derived tables.
+- Python via `uv run` in `/home/dt-lindberg/Projects/getting-the-omarchy-fame` (pandas, numpy, statsmodels, lifelines, scikit-learn, matplotlib, pyarrow installed). Prefer parquet for large derived tables.
 - Brief full-line comments only for non-trivial code. Files under ~250 lines; split into a package when larger. British English in prose.
 - No look-ahead: any feature used at a decision point uses only information available at that moment.
 
