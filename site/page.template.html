@@ -68,8 +68,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   display: grid; place-items: center; min-width: 26px; height: 22px; padding: 0 6px; border-radius: 4px;
   color: var(--ink-3); text-decoration: none;
 }
-.waybar nav a[aria-current="true"] { background: var(--accent); color: var(--bar); }
-.waybar nav a:hover { color: var(--ink); }
+.waybar nav a[aria-current="true"] { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.waybar nav a:not([aria-current="true"]):hover { color: var(--ink); }
 /* Theme picker: a round accent button, last in the strip on phones and first in the sidebar; opens a list of every Omarchy theme. */
 #theme-toggle {
   order: 2; margin-left: auto; flex: none; display: grid; place-items: center;
@@ -77,7 +77,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   color: var(--accent); background: var(--pane); border: 1.5px solid var(--accent);
   transition: background .15s, color .15s;
 }
-#theme-toggle:hover, #theme-toggle[aria-expanded="true"] { background: var(--accent); color: var(--bar); }
+#theme-toggle:hover, #theme-toggle[aria-expanded="true"] { background: var(--accent); color: var(--on-accent); }
 #theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 #theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 #theme-toggle circle { fill: currentColor; stroke: none; }

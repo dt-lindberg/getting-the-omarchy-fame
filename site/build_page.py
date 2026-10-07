@@ -20,7 +20,7 @@ def theme_css(themes: list[dict]) -> str:
     rules = []
     for t in themes:
         tokens = {"--bg": t["bg"], "--bar": t["bar"], "--ink": t["ink"], "--ink-2": t["ink2"],
-                  "--ink-3": t["ink3"], "--accent": t["accent"]}
+                  "--ink-3": t["ink3"], "--accent": t["accent"], "--on-accent": t["on_accent"]}
         body = " ".join(f"{k}: {v};" for k, v in tokens.items())
         rules.append(f':root[data-theme="{t["id"]}"] {{ {body} }}')
     return "\n".join(rules)
